@@ -1,0 +1,7 @@
+# Generated deal data can contain customer-sensitive information.
+contexts/*.json
+artifacts/*.md
+
+!contexts/.gitkeep
+!artifacts/.gitkeep
+
