@@ -1,5 +1,5 @@
 ---
-name: presale-scope
+name: scope
 description: Analyze pain points and define solution scope with scope-creep control.
 ---
 

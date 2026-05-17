@@ -1,5 +1,5 @@
 ---
-name: presale-context
+name: context
 description: Update and compress deal context from customer answers, notes, Q&A, and feedback.
 ---
 
@@ -23,4 +23,4 @@ Keep active: deal summary, confirmed/unconfirmed requirements, scope register, a
 
 Use [references/change-log.md](../../references/change-log.md).
 
-If feedback expands scope → hand off to `presale-scope` before revising WBS/proposal.
+If feedback expands scope → hand off to `scope` before revising WBS/proposal.

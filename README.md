@@ -83,12 +83,12 @@ The system operates through 6 sequential stages. Each stage has a **Gate** — t
 
 | # | Stage | Skill | Output |
 |:---:|---|---|---|
-| **1** | **Discovery** | `presale-discovery` | Intake summary, confirmed facts, clarification questions |
-| **2** | **Context** | `presale-context` | Deal context, decisions, assumptions, change history |
-| **3** | **Scope** | `presale-scope` | Pain points, in/out scope, risks, scope register |
-| **4** | **WBS** | `presale-wbs` | Work breakdown, milestones, resource estimates |
-| **5** | **Proposal** | `presale-proposal` | Multi-section proposal draft |
-| **6** | **Review & Finalize** | `presale-review-finalize` | Consistency check, finalization approval |
+| **1** | **Discovery** | `discovery` | Intake summary, confirmed facts, clarification questions |
+| **2** | **Context** | `context` | Deal context, decisions, assumptions, change history |
+| **3** | **Scope** | `scope` | Pain points, in/out scope, risks, scope register |
+| **4** | **WBS** | `wbs` | Work breakdown, milestones, resource estimates |
+| **5** | **Proposal** | `proposal` | Multi-section proposal draft |
+| **6** | **Review & Finalize** | `review-finalize` | Consistency check, finalization approval |
 
 ---
 

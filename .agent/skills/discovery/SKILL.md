@@ -1,5 +1,5 @@
 ---
-name: presale-discovery
+name: discovery
 description: Normalize raw customer input and generate clarification questions for presale discovery.
 ---
 

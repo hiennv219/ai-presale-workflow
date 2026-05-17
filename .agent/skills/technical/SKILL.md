@@ -1,5 +1,5 @@
 ---
-name: presale-technical
+name: technical
 description: Propose technical decisions when SA has not provided them. Optional — skipped if tech decisions already in context.
 ---
 

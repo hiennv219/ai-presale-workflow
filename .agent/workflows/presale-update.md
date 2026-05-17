@@ -46,7 +46,7 @@ Output format:
 
 ### Step 2: Update Context
 
-Skill: [presale-context](../skills/presale-context/SKILL.md)
+Skill: [context](../skills/context/SKILL.md)
 
 - Record change in deal context.
 - Add change log entry.
@@ -82,7 +82,7 @@ Proposal (multi-section):
 
 Run ONLY for scope/requirement/timeline changes. Skip for content revision or correction.
 
-Skill: [presale-review-finalize](../skills/presale-review-finalize/SKILL.md) (review mode, no finalize)
+Skill: [review-finalize](../skills/review-finalize/SKILL.md) (review mode, no finalize)
 
 - Check proposal ↔ WBS.
 - Check WBS ↔ scope.

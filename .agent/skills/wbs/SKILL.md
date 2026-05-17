@@ -1,5 +1,5 @@
 ---
-name: presale-wbs
+name: wbs
 description: Create or revise WBS from approved scope with phases, tasks, estimates, and traceability.
 ---
 

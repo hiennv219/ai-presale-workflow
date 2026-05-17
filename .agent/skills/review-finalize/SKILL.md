@@ -1,5 +1,5 @@
 ---
-name: presale-review-finalize
+name: review-finalize
 description: Review artifacts for consistency and scope creep. Approve finalization or list required fixes.
 ---
 

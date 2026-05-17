@@ -46,7 +46,7 @@
 ```
 
 ### 3.2 High-Level Wireframe
-<!-- Use presale-wireframe skill. Draw ASCII wireframes for each core screen. Never use text-only descriptions. -->
+<!-- Use wireframe skill. Draw ASCII wireframes for each core screen. Never use text-only descriptions. -->
 
 ## 4. Risks, Assumptions & Acceptance Criteria
 
@@ -69,7 +69,7 @@
 
 <!-- Brownfield: include 5.1 AS-IS, 5.2 TO-BE, 5.3 Migration, 5.4 Tech Stack, 5.5 Data Flow, 5.6 Capacity -->
 <!-- Greenfield: skip AS-IS and Migration, start with Target Architecture. Renumber accordingly. -->
-<!-- Use presale-architecture skill for all diagrams. ASCII box art for static views, Mermaid sequence for dynamic flows. -->
+<!-- Use architecture skill for all diagrams. ASCII box art for static views, Mermaid sequence for dynamic flows. -->
 
 ### 5.1 AS-IS Architecture (brownfield only)
 ```text

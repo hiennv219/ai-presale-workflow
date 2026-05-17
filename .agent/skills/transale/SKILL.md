@@ -1,5 +1,5 @@
 ---
-name: presale-transale
+name: transale
 description: Translate Markdown documents between English, Japanese, and Vietnamese while preserving structure, formatting, and technical accuracy.
 ---
 

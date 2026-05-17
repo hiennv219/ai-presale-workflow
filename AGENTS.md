@@ -14,7 +14,7 @@ The **Orchestrator** routes user input to the correct skill agent based on inten
 
 ## Orchestrator
 
-**File:** `.agent/skills/presale-orchestrator/SKILL.md`
+**File:** `.agent/skills/orchestrator/SKILL.md`
 
 The orchestrator is the routing layer. It does not produce artifacts itself — it determines which skill to invoke based on:
 
@@ -26,13 +26,13 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 | User Input Type | Routed To |
 |---|---|
-| Raw customer bullets, briefs, emails | `presale-discovery` |
-| Answers, notes, Q&A, feedback | `presale-context` |
-| Need pain points or scope definition | `presale-scope` |
-| Need delivery plan or task breakdown | `presale-wbs` |
-| Need proposal draft or revision | `presale-proposal` |
-| Need review or finalization | `presale-review-finalize` |
-| Need document translation (EN/JA/VI) | `presale-transale` |
+| Raw customer bullets, briefs, emails | `discovery` |
+| Answers, notes, Q&A, feedback | `context` |
+| Need pain points or scope definition | `scope` |
+| Need delivery plan or task breakdown | `wbs` |
+| Need proposal draft or revision | `proposal` |
+| Need review or finalization | `review-finalize` |
+| Need document translation (EN/JA/VI) | `transale` |
 
 ---
 
@@ -40,7 +40,7 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ### 1. Discovery Agent
 
-**File:** `.agent/skills/presale-discovery/SKILL.md`
+**File:** `.agent/skills/discovery/SKILL.md`
 
 **Purpose:** Normalize raw customer input and generate clarification questions.
 
@@ -58,7 +58,7 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ### 2. Context Agent
 
-**File:** `.agent/skills/presale-context/SKILL.md`
+**File:** `.agent/skills/context/SKILL.md`
 
 **Purpose:** Update and compress deal context from customer answers, notes, Q&A, and feedback.
 
@@ -76,7 +76,7 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ### 3. Scope Agent
 
-**File:** `.agent/skills/presale-scope/SKILL.md`
+**File:** `.agent/skills/scope/SKILL.md`
 
 **Purpose:** Analyze pain points and define solution scope with scope-creep control.
 
@@ -96,7 +96,7 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ### 4. WBS Agent
 
-**File:** `.agent/skills/presale-wbs/SKILL.md`
+**File:** `.agent/skills/wbs/SKILL.md`
 
 **Purpose:** Create or revise Work Breakdown Structure from approved scope.
 
@@ -114,7 +114,7 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ### 5. Proposal Agent
 
-**File:** `.agent/skills/presale-proposal/SKILL.md`
+**File:** `.agent/skills/proposal/SKILL.md`
 
 **Purpose:** Create or revise the presale proposal from context, scope, WBS, and risks.
 
@@ -134,7 +134,7 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ### 6. Review & Finalize Agent
 
-**File:** `.agent/skills/presale-review-finalize/SKILL.md`
+**File:** `.agent/skills/review-finalize/SKILL.md`
 
 **Purpose:** Review artifacts for consistency and scope creep. Approve or block finalization.
 
@@ -160,7 +160,7 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ### 7. Transale Agent
 
-**File:** `.agent/skills/presale-transale/SKILL.md`
+**File:** `.agent/skills/transale/SKILL.md`
 
 **Purpose:** Translate Markdown documents between English, Japanese, and Vietnamese while preserving structure and technical accuracy.
 
@@ -174,6 +174,57 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 **Standalone:** This agent runs independently via `/presale-transale` — it is not part of the main pipeline stages.
 
 **Output:** `{{original_name}}_{{lang_code}}.md` in same directory as source
+
+---
+
+### 8. Technical Agent
+
+**File:** `.agent/skills/technical/SKILL.md`
+
+**Purpose:** Propose technical decisions when SA has not provided them.
+
+**Behavior:**
+- Runs only when deal-context has no confirmed technical decisions
+- Proposes: architecture pattern, tech stack, infrastructure approach, key trade-offs
+- Draws system architecture using `architecture` skill
+- Writes component communication narrative grouped by delivery phases
+- Identifies 3rd-party services and pass-through cost models
+- All outputs marked as "proposed" until SA/user confirms
+
+**Output:** `workspace/technical.md`
+
+---
+
+### 9. Architecture Agent (Sub-skill)
+
+**File:** `.agent/skills/architecture/SKILL.md`
+
+**Purpose:** Draw ASCII architecture diagrams and Mermaid data-flow sequences.
+
+**Behavior:**
+- Static view: ASCII layered box art (Client → API → Service → Data)
+- Dynamic view: Mermaid sequence diagram for data flow
+- Annotates phase-specific components with `(Phase N)`
+- Keeps width under 80 characters
+- Labels every box with technology + responsibilities
+
+**Delegated by:** `technical`, `proposal` (section 5)
+
+---
+
+### 10. Wireframe Agent (Sub-skill)
+
+**File:** `.agent/skills/wireframe/SKILL.md`
+
+**Purpose:** Draw ASCII wireframes for UI screens in proposals.
+
+**Behavior:**
+- Draws spatial layout using box-drawing characters
+- Shows field placement, buttons, data areas with sample data
+- One wireframe per screen, default/loaded state
+- Never describes a screen with text-only bullet points
+
+**Delegated by:** `proposal` (section 3.2)
 
 ---
 

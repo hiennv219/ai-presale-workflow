@@ -1,5 +1,5 @@
 ---
-name: presale-proposal
+name: proposal
 description: Create or revise presale proposal from context, scope, WBS, and risks. Always uses multi-section file structure.
 ---
 
@@ -9,9 +9,9 @@ description: Create or revise presale proposal from context, scope, WBS, and ris
 
 1. Reflect customer context and pain points before solution.
 2. Use approved scope register. Ensure features are grouped by MoSCoW priority.
-3. Section 3 (User Flow & Wireframe): include Mermaid user flow for core features only. For wireframes, delegate to `presale-wireframe` skill. Skip for upgrade-only projects with no logic changes.
+3. Section 3 (User Flow & Wireframe): include Mermaid user flow for core features only. For wireframes, delegate to `wireframe` skill. Skip for upgrade-only projects with no logic changes.
 4. Section 4 (Risks, Assumptions & Acceptance): order is Assumptions → Risks → Acceptance Criteria.
-5. Section 5 (Technical Architecture): delegate to `presale-architecture` skill for diagrams. Use `workspace/technical.md` if available.
+5. Section 5 (Technical Architecture): delegate to `architecture` skill for diagrams. Use `workspace/technical.md` if available.
 6. Use WBS summary for implementation plan.
 7. Never add deliverables missing from WBS.
 8. Ensure 3rd-Party Services and Pass-through Costs are explicitly detailed in section 8.

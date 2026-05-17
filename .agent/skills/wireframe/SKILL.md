@@ -1,5 +1,5 @@
 ---
-name: presale-wireframe
+name: wireframe
 description: Draw ASCII wireframes for UI screens in proposals. Always visual, never text-only descriptions.
 ---
 
@@ -13,7 +13,7 @@ description: Draw ASCII wireframes for UI screens in proposals. Always visual, n
 
 - Proposal section 3.2 (High-Level Wireframe)
 - Any time a UI screen needs to be communicated in a markdown deliverable
-- When presale-proposal skill delegates wireframe work
+- When `proposal` skill delegates wireframe work
 
 ## Procedure
 

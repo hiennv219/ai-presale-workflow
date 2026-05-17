@@ -9,9 +9,9 @@ workspace/proposal/
 ├── _index.md                        ← metadata + mục lục (luôn đọc đầu tiên)
 ├── 01-project-overview.md           ← Bối cảnh, Pain Points, Mục tiêu, Solution Overview, Showcase
 ├── 02-scope-solution.md             ← In-Scope, Out-of-Scope
-├── 03-user-flow-wireframe.md        ← User Flow (Mermaid), Wireframe (ASCII via presale-wireframe skill)
+├── 03-user-flow-wireframe.md        ← User Flow (Mermaid), Wireframe (ASCII via wireframe skill)
 ├── 04-risks-assumptions-acceptance.md ← Assumptions, Rủi ro, Tiêu chí nghiệm thu
-├── 05-technical-architecture.md     ← Kiến trúc (ASCII via presale-architecture skill), Tech Stack, Data Flow (Mermaid), Capacity
+├── 05-technical-architecture.md     ← Kiến trúc (ASCII via architecture skill), Tech Stack, Data Flow (Mermaid), Capacity
 ├── 06-implementation-plan.md        ← Roadmap tổng thể, Milestones, Delivery Plan
 ├── 07-wbs-resources.md              ← WBS, Resource Plan, Capacity
 ├── 08-budget-commercials.md         ← Budget, Infra Cost, 3rd-Party Costs

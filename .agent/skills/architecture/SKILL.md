@@ -1,5 +1,5 @@
 ---
-name: presale-architecture
+name: architecture
 description: Draw ASCII architecture diagrams and Mermaid data-flow sequences for technical sections in proposals.
 ---
 
@@ -13,7 +13,7 @@ description: Draw ASCII architecture diagrams and Mermaid data-flow sequences fo
 
 - Proposal section 5 (Technical Architecture)
 - `workspace/technical.md` creation
-- When presale-technical or presale-proposal skill needs system diagrams
+- When `technical` or `proposal` skill needs system diagrams
 
 ## Procedure
 

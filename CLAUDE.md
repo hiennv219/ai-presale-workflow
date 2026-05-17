@@ -18,7 +18,7 @@ When the user types a command starting with `/`, match it against the list below
 
 1. Read [.agent/rules.md](.agent/rules.md).
 2. Read [.agent/workflows/presale-run.md](.agent/workflows/presale-run.md).
-3. Use [.agent/skills/presale-orchestrator/SKILL.md](.agent/skills/presale-orchestrator/SKILL.md) to select the next skill.
+3. Use [.agent/skills/orchestrator/SKILL.md](.agent/skills/orchestrator/SKILL.md) to select the next skill.
 4. Load only the skill needed for the current stage.
 5. Use reference templates in [.agent/references/](.agent/references/) only when producing that artifact.
 

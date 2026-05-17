@@ -1,5 +1,5 @@
 ---
-name: presale-orchestrator
+name: orchestrator
 description: Route presale workflow to correct skill based on user input type.
 ---
 
@@ -9,14 +9,14 @@ description: Route presale workflow to correct skill based on user input type.
 
 | User input | Skill |
 | --- | --- |
-| Raw customer bullets | `presale-discovery` |
-| Answers, notes, Q&A, feedback | `presale-context` |
-| Need pain points, scope | `presale-scope` |
-| Need tech analysis, no tech decisions in context | `presale-technical` |
-| Need delivery plan, tasks | `presale-wbs` |
-| Need proposal draft/revision | `presale-proposal` |
-| Need review or finalization | `presale-review-finalize` |
-| Need document translation (EN/JA/VI) | `presale-transale` |
+| Raw customer bullets | `discovery` |
+| Answers, notes, Q&A, feedback | `context` |
+| Need pain points, scope | `scope` |
+| Need tech analysis, no tech decisions in context | `technical` |
+| Need delivery plan, tasks | `wbs` |
+| Need proposal draft/revision | `proposal` |
+| Need review or finalization | `review-finalize` |
+| Need document translation (EN/JA/VI) | `transale` |
 
 ## Procedure
 
