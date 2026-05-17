@@ -14,6 +14,7 @@ description: Analyze pain points and define solution scope with scope-creep cont
 5. **Prioritize Features**: Apply the MoSCoW method (Must-have, Should-have, Could-have, Won't-have) to all items in the in-scope register.
 6. Run impact check for any new/expanded request.
 7. Generate User Flow (Mermaid) and High-level Wireframe text descriptions for the core features.
+8. Ask user if there are relevant case studies / showcase projects to include in the proposal (optional).
 
 ## Scope Change Triggers
 

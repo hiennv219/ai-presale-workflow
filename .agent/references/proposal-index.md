@@ -15,13 +15,12 @@
 | # | Section | File | Status | Last Updated |
 |---|---------|------|--------|--------------|
 | 1 | Project Overview | `01-project-overview.md` | Pending | — |
-| 2 | Project Scope | `02-project-scope.md` | Pending | — |
-| 3 | Solution Approach | `03-solution-approach.md` | Pending | — |
-| 4 | Technical Requirement Analysis | `04-technical-requirements.md` | Pending | — |
-| 5 | Technical Solutions Propose | `05-technical-solutions.md` | Pending | — |
-| 6 | Product Roadmap | `06-product-roadmap.md` | Pending | — |
-| 7 | Master Schedule | `07-master-schedule.md` | Pending | — |
-| 8 | WBS & Quotations | `08-wbs-quotations.md` | Pending | — |
+| 2 | Scope & Solution | `02-scope-solution.md` | Pending | — |
+| 3 | Risks & Acceptance Criteria | `03-risks-acceptance.md` | Pending | — |
+| 4 | Technical Architecture | `04-technical-architecture.md` | Pending | — |
+| 5 | Implementation Plan | `05-implementation-plan.md` | Pending | — |
+| 6 | WBS & Resources | `06-wbs-resources.md` | Pending | — |
+| 7 | Budget & Commercials | `07-budget-commercials.md` | Pending | — |
 
 ## Change History
 

@@ -1,222 +1,196 @@
 # Proposal: DailyTools MVP
 **Author**: Antigravity AI
-**Date**: 2026-05-16
-**Version**: Final
+**Date**: 2026-05-17
+**Version**: Final (New 7-Section Template)
 
 ---
 
 ## 1. Project Overview
 
 ### 1.1 Context & Problem Statement
-- **Current State**: Project Managers (PMs) currently spend significant time manually summarizing meeting notes, tracking action items, and context-switching between meeting platforms (Zoom/Teams) and project management tools (Jira/Notion). This manual process leads to information loss and reduced productivity.
+- **Current State**: Project Managers (PMs) currently lack immediate visibility into critical blockers. Daily updates from the development team are often unstructured, too long, or buried in chat channels. This leads to PMs missing critical issues and wasting time manually parsing text.
 - **Root Cause Analysis**:
 
 | # | Pain Point | Root Cause | Severity |
 |:--|:-----------|:----------------|:------:|
-| P1 | Manual meeting summarization | Lack of automated AI summarization tools | High |
-| P2 | Tool context switching | No direct sync between meetings and PM tools | High |
-| P3 | Missed action items | Information lost in manual transcript review | Medium |
+| P1 | Lack of visibility into dev blockers | Daily reports are too long or unstructured | High |
+| P2 | Manual parsing of updates | Devs write unstructured text in chat | High |
 
 ### 1.2 Goals & Business Impact
-- **Goal**: Optimize PM effort and reduce manual overhead by automating the meeting summarization and task distribution process.
-- **Type**: Greenfield MVP Development
+- **Goal**: Provide a lightweight, automated way to collect dev updates and instantly extract blockers using AI.
+- **Type**: Greenfield MVP Development (Simple Trial)
 - **Business Benefits**:
-    - [x] **Time Savings**: Reduce PM effort in post-meeting documentation by ~70%.
-    - [x] **Data Accuracy**: Ensure all decisions and action items are captured and tracked.
-    - [x] **Workflow Efficiency**: Seamless integration between communication and execution tools.
+    - [x] **Time Savings**: Reduce PM effort in parsing daily reports.
+    - [x] **Risk Mitigation**: Catch and highlight blockers immediately before they cause delays.
+    - [x] **Developer Experience**: A frictionless, 3-field form that takes 30 seconds to fill out.
+
 
 ## 2. Project Scope
 
 ### 2.1 In-Scope
-The MVP for DailyTools focuses on the core "Automated PM Bridge" functionality, prioritized by the MoSCoW method:
-- **Meeting Capture (Must-have)**: Integration with Zoom and Microsoft Teams via APIs to fetch recordings/transcripts.
-- **AI Engine (Must-have)**: Processing of audio/transcripts to generate structured summaries (Executive Summary, Decisions, Action Items).
-- **Tool Integration (Must-have)**: Automatic push of results into Jira (as issues or comments) and Notion (as project pages).
-- **PM Dashboard (Should-have)**: A lightweight web interface for PMs to configure integrations and review summaries before pushing.
+The MVP for DailyTools focuses on a simple text-based data collection and extraction trial, prioritized by the MoSCoW method:
+- **Web Form for Devs (Must-have)**: A simple web form (What I did, What I will do, Blockers) for daily submission.
+- **AI Blocker Extraction (Must-have)**: Processing the submitted text with GPT-4o to flag and highlight hidden blockers.
+- **PM Dashboard (Must-have)**: A clean view for PMs to instantly see active blockers and historical daily logs.
 
 ### 2.2 Out-of-Scope
-- **Real-time Transcription**: Live text display during the meeting.
-- **Standalone Mobile Application**: The initial focus is on the PM's desktop workflow.
-- **Google Meet Integration**: Scheduled for Phase 2.
-- **Advanced Sentiment Analysis**: Deep psychological insights beyond core task management.
+- **Real-time Live Transcription**: Irrelevant to this text-based MVP.
+- **Jira/Notion Sync**: Deferred to Phase 2 to keep the MVP simple.
 
 ### 2.3 Strategic Assumptions
-- **API Availability**: Zoom and Microsoft Teams provide stable API access for recording retrieval.
-- **LLM Integration**: Use of advanced LLMs (e.g., GPT-4 or Claude 3) for high-quality summarization.
-- **User Permissions**: Clients will grant necessary OAuth permissions for cross-tool integrations.
+- **Developer Adoption**: Developers will consistently use the ultra-fast web form instead of chat channels.
+- **LLM Accuracy**: GPT-4o will accurately differentiate between standard updates and critical blockers.
+
+### 2.4 Risk & Mitigation
+| # | Risk | Severity | Impact | Mitigation |
+|:--|:-----|:--------:|:-------|:-----------|
+| R1 | Low adoption by devs | High | No data to extract blockers from | Make the form ultra-fast (3 fields) and mobile-friendly. |
+| R2 | AI missing hidden blockers | Medium | False sense of security for PMs | Allow devs to explicitly tag blockers, plus prompt-tuning. |
+
 
 ## 3. Solution Approach
 
-### 3.1 Risk & Mitigation
-| # | Risk | Severity | Impact | Mitigation |
-|:--|:-----|:--------:|:-------|:-----------|
-| R1 | Privacy of meeting data | High | Potential data leak of sensitive discussions | End-to-end encryption and strict data retention policies (delete after processing). |
-| R2 | AI summary inaccuracy | Medium | Incorrect tasks or decisions captured | "Human-in-the-loop" review step in the PM dashboard before syncing to Jira/Notion. |
-| R3 | API breaking changes | Low | System downtime for integrations | Modular integration design with robust error handling and manual fallback support. |
-
-### 3.2 Acceptance Criteria
+### 3.1 Acceptance Criteria
 | # | Item | Measurement Criteria | Phase |
 |:--|:-----|:---------------------|:------|
-| AC1 | Meeting Fetch | System successfully retrieves recordings from Zoom/Teams 100% of the time. | Phase 1 |
-| AC2 | Summary Quality | 85%+ of generated action items are rated "Accurate" by PMs in UAT. | Phase 2 |
-| AC3 | Sync Reliability | Summaries are pushed to Jira/Notion without data loss or formatting errors. | Phase 3 |
-| AC4 | Time Optimization | PMs report at least 50% time reduction in meeting documentation tasks. | Phase 4 |
+| AC1 | Form Submission | Devs can submit form and data saves to DB correctly. | Phase 1 |
+| AC2 | Blocker Extraction | AI correctly flags blockers in 90% of test inputs. | Phase 2 |
+| AC3 | Dashboard Visibility | PM dashboard renders active blockers clearly above normal logs. | Phase 3 |
 
-### 3.3 Visualizing Solution
+### 3.2 Visualizing Solution
 
 #### User Flow
 ```mermaid
 graph TD
-    A([PM logs into DailyTools]) --> B[Connects Zoom/Teams Account]
-    B --> C{Meeting Finished?}
-    C -- Yes --> D[Auto-fetch Recording/Transcript]
-    D --> E[AI Processes Summary & Action Items]
-    E --> F[PM Reviews Summary on Dashboard]
-    F --> G[Push to Jira/Notion]
-    C -- No --> H[Wait for next meeting]
+    A([Dev opens DailyTools]) --> B[Fills out Daily Report Form]
+    B --> C[Submit]
+    C --> D[AI Scans Text for Blockers]
+    D --> E{Blocker Found?}
+    E -- Yes --> F[Highlight on PM Dashboard]
+    E -- No --> G[Log as normal status]
+    F --> H([PM Reviews Blockers])
 ```
 
 #### High-Level Wireframe
-- **Dashboard Screen**:
-  - **Header**: User profile, Settings, Sync status.
-  - **Sidebar**: Recent Meetings, Integrations configs.
-  - **Main Content**: List of recently processed meetings with a "Review" button.
-  - **Review Modal**: Shows AI-generated summary, action items (editable), and "Push to Jira" button.
+- **Dev Form**: What I did, What I will do, Blockers (Optional).
+- **PM Dashboard**: Active Blockers alert section at the top, followed by a chronological list of standard daily updates.
 
-## 4. Technical Requirement Analysis
 
-### 4.1 Design Principles
-DailyTools is built on the principle of "Invisible Automation"—integrating deeply into existing workflows without introducing new friction.
+## 4. Technical Architecture
 
-| Principle | Explanation | Accepted Trade-off |
-|:----------|:------------|:-------------------|
-| Data Sovereignty | Meeting data belongs to the user and is never used for training. | Higher infrastructure cost for private processing. |
-| Workflow First | Tools should go where the PM already is (Jira/Notion). | Complex API maintenance for third-party tools. |
-| Precision over Length | Summaries must be concise and actionable, not verbatim. | Potential loss of minor contextual nuances. |
-
-### 4.2 Capacity Planning
-#### Traffic Estimation
-| Metric | Value | Calculation |
-|:-------|:------|:------------|
-| Avg Meetings / Day | 100 | Initial pilot scale |
-| Storage / Meeting | 500MB | Avg 1h Zoom recording (transitory) |
-| Daily Data Volume | 50GB | Transitory storage for processing |
-
-#### Infrastructure Sizing
-- **Compute**: Autoscaling nodes for media processing (Whisper/FFmpeg).
-- **Storage**: Temporary S3 bucket with 24-hour expiration policy.
-- **Database**: PostgreSQL for metadata and integration settings.
-
-#### Scaling Strategy
-| Phase | Target Load | Action | Est. Infra Cost/month |
-|:------|:-----------|:-------|:----------------------|
-| MVP | 10-20 PMs | Single region, shared RDS | $150 - $300 |
-| Growth | 100-500 PMs | Multi-AZ, dedicated instances | $800 - $1,500 |
-
-## 5. Technical Solutions Propose
-
-### 5.1 Target Architecture
-DailyTools uses a serverless-first architecture to handle bursty meeting processing loads efficiently.
+### 4.1 Target Architecture
+DailyTools uses a simple Next.js monolithic architecture for rapid MVP delivery.
 
 ```text
-[Zoom/Teams API] --> [Webhook Handler] --> [S3 Temporary Storage]
-                                                 |
-                                         [AI Processing Pipeline]
-                                         (Whisper + GPT-4/Claude)
-                                                 |
-[PM Dashboard] <--- [Metadata DB] <--- [Structured Summary]
-      |
-      +------> [Jira API] / [Notion API]
+CLIENT LAYER        → Web Dashboard (React/Next.js)
+                      - PM Dashboard (Blockers View)
+                      - Dev Daily Report Form
+                      │
+API GATEWAY         → Next.js API Routes / Auth
+                      │
+SERVICE LAYER       → ┌─────────────────────┐
+                      │ AI Blocker Service  │
+                      │ - Scans text input  │
+                      │ - Extracts blockers │
+                      └─────────┬───────────┘
+                                │
+DATA LAYER          → ┌─────────▼───────────┐
+                      │ Relational DB       │
+                      │ - Reports & Blockers│
+                      └─────────────────────┘
 ```
 
 **Component Communication:**
-- **Capture**: Webhooks notify DailyTools when a cloud recording is ready.
-- **AI Processing**: Asynchronous worker pool processes audio into text and then into structured summaries.
-- **Delivery**: Final summaries are stored in a secured DB and displayed in the Dashboard for approval before API dispatch.
+- **Capture**: Dev submits a Next.js form.
+- **AI Processing**: Next.js API calls OpenAI (GPT-4o) to evaluate text.
+- **Delivery**: PM views the dashboard which queries the DB directly.
 
-### 5.2 Tech Stack
+### 4.2 Tech Stack
 | Layer | Technology | Role |
 |:------|:-----------|:-----|
-| Backend | Node.js / TypeScript | Core logic and API handlers |
-| AI / NLP | OpenAI Whisper / GPT-4o | Transcription and summarization |
-| Database | PostgreSQL (Supabase/RDS) | Integration settings and metadata |
-| Frontend | React + Tailwind CSS | PM Dashboard |
-| Cloud | AWS (Lambda, S3, EventBridge) | Infrastructure and orchestration |
+| Fullstack | Next.js / TypeScript | Unified frontend and backend API |
+| AI / NLP | OpenAI GPT-4o | Text analysis and blocker extraction |
+| Database | PostgreSQL (Supabase) | Data storage |
+| Hosting | Vercel | Zero-config deployment |
 
-### 5.3 UI/UX Concept
-The UI will be a "Zero-Inbox" inspired dashboard where new meeting summaries appear as cards. PMs can:
-1. **Review**: Edit AI-generated action items.
-2. **Assign**: Map tasks to specific Jira projects/users.
-3. **Sync**: Single-click push to Jira/Notion.
 
-## 6. Product Roadmap
+## 5. Implementation Plan
 
-| Phase | Feature | Duration | Timeline | M1 | M2 | M3 | M4 |
+### 5.1 Product Roadmap
+| Phase | Feature | Duration | Timeline | W1 | W2 | W3 | W4 |
 |-------|---------|----------|----------|:--:|:--:|:--:|:--:|
-| P1 | Foundation & Capture (Zoom/Teams) | 4 weeks | Month 1 | ███ |    |    |    |
-| P2 | AI Core (Transcription/Summary) | 3 weeks | Month 2 |     | ███ |    |    |
-| P3 | Delivery Sync (Jira/Notion) | 2 weeks | Month 3 |     |     | ███ |    |
-| P4 | UAT & Launch | 2 weeks | Month 3 |     |     |     | ███ |
+| P1 | Form & Database | 1 week | Week 1 | ███ |    |    |    |
+| P2 | AI Blocker Engine | 1 week | Week 2 |     | ███ |    |    |
+| P3 | PM Dashboard View | 1 week | Week 3 |     |     | ███ |    |
+| P4 | UAT & Launch | 1 week | Week 4 |     |     |     | ███ |
 
 **Legend:** `███` = Active development period
 
 **Key Highlights:**
-- **Month 1**: Establish secure API tunnels to Zoom and Teams.
-- **Month 2**: Optimize AI prompts for PM-specific summarization accuracy.
-- **Month 3**: Finalize bi-directional sync with Jira/Notion and go live.
+- **Week 1**: Deploy the basic web form for Devs.
+- **Week 2**: Integrate OpenAI and tune the prompt for blocker extraction.
+- **Week 3**: Finalize the dashboard for the PM.
+- **Week 4**: UAT and Live launch of the MVP.
 
-### 6.1 Delivery Plan
-The project will follow an Agile methodology with bi-weekly sprints. We will prioritize the Zoom integration first as the primary capture source, followed by the AI engine refinement.
-
-## 7. Master Schedule
-
-### 7.1 Master Schedule Overview
-- **Total Duration**: 12 weeks (~3 months)
-- **Methodology**: Agile (Scrum)
-
-### 7.2 Project Milestone Breakdown
+### 5.2 Project Milestone Breakdown
 | # | Milestone | Target Date | Key Modules | DoD | Verification Tool |
 |---|-----------|-------------|-------------|-----|-------------------|
-| M1 | Capture Ready | Week 4 | Zoom/Teams API | recordings fetched to S3 | Integration Tests |
-| M2 | Engine Ready | Week 7 | AI Summarization | 85%+ accuracy on 10 tests | QA Review |
-| M3 | Integration Ready | Week 9 | Jira/Notion Sync | Summaries appear in tools | E2E Testing |
-| M4 | MVP Launch | Week 12 | Launch Prep | User acceptance signed | UAT Sign-off |
+| M1 | Form Ready | Week 1 | Web Form & DB | Form submits to DB | Manual Test |
+| M2 | AI Ready | Week 2 | AI Extraction | 90% accuracy | QA Review |
+| M3 | Dashboard | Week 3 | PM UI | PM sees blockers | UI Test |
+| M4 | Launch | Week 4 | Live Deploy | Signed off | UAT |
 
-## 8. WBS & Quotations
 
-### 8.1 Work Breakdown Structure (WBS)
+## 6. Work Breakdown Structure
+
+### 6.1 WBS Details
 Refer to the detailed [WBS Document](../wbs.md) for task-level estimates and dependencies.
 
-### 8.2 Resource Plan
+### 6.2 Resource Plan
 | Role | FTE | Responsibility |
 |:-----|:---:|:---------------|
-| Solutions Architect | 0.2 | System design and API strategy |
-| Backend Developer | 1.0 | API integrations and core processing |
-| AI Engineer | 0.5 | Prompt engineering and transcription tuning |
-| Frontend Developer | 0.5 | PM Dashboard UI/UX |
-| QA Engineer | 0.3 | End-to-end testing and validation |
+| Solutions Architect | 0.1 | System design |
+| Fullstack Developer | 1.0 | Frontend, API, and DB |
+| AI Engineer | 0.3 | Prompt engineering |
+| QA Engineer | 0.2 | End-to-end testing |
 
-### 8.3 Resource Estimation
+### 6.3 Resource Estimation
 | Phase | Dev/Ops (h) | QA (h) | Total | Target | Quick summary |
 |:------|:-----------:|:------:|:-----:|:-------|:--------------|
-| P1: Foundation | 80 | 16 | 96 | Month 1 | Setup and platform integrations |
-| P2: AI Core | 60 | 12 | 72 | Month 2 | Summarization engine logic |
-| P3: Delivery | 50 | 10 | 60 | Month 3 | Jira/Notion sync modules |
-| P4: Launch | 20 | 10 | 30 | Month 3 | Final testing and UAT |
+| P1: Foundation | 24 | 4 | 28 | Week 1 | Setup and Web Form |
+| P2: AI Engine | 28 | 8 | 36 | Week 2 | LLM logic |
+| P3: Dashboard | 20 | 8 | 28 | Week 3 | PM UI |
+| P4: Launch | 8 | 12 | 20 | Week 4 | UAT and Bug fixing |
 
-### 8.4 Budget
-- **Total Effort**: 258 working hours.
-- **Development Cost**: Based on a blended rate (TBD by final resource allocation).
-- **Operational Cost (Infrastructure Estimation)**:
+### 6.4 Capacity Planning & Infrastructure Sizing
+#### Traffic Estimation
+| Metric | Value | Calculation |
+|:-------|:------|:------------|
+| Avg Reports / Day | 50 | Initial dev team size |
+| Storage / Report | < 5KB | Plain text data |
+| Daily Data Volume | < 1MB | Extremely lightweight |
 
+#### Infrastructure Sizing
+- **Compute**: Next.js Serverless functions (Vercel).
+- **Storage**: None needed beyond the database.
+- **Database**: PostgreSQL (Supabase/Vercel Postgres) for text logs.
+
+
+## 7. Budget & Commercials
+
+### 7.1 Development Cost
+- **Total Effort**: 112 working hours.
+- **Development Cost**: TBD by final resource allocation.
+
+### 7.2 Operational Cost & Scaling Strategy
 | Phase | Capacity | Infra Cost/month | Main Components |
 |:------|:---------|:-----------------|:----------------|
-| Pilot | 20 PMs | $200 | AWS Lambda, Whisper API, S3 |
-| MVP | 100 PMs | $650 | Dedicated RDS, High-tier LLM API |
+| MVP | 50 Devs | $20 | Vercel, Supabase |
 
-### 8.5 3rd-Party Vendor & Pass-Through Costs
+### 7.3 3rd-Party Vendor & Pass-Through Costs
 | Service | Vendor | Ownership | Pass-through Cost Model |
 |:--------|:-------|:----------|:------------------------|
-| Cloud Infrastructure | AWS / Vercel | Client | Billed directly to Client's credit card |
-| AI / LLM API | OpenAI (Whisper/GPT-4o) | Client | Pay-as-you-go based on volume |
-| Integrations | Zoom, Teams, Jira, Notion | Client | Uses Client's existing enterprise licenses |
+| Cloud Infrastructure | Vercel | Client | Billed directly to Client's credit card |
+| AI / LLM API | OpenAI (GPT-4o) | Client | Pay-as-you-go based on volume |
+
+

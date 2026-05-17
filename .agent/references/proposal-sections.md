@@ -7,14 +7,14 @@ Proposal được tách thành các file riêng để tối ưu token. Mỗi fil
 ```
 workspace/proposal/
 ├── _index.md                        ← metadata + mục lục (luôn đọc đầu tiên)
-├── 01-project-overview.md           ← Bối cảnh, Pain Points, Mục tiêu
-├── 02-project-scope.md              ← In-Scope, Out-of-Scope, Giả định
-├── 03-solution-approach.md          ← Rủi ro, Tiêu chí nghiệm thu
-├── 04-technical-requirements.md     ← Design Principles, Capacity Planning
-├── 05-technical-solutions.md        ← AS-IS, TO-BE, Migration, Tech Stack, UI/UX
-├── 06-product-roadmap.md            ← Roadmap tổng thể, Delivery Plan
-├── 07-master-schedule.md            ← Timeline, Milestones Phase 1
-├── 08-wbs-quotations.md             ← WBS, Resource Plan, Estimation, Budget
+├── 01-project-overview.md           ← Bối cảnh, Pain Points, Mục tiêu, Solution Overview, Showcase
+├── 02-scope-solution.md             ← In-Scope, Out-of-Scope
+├── 03-user-flow-wireframe.md        ← User Flow (core features only), High-Level Wireframe
+├── 04-risks-assumptions-acceptance.md ← Assumptions, Rủi ro, Tiêu chí nghiệm thu
+├── 05-technical-architecture.md     ← Kiến trúc hệ thống, Tech Stack, Capacity Planning
+├── 06-implementation-plan.md        ← Roadmap tổng thể, Milestones, Delivery Plan
+├── 07-wbs-resources.md              ← WBS, Resource Plan, Capacity
+├── 08-budget-commercials.md         ← Budget, Infra Cost, 3rd-Party Costs
 ```
 
 ## Quy tắc
@@ -23,4 +23,4 @@ workspace/proposal/
 - Khi review/finalize: đọc `_index.md` + các section cần kiểm tra.
 - Khi xuất bản full proposal: concat tất cả sections theo thứ tự 01→08.
 - `_index.md` chứa metadata, version, và trạng thái từng section.
-- Mỗi section file bắt đầu bằng heading cấp 2 (##) tương ứng với proposal_template.md.
+- Mỗi section file bắt đầu bằng heading cấp 2 (##) tương ứng với proposal.md.

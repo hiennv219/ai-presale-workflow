@@ -17,11 +17,12 @@ If not met → report what's missing, do NOT export.
 
 1. Detect format:
    - Read `workspace/proposal/_index.md`.
-   - If sections are 01→08 (new format): concat 01→08.
+   - If sections are 01→07 (newest format): concat 01→07.
+   - If sections are 01→08 (mid format): concat 01→08.
    - If sections are 01→13 (legacy format): concat 01→13.
 2. Write or update `workspace/final-proposal.md`:
    - **If file does NOT exist**: concat all sections, prepend final metadata (version=final, date).
-   - **If file ALREADY exists**: only replace the section(s) that changed. Find heading boundary (e.g. `## 5.` → `## 6.`) and replace that range with new content from the corresponding section file. Do NOT re-concat all 8 files.
+   - **If file ALREADY exists**: only replace the section(s) that changed. Find heading boundary (e.g. `## 5.` → `## 6.`) and replace that range with new content from the corresponding section file. Do NOT re-concat all files.
    - **Path Fix**: Replace any `../assets/` string with `assets/` so image paths render correctly in the combined file.
 3. Write `workspace/final-wbs.md` (from `workspace/wbs.md` + final metadata).
 4. Update `status.md`: mark Final Proposal + Final WBS as Done.

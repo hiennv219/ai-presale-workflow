@@ -4,62 +4,63 @@
 
 ```
 CLIENT LAYER        → Web Dashboard (React/Next.js)
+                      - PM Dashboard (Blockers View)
+                      - Dev Daily Report Form
                       │
-API GATEWAY         → API Gateway / Auth (NextAuth/Cognito)
+API GATEWAY         → Next.js API Routes / Auth
                       │
-SERVICE LAYER       → ┌─────────────────────┐   ┌─────────────────────┐
-                      │ Integration Service │   │ AI Summary Service  │
-                      │ - Syncs Zoom/Teams  │   │ - Transcribes Audio │
-                      │ - Pushes to Jira    │   │ - Generates Summary │
-                      └─────────┬───────────┘   └─────────┬───────────┘
-                                │                         │
-DATA LAYER          → ┌─────────▼───────────┐   ┌─────────▼───────────┐
-                      │ Relational DB       │   │ Object Storage      │
-                      │ - Users & Configs   │   │ - Temp Audio Files  │
-                      └─────────────────────┘   └─────────────────────┘
+SERVICE LAYER       → ┌─────────────────────┐
+                      │ AI Blocker Service  │
+                      │ - Scans text input  │
+                      │ - Extracts blockers │
+                      └─────────┬───────────┘
+                                │
+DATA LAYER          → ┌─────────▼───────────┐
+                      │ Relational DB       │
+                      │ - Reports & Blockers│
+                      └─────────────────────┘
 ```
 
 ## Component Communication
 
 **Communication between core components (MVP Vision):**
 - **Phase 1 (MVP):** 
-  - The Web Dashboard talks to the API Gateway to configure integration tokens.
-  - The Integration Service receives webhooks from Zoom/Teams when a meeting ends, downloads the recording to Object Storage.
-  - An event triggers the AI Summary Service which calls the transcription and summarization APIs (OpenAI).
-  - The result is stored in the DB and pushed back via the Integration Service to Jira/Notion.
+  - The Dev logs in and submits a text-based daily report via the Web Form.
+  - The Next.js API receives the form data and stores it in the Relational DB.
+  - The API triggers the AI Blocker Service which sends the text to an LLM (OpenAI GPT-4o).
+  - The LLM returns extracted blockers (if any), which are saved to the DB.
+  - The PM views the Dashboard, which queries the DB for today's aggregated blockers.
 
 ## Tech Stack
 
 | Layer | Technology | Reason |
 | --- | --- | --- |
-| Frontend | Next.js, TailwindCSS | Fast development, SEO-friendly, easy admin panel |
-| Backend | Node.js (NestJS) or Next.js API | Non-blocking I/O perfect for webhooks and API calls |
-| Database | PostgreSQL (Supabase/RDS) | Relational data integrity for users and tokens |
-| Storage | AWS S3 / Cloudflare R2 | Cheap storage for temporary meeting audio |
+| Frontend | Next.js, TailwindCSS | Fast development, unified full-stack framework |
+| Backend | Next.js API Routes | Sufficient for handling form submissions and AI calls |
+| Database | PostgreSQL (Supabase/Vercel Postgres) | Relational data integrity for users and reports |
 
 ## 3rd-Party Vendor & Ecosystem
 
 | Service | Vendor | Ownership | Pass-through Cost Model |
 | --- | --- | --- | --- |
-| Cloud Infrastructure | AWS or Vercel | Client | Billed directly to Client's credit card |
-| AI / LLM API | OpenAI (Whisper & GPT-4o) | Client | Billed by usage (Pay-as-you-go) |
-| Integrations | Zoom, Teams, Jira, Notion | Client | Uses Client's existing enterprise licenses |
+| Cloud Infrastructure | Vercel | Client | Billed directly to Client's credit card |
+| AI / LLM API | OpenAI (GPT-4o) | Client | Billed by usage (Pay-as-you-go) |
 
 ## Key Technical Decisions
 
 | ID | Decision | Rationale | Status |
 | --- | --- | --- | --- |
-| TECH001 | Use OpenAI APIs for processing | Highest accuracy for meeting summaries, minimal custom training needed. | Proposed |
-| TECH002 | Store audio temporarily only | Privacy requirement (RSK001) - files are deleted after processing. | Proposed |
+| TECH001 | Use OpenAI GPT-4o for processing | High accuracy for extracting actionable blockers from unstructured text. | Proposed |
+| TECH003 | Monolithic Next.js Architecture | Simplest and fastest time-to-market for a form-based MVP. | Proposed |
 
 ## Technical Risks
 
 | ID | Risk | Mitigation |
 | --- | --- | --- |
-| TR001 | OpenAI API rate limits | Implement exponential backoff and queuing mechanism. |
+| TR001 | OpenAI API rate limits | Negligible for text-only MVP, but will implement basic retry logic. |
 
 ## Technical Assumptions
 
 | ID | Assumption |
 | --- | --- |
-| TA001 | Zoom and Teams APIs allow downloading cloud recordings via OAuth apps. |
+| TA002 | Devs will provide enough context in text for AI to detect blockers. |

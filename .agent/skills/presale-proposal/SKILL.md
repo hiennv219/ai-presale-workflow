@@ -9,10 +9,11 @@ description: Create or revise presale proposal from context, scope, WBS, and ris
 
 1. Reflect customer context and pain points before solution.
 2. Use approved scope register. Ensure features are grouped by MoSCoW priority, and include the generated Mermaid User Flow and High-Level Wireframe descriptions.
-3. Use WBS summary for implementation plan.
-4. Include assumptions, risks, out-of-scope, next steps.
-5. Never add deliverables missing from WBS.
-6. For sections 4-5: use `workspace/technical.md` if available. If not, derive from scope + context. Ensure 3rd-Party Services and Pass-through Costs are explicitly detailed.
+3. For new features or greenfield projects: include User Flow in section 2.3 with Mermaid diagram + short description explaining the flow. Skip for upgrade-only projects with no logic changes.
+4. Use WBS summary for implementation plan.
+5. Include assumptions, risks, out-of-scope, next steps.
+6. Never add deliverables missing from WBS.
+7. For section 4: use `workspace/technical.md` if available. If not, derive from scope + context. Ensure 3rd-Party Services and Pass-through Costs are explicitly detailed.
 
 ## File Structure
 
@@ -37,8 +38,8 @@ Revise affected sections only. Never regenerate full proposal unless scope/posit
 
 ## Full Export
 
-Only on `/presale-finalize`. Concat sections 01→08, prepend metadata, write `workspace/final-proposal.md`.
+Only on `/presale-finalize`. Concat sections 01→07, prepend metadata, write `workspace/final-proposal.md`.
 
 ## Legacy Compatibility
 
-If an existing project uses the old 13-section format (01-executive-summary.md → 13-next-steps.md), continue working in that format for that project. New projects always use the 8-section format.
+If an existing project uses the old 13-section format or 8-section format, continue working in that format for that project. New projects always use the 7-section format.

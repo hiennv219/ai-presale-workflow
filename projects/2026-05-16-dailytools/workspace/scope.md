@@ -3,21 +3,19 @@
 ## Input Used
 
 - Context version: 1.0
-- Confirmed requirements: REQ001-REQ004
-- Assumptions: AS001, AS002
-- Constraints: Focus on MVP, PM optimization goal.
+- Confirmed requirements: REQ004, REQ007, REQ008
+- Constraints: Focus on simplest MVP trial.
 
 ## Pain Points
 
 | ID | Pain Point | Evidence | Impact | Root Cause Hypothesis | Confidence |
 | --- | --- | --- | --- | --- | --- |
-| PP001 | Manual meeting summarization | Client Input | ~2-4 hours/week lost per PM | Lack of automated summarization tools | High |
-| PP002 | Tool context switching | Best practice | Fragmented project data | No direct sync between meetings and PM tools | High |
-| PP003 | Missed action items | Best practice | Project delays/overhead | Information lost in manual transcript review | Medium |
+| PP001 | Lack of visibility into dev blockers | Client Pivot | PMs miss critical issues | Daily reports are too long or not structured | High |
+| PP002 | Manual parsing of updates | Best practice | PMs waste time reading | Devs write unstructured text | High |
 
 ## Solution Direction
 
-DailyTools will provide an "Automated PM Bridge" that captures meeting recordings directly from platform APIs (Zoom/Teams), processes them via a specialized AI summarization engine optimized for PM workflows, and pushes structured results (Action Items, Decisions, Summary) directly into the project's source of truth (Jira/Notion).
+DailyTools will provide a lightweight Web Form for developers to submit their daily reports. A text-based AI engine will automatically scan these reports to extract and highlight any "Blockers" or risks, displaying them prominently on a PM Dashboard for immediate action.
 
 ## Scope Register
 
@@ -25,25 +23,25 @@ DailyTools will provide an "Automated PM Bridge" that captures meeting recording
 
 | ID | Item | Priority (MoSCoW) | Maps To | Reason |
 | --- | --- | --- | --- | --- |
-| SCOPE001 | Zoom & Microsoft Teams API Integration | Must-have | REQ001 | Source of meeting content |
-| SCOPE002 | AI Summarization Engine | Must-have | REQ002 | Core value proposition |
-| SCOPE003 | Jira & Notion API Export | Must-have | REQ003 | Workflow automation |
-| SCOPE004 | Web Dashboard for Configuration | Should-have | REQ004 | Admin control for PMs |
+| SCOPE006 | Web Form for Dev Daily Reports | Must-have | REQ007 | Source of text data |
+| SCOPE007 | AI Blockers Extraction | Must-have | REQ008 | Core MVP value |
+| SCOPE008 | PM Dashboard for Blockers | Must-have | REQ004 | Admin view for PMs |
 
 ### Out Of Scope
 
 | ID | Item | Reason |
 | --- | --- | --- |
-| SCOPE005 | Live/Real-time Transcription | Increases cost/complexity; summary is the goal |
-| SCOPE006 | Standalone Mobile App | PMs typically work on desktop; web-first focus |
+| SCOPE004 | Real-time live transcription | Irrelevant to text-based MVP |
+| SCOPE005 | Jira/Notion Sync | Deferred to Phase 2 to keep MVP simple |
 
 ### Future Phase
 
 | ID | Item | Reason |
 | --- | --- | --- |
-| SCOPE007 | Google Meet Integration | Secondary priority after Zoom/Teams |
-| SCOPE008 | Multi-language Support | Focus on English/Vietnamese for MVP |
-| SCOPE009 | Slack/Email Notifications | Alternative delivery for broader teams |
+| SCOPE001 | Meeting platform integrations (Zoom/Teams) | Deferred per Client Pivot |
+| SCOPE002 | AI Voice Summarization Engine | Deferred per Client Pivot |
+| SCOPE003 | Jira & Notion API Export | Deferred per Client Pivot |
+| SCOPE009 | Multi-language Support | Focus on English/Vietnamese for MVP |
 
 ### Pending Decisions
 
@@ -59,26 +57,26 @@ DailyTools will provide an "Automated PM Bridge" that captures meeting recording
 
 | ID | Risk | Severity | Mitigation |
 | --- | --- | --- | --- |
-| RSK001 | Privacy of meeting data | High | End-to-end encryption and strict data retention policies |
-| RSK002 | Integration reliability | Medium | Robust error handling and manual fallback (upload) support |
+| RSK003 | Low adoption by devs | High | Make the form ultra-fast (3 fields) |
+| RSK001 | AI missing hidden blockers | Medium | Allow devs to explicitly tag blockers |
 
 ## Visualizing Solution (User Flow & Mockups)
 
 ### User Flow
 ```mermaid
 graph TD
-    A([PM logs into DailyTools]) --> B[Connects Zoom/Teams Account]
-    B --> C{Meeting Finished?}
-    C -- Yes --> D[Auto-fetch Recording/Transcript]
-    D --> E[AI Processes Summary & Action Items]
-    E --> F[PM Reviews Summary on Dashboard]
-    F --> G[Push to Jira/Notion]
-    C -- No --> H[Wait for next meeting]
+    A([Dev opens DailyTools]) --> B[Fills out Daily Report Form]
+    B --> C[Submit]
+    C --> D[AI Scans Text for Blockers]
+    D --> E{Blocker Found?}
+    E -- Yes --> F[Highlight on PM Dashboard]
+    E -- No --> G[Log as normal status]
+    F --> H([PM Reviews Blockers])
 ```
 
 ### High-Level Wireframe
-- **Dashboard Screen**:
-  - **Header**: User profile, Settings, Sync status (Zoom/Teams connected).
-  - **Sidebar**: Recent Meetings, Integrations (Jira/Notion configs).
-  - **Main Content**: List of recently processed meetings with a "Review" button.
-  - **Review Modal**: Shows AI-generated summary, action items (editable), and a prominent "Push to Jira" button.
+- **Dev Form**:
+  - **Fields**: What I did, What I will do, Blockers (Optional).
+- **PM Dashboard**:
+  - **Header**: Project selection, Date.
+  - **Main Content**: A prominent "Active Blockers" alert section showing issues extracted by AI, followed by a list of standard daily updates.
