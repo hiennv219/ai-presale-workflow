@@ -8,11 +8,11 @@ description: Create or revise presale proposal from context, scope, WBS, and ris
 ## Procedure
 
 1. Reflect customer context and pain points before solution.
-2. Use approved scope register.
+2. Use approved scope register. Ensure features are grouped by MoSCoW priority, and include the generated Mermaid User Flow and High-Level Wireframe descriptions.
 3. Use WBS summary for implementation plan.
 4. Include assumptions, risks, out-of-scope, next steps.
 5. Never add deliverables missing from WBS.
-6. For sections 4-5: use `workspace/technical.md` if available. If not, derive from scope + context.
+6. For sections 4-5: use `workspace/technical.md` if available. If not, derive from scope + context. Ensure 3rd-Party Services and Pass-through Costs are explicitly detailed.
 
 ## File Structure
 

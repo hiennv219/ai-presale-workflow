@@ -15,8 +15,9 @@ Run ONLY when deal-context has no confirmed technical decisions (tech stack, arc
 2. Propose: architecture pattern, tech stack, infrastructure approach, key technical trade-offs.
 3. Draw system architecture as ASCII box diagram (see format below).
 4. Write component communication narrative grouped by delivery phases.
-5. Mark all outputs as status: proposed (not confirmed).
-6. Present to user/SA for approval before proceeding.
+5. Identify 3rd-Party Services & Vendor Ecosystem (Cloud, Payment, API, SaaS) and define Ownership and Pass-through cost models.
+6. Mark all outputs as status: proposed (not confirmed).
+7. Present to user/SA for approval before proceeding.
 
 ## Architecture Diagram Format
 
@@ -56,6 +57,7 @@ Write to `workspace/technical.md`:
 - System architecture diagram (ASCII box art)
 - Component communication narrative (per phase)
 - Tech stack table (Layer | Technology | Reason)
+- 3rd-Party Vendor & Ecosystem (Service | Vendor | Ownership | Pass-through Cost Model)
 - Key technical decisions (ID | Decision | Rationale | Status: proposed)
 - Technical risks
 - Technical assumptions

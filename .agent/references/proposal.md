@@ -22,6 +22,9 @@
     - [x] {{benefit_2}}
     - [x] {{benefit_3}}
 
+### 1.3 Proposed Solution Overview
+{{solution_overview}}
+
 ## 2. Project Scope
 ### 2.1 In-Scope
 {{in_scope_phases}}

@@ -23,12 +23,12 @@ DailyTools will provide an "Automated PM Bridge" that captures meeting recording
 
 ### In Scope
 
-| ID | Item | Maps To | Reason |
-| --- | --- | --- | --- |
-| SCOPE001 | Zoom & Microsoft Teams API Integration | REQ001 | Source of meeting content |
-| SCOPE002 | AI Summarization Engine | REQ002 | Core value proposition |
-| SCOPE003 | Jira & Notion API Export | REQ003 | Workflow automation |
-| SCOPE004 | Web Dashboard for Configuration | REQ004 | Admin control for PMs |
+| ID | Item | Priority (MoSCoW) | Maps To | Reason |
+| --- | --- | --- | --- | --- |
+| SCOPE001 | Zoom & Microsoft Teams API Integration | Must-have | REQ001 | Source of meeting content |
+| SCOPE002 | AI Summarization Engine | Must-have | REQ002 | Core value proposition |
+| SCOPE003 | Jira & Notion API Export | Must-have | REQ003 | Workflow automation |
+| SCOPE004 | Web Dashboard for Configuration | Should-have | REQ004 | Admin control for PMs |
 
 ### Out Of Scope
 
@@ -61,3 +61,24 @@ DailyTools will provide an "Automated PM Bridge" that captures meeting recording
 | --- | --- | --- | --- |
 | RSK001 | Privacy of meeting data | High | End-to-end encryption and strict data retention policies |
 | RSK002 | Integration reliability | Medium | Robust error handling and manual fallback (upload) support |
+
+## Visualizing Solution (User Flow & Mockups)
+
+### User Flow
+```mermaid
+graph TD
+    A([PM logs into DailyTools]) --> B[Connects Zoom/Teams Account]
+    B --> C{Meeting Finished?}
+    C -- Yes --> D[Auto-fetch Recording/Transcript]
+    D --> E[AI Processes Summary & Action Items]
+    E --> F[PM Reviews Summary on Dashboard]
+    F --> G[Push to Jira/Notion]
+    C -- No --> H[Wait for next meeting]
+```
+
+### High-Level Wireframe
+- **Dashboard Screen**:
+  - **Header**: User profile, Settings, Sync status (Zoom/Teams connected).
+  - **Sidebar**: Recent Meetings, Integrations (Jira/Notion configs).
+  - **Main Content**: List of recently processed meetings with a "Review" button.
+  - **Review Modal**: Shows AI-generated summary, action items (editable), and a prominent "Push to Jira" button.

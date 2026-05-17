@@ -30,4 +30,9 @@ Refer to the detailed [WBS Document](../wbs.md) for task-level estimates and dep
 | Pilot | 20 PMs | $200 | AWS Lambda, Whisper API, S3 |
 | MVP | 100 PMs | $650 | Dedicated RDS, High-tier LLM API |
 
-- **Note**: Costs exclude third-party API usage fees (OpenAI/Claude) which are billed based on volume.
+### 8.5 3rd-Party Vendor & Pass-Through Costs
+| Service | Vendor | Ownership | Pass-through Cost Model |
+|:--------|:-------|:----------|:------------------------|
+| Cloud Infrastructure | AWS / Vercel | Client | Billed directly to Client's credit card |
+| AI / LLM API | OpenAI (Whisper/GPT-4o) | Client | Pay-as-you-go based on volume |
+| Integrations | Zoom, Teams, Jira, Notion | Client | Uses Client's existing enterprise licenses |

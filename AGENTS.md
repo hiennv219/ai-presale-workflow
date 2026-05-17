@@ -32,6 +32,7 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 | Need delivery plan or task breakdown | `presale-wbs` |
 | Need proposal draft or revision | `presale-proposal` |
 | Need review or finalization | `presale-review-finalize` |
+| Need document translation (EN/JA/VI) | `presale-transale` |
 
 ---
 
@@ -154,6 +155,25 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 - Final version and date present
 
 **Output:** Review findings table (if not ready) or finalization approval (if ready)
+
+---
+
+### 7. Transale Agent
+
+**File:** `.agent/skills/presale-transale/SKILL.md`
+
+**Purpose:** Translate Markdown documents between English, Japanese, and Vietnamese while preserving structure and technical accuracy.
+
+**Behavior:**
+- Preserves all Markdown formatting: headings, tables, lists, code blocks, links, images
+- Does NOT translate technical terms, acronyms, product names, file paths, or code
+- Adapts tone per language: professional English, です/ます Japanese, natural Vietnamese business writing
+- Validates structure match between source and output (heading count, table count, list items)
+- Supports single file and multi-file (directory) translation
+
+**Standalone:** This agent runs independently via `/presale-transale` — it is not part of the main pipeline stages.
+
+**Output:** `{{original_name}}_{{lang_code}}.md` in same directory as source
 
 ---
 

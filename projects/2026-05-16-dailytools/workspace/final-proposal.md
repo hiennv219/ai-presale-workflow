@@ -28,11 +28,11 @@
 ## 2. Project Scope
 
 ### 2.1 In-Scope
-The MVP for DailyTools focuses on the core "Automated PM Bridge" functionality:
-- **Meeting Capture**: Integration with Zoom and Microsoft Teams via APIs to fetch recordings/transcripts.
-- **AI Engine**: Processing of audio/transcripts to generate structured summaries (Executive Summary, Decisions, Action Items).
-- **Tool Integration**: Automatic push of results into Jira (as issues or comments) and Notion (as project pages).
-- **PM Dashboard**: A lightweight web interface for PMs to configure integrations and review summaries before pushing.
+The MVP for DailyTools focuses on the core "Automated PM Bridge" functionality, prioritized by the MoSCoW method:
+- **Meeting Capture (Must-have)**: Integration with Zoom and Microsoft Teams via APIs to fetch recordings/transcripts.
+- **AI Engine (Must-have)**: Processing of audio/transcripts to generate structured summaries (Executive Summary, Decisions, Action Items).
+- **Tool Integration (Must-have)**: Automatic push of results into Jira (as issues or comments) and Notion (as project pages).
+- **PM Dashboard (Should-have)**: A lightweight web interface for PMs to configure integrations and review summaries before pushing.
 
 ### 2.2 Out-of-Scope
 - **Real-time Transcription**: Live text display during the meeting.
@@ -61,6 +61,27 @@ The MVP for DailyTools focuses on the core "Automated PM Bridge" functionality:
 | AC2 | Summary Quality | 85%+ of generated action items are rated "Accurate" by PMs in UAT. | Phase 2 |
 | AC3 | Sync Reliability | Summaries are pushed to Jira/Notion without data loss or formatting errors. | Phase 3 |
 | AC4 | Time Optimization | PMs report at least 50% time reduction in meeting documentation tasks. | Phase 4 |
+
+### 3.3 Visualizing Solution
+
+#### User Flow
+```mermaid
+graph TD
+    A([PM logs into DailyTools]) --> B[Connects Zoom/Teams Account]
+    B --> C{Meeting Finished?}
+    C -- Yes --> D[Auto-fetch Recording/Transcript]
+    D --> E[AI Processes Summary & Action Items]
+    E --> F[PM Reviews Summary on Dashboard]
+    F --> G[Push to Jira/Notion]
+    C -- No --> H[Wait for next meeting]
+```
+
+#### High-Level Wireframe
+- **Dashboard Screen**:
+  - **Header**: User profile, Settings, Sync status.
+  - **Sidebar**: Recent Meetings, Integrations configs.
+  - **Main Content**: List of recently processed meetings with a "Review" button.
+  - **Review Modal**: Shows AI-generated summary, action items (editable), and "Push to Jira" button.
 
 ## 4. Technical Requirement Analysis
 
@@ -193,4 +214,9 @@ Refer to the detailed [WBS Document](../wbs.md) for task-level estimates and dep
 | Pilot | 20 PMs | $200 | AWS Lambda, Whisper API, S3 |
 | MVP | 100 PMs | $650 | Dedicated RDS, High-tier LLM API |
 
-- **Note**: Costs exclude third-party API usage fees (OpenAI/Claude) which are billed based on volume.
+### 8.5 3rd-Party Vendor & Pass-Through Costs
+| Service | Vendor | Ownership | Pass-through Cost Model |
+|:--------|:-------|:----------|:------------------------|
+| Cloud Infrastructure | AWS / Vercel | Client | Billed directly to Client's credit card |
+| AI / LLM API | OpenAI (Whisper/GPT-4o) | Client | Pay-as-you-go based on volume |
+| Integrations | Zoom, Teams, Jira, Notion | Client | Uses Client's existing enterprise licenses |
