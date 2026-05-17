@@ -28,15 +28,15 @@
   </style>
 </head>
 <body>
-<h1>Proposal: DailyTools MVP</h1>
+  <h1>Proposal: DailyTools MVP</h1>
 <p><strong>Author</strong>: Antigravity AI
-<strong>Date</strong>: 2026-05-16
-<strong>Version</strong>: Final</p>
+<strong>Date</strong>: 2026-05-17
+<strong>Version</strong>: Final (8-Section v3)</p>
 <hr>
 <h2>1. Project Overview</h2>
 <h3>1.1 Context &amp; Problem Statement</h3>
 <ul>
-<li><strong>Current State</strong>: Project Managers (PMs) currently spend significant time manually summarizing meeting notes, tracking action items, and context-switching between meeting platforms (Zoom/Teams) and project management tools (Jira/Notion). This manual process leads to information loss and reduced productivity.</li>
+<li><strong>Current State</strong>: Project Managers (PMs) currently lack immediate visibility into critical blockers. Daily updates from the development team are often unstructured, too long, or buried in chat channels. This leads to PMs missing critical issues and wasting time manually parsing text.</li>
 <li><strong>Root Cause Analysis</strong>:</li>
 </ul>
 <table>
@@ -50,58 +50,140 @@
 </thead>
 <tbody><tr>
 <td align="left">P1</td>
-<td align="left">Manual meeting summarization</td>
-<td align="left">Lack of automated AI summarization tools</td>
+<td align="left">Lack of visibility into dev blockers</td>
+<td align="left">Daily reports are too long or unstructured</td>
 <td align="center">High</td>
 </tr>
 <tr>
 <td align="left">P2</td>
-<td align="left">Tool context switching</td>
-<td align="left">No direct sync between meetings and PM tools</td>
+<td align="left">Manual parsing of updates</td>
+<td align="left">Devs write unstructured text in chat</td>
 <td align="center">High</td>
-</tr>
-<tr>
-<td align="left">P3</td>
-<td align="left">Missed action items</td>
-<td align="left">Information lost in manual transcript review</td>
-<td align="center">Medium</td>
 </tr>
 </tbody></table>
 <h3>1.2 Goals &amp; Business Impact</h3>
 <ul>
-<li><strong>Goal</strong>: Optimize PM effort and reduce manual overhead by automating the meeting summarization and task distribution process.</li>
-<li><strong>Type</strong>: Greenfield MVP Development</li>
+<li><strong>Goal</strong>: Provide a lightweight, automated way to collect dev updates and instantly extract blockers using AI.</li>
+<li><strong>Type</strong>: Greenfield MVP Development (Simple Trial)</li>
 <li><strong>Business Benefits</strong>:<ul>
-<li><input checked="" disabled="" type="checkbox"> <strong>Time Savings</strong>: Reduce PM effort in post-meeting documentation by ~70%.</li>
-<li><input checked="" disabled="" type="checkbox"> <strong>Data Accuracy</strong>: Ensure all decisions and action items are captured and tracked.</li>
-<li><input checked="" disabled="" type="checkbox"> <strong>Workflow Efficiency</strong>: Seamless integration between communication and execution tools.</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>Time Savings</strong>: Reduce PM effort in parsing daily reports.</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>Risk Mitigation</strong>: Catch and highlight blockers immediately before they cause delays.</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>Developer Experience</strong>: A frictionless, 3-field form that takes 30 seconds to fill out.</li>
 </ul>
 </li>
 </ul>
-<h2>2. Project Scope</h2>
+<h3>1.3 Proposed Solution Overview</h3>
+<p>DailyTools is a lightweight web application that automates the collection and analysis of developer daily reports. Developers submit a simple 3-field form (What I did, What I will do, Blockers). An AI engine powered by GPT-4o scans each submission in real-time to detect hidden blockers or risks — even when developers don&#39;t explicitly flag them. PMs get a dedicated dashboard showing active blockers at a glance, eliminating the need to manually read through chat messages or lengthy reports.</p>
+<h3>1.4 Company Showcase (Optional)</h3>
+<p>N/A — No relevant case studies provided for this project.</p>
+<h2>2. Scope &amp; Solution</h2>
 <h3>2.1 In-Scope</h3>
-<p>The MVP for DailyTools focuses on the core &quot;Automated PM Bridge&quot; functionality:</p>
+<p>The MVP for DailyTools focuses on a simple text-based data collection and extraction trial, prioritized by the MoSCoW method:</p>
 <ul>
-<li><strong>Meeting Capture</strong>: Integration with Zoom and Microsoft Teams via APIs to fetch recordings/transcripts.</li>
-<li><strong>AI Engine</strong>: Processing of audio/transcripts to generate structured summaries (Executive Summary, Decisions, Action Items).</li>
-<li><strong>Tool Integration</strong>: Automatic push of results into Jira (as issues or comments) and Notion (as project pages).</li>
-<li><strong>PM Dashboard</strong>: A lightweight web interface for PMs to configure integrations and review summaries before pushing.</li>
+<li><strong>Web Form for Devs (Must-have)</strong>: A simple web form (What I did, What I will do, Blockers) for daily submission.</li>
+<li><strong>AI Blocker Extraction (Must-have)</strong>: Processing the submitted text with GPT-4o to flag and highlight hidden blockers.</li>
+<li><strong>PM Dashboard (Must-have)</strong>: A clean view for PMs to instantly see active blockers and historical daily logs.</li>
 </ul>
 <h3>2.2 Out-of-Scope</h3>
 <ul>
-<li><strong>Real-time Transcription</strong>: Live text display during the meeting.</li>
-<li><strong>Standalone Mobile Application</strong>: The initial focus is on the PM&#39;s desktop workflow.</li>
-<li><strong>Google Meet Integration</strong>: Scheduled for Phase 2.</li>
-<li><strong>Advanced Sentiment Analysis</strong>: Deep psychological insights beyond core task management.</li>
+<li><strong>Real-time Live Transcription</strong>: Irrelevant to this text-based MVP.</li>
+<li><strong>Jira/Notion Sync</strong>: Deferred to Phase 2 to keep the MVP simple.</li>
 </ul>
-<h3>2.3 Strategic Assumptions</h3>
-<ul>
-<li><strong>API Availability</strong>: Zoom and Microsoft Teams provide stable API access for recording retrieval.</li>
-<li><strong>LLM Integration</strong>: Use of advanced LLMs (e.g., GPT-4 or Claude 3) for high-quality summarization.</li>
-<li><strong>User Permissions</strong>: Clients will grant necessary OAuth permissions for cross-tool integrations.</li>
-</ul>
-<h2>3. Solution Approach</h2>
-<h3>3.1 Risk &amp; Mitigation</h3>
+<h2>3. User Flow &amp; Wireframe</h2>
+<h3>3.1 User Flow</h3>
+<p>Developers submit daily reports through a simple web form. The AI engine scans each submission for blockers. If a blocker is detected, it is highlighted on the PM Dashboard for immediate action. Otherwise, the report is logged as a normal status update.</p>
+<pre><code class="language-mermaid">graph TD
+    A([Dev opens DailyTools]) --&gt; B[Fills out Daily Report Form]
+    B --&gt; C[Submit]
+    C --&gt; D[AI Scans Text for Blockers]
+    D --&gt; E{Blocker Found?}
+    E -- Yes --&gt; F[Highlight on PM Dashboard]
+    E -- No --&gt; G[Log as normal status]
+    F --&gt; H([PM Reviews Blockers])
+</code></pre>
+<h3>3.2 High-Level Wireframe</h3>
+<p><strong>Dev Form</strong></p>
+<pre><code>┌─────────────────────────────────────┐
+│  📋 Daily Standup                   │
+├─────────────────────────────────────┤
+│                                     │
+│  What I did yesterday:              │
+│  ┌─────────────────────────────┐    │
+│  │                             │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│  What I will do today:              │
+│  ┌─────────────────────────────┐    │
+│  │                             │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│  Blockers (optional):               │
+│  ┌─────────────────────────────┐    │
+│  │                             │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│           [ Submit ]                │
+└─────────────────────────────────────┘
+</code></pre>
+<p><strong>PM Dashboard</strong></p>
+<pre><code>┌─────────────────────────────────────┐
+│  📊 PM Dashboard                    │
+├─────────────────────────────────────┤
+│                                     │
+│  ⚠️  Active Blockers (2)            │
+│  ┌─────────────────────────────┐    │
+│  │ • John: API timeout issue   │    │
+│  │ • Mai: Waiting for design   │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│  ─────────────────────────────────  │
+│                                     │
+│  📅 Today&#39;s Updates                 │
+│  ┌─────────────────────────────┐    │
+│  │ John - 10:02 AM             │    │
+│  │ Did: Fixed auth module      │    │
+│  │ Will: Start API integration │    │
+│  │ ⚠️ Blocker: API timeout     │    │
+│  ├─────────────────────────────┤    │
+│  │ Mai - 09:45 AM              │    │
+│  │ Did: Completed wireframes   │    │
+│  │ Will: Build prototype       │    │
+│  │ ⚠️ Blocker: Waiting design  │    │
+│  └─────────────────────────────┘    │
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<h2>4. Risks, Assumptions &amp; Acceptance Criteria</h2>
+<h3>4.1 Strategic Assumptions</h3>
+<table>
+<thead>
+<tr>
+<th align="left">#</th>
+<th align="left">Category</th>
+<th align="left">Assumption</th>
+<th align="left">Note</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">A1</td>
+<td align="left">Adoption</td>
+<td align="left">Developers will consistently use the web form instead of chat channels</td>
+<td align="left">Form must be ultra-fast (&lt;30s to fill)</td>
+</tr>
+<tr>
+<td align="left">A2</td>
+<td align="left">AI Accuracy</td>
+<td align="left">GPT-4o will accurately differentiate between standard updates and critical blockers</td>
+<td align="left">Prompt tuning required during Phase 2</td>
+</tr>
+<tr>
+<td align="left">A3</td>
+<td align="left">Scale</td>
+<td align="left">Initial team size ~50 developers</td>
+<td align="left">Affects infra sizing decisions</td>
+</tr>
+</tbody></table>
+<h3>4.2 Risk &amp; Mitigation</h3>
 <table>
 <thead>
 <tr>
@@ -114,27 +196,20 @@
 </thead>
 <tbody><tr>
 <td align="left">R1</td>
-<td align="left">Privacy of meeting data</td>
+<td align="left">Low adoption by devs</td>
 <td align="center">High</td>
-<td align="left">Potential data leak of sensitive discussions</td>
-<td align="left">End-to-end encryption and strict data retention policies (delete after processing).</td>
+<td align="left">No data to extract blockers from</td>
+<td align="left">Make the form ultra-fast (3 fields) and mobile-friendly.</td>
 </tr>
 <tr>
 <td align="left">R2</td>
-<td align="left">AI summary inaccuracy</td>
+<td align="left">AI missing hidden blockers</td>
 <td align="center">Medium</td>
-<td align="left">Incorrect tasks or decisions captured</td>
-<td align="left">&quot;Human-in-the-loop&quot; review step in the PM dashboard before syncing to Jira/Notion.</td>
-</tr>
-<tr>
-<td align="left">R3</td>
-<td align="left">API breaking changes</td>
-<td align="center">Low</td>
-<td align="left">System downtime for integrations</td>
-<td align="left">Modular integration design with robust error handling and manual fallback support.</td>
+<td align="left">False sense of security for PMs</td>
+<td align="left">Allow devs to explicitly tag blockers, plus prompt-tuning.</td>
 </tr>
 </tbody></table>
-<h3>3.2 Acceptance Criteria</h3>
+<h3>4.3 Acceptance Criteria</h3>
 <table>
 <thead>
 <tr>
@@ -146,57 +221,109 @@
 </thead>
 <tbody><tr>
 <td align="left">AC1</td>
-<td align="left">Meeting Fetch</td>
-<td align="left">System successfully retrieves recordings from Zoom/Teams 100% of the time.</td>
+<td align="left">Form Submission</td>
+<td align="left">Devs can submit form and data saves to DB correctly.</td>
 <td align="left">Phase 1</td>
 </tr>
 <tr>
 <td align="left">AC2</td>
-<td align="left">Summary Quality</td>
-<td align="left">85%+ of generated action items are rated &quot;Accurate&quot; by PMs in UAT.</td>
+<td align="left">Blocker Extraction</td>
+<td align="left">AI correctly flags blockers in 90% of test inputs.</td>
 <td align="left">Phase 2</td>
 </tr>
 <tr>
 <td align="left">AC3</td>
-<td align="left">Sync Reliability</td>
-<td align="left">Summaries are pushed to Jira/Notion without data loss or formatting errors.</td>
+<td align="left">Dashboard Visibility</td>
+<td align="left">PM dashboard renders active blockers clearly above normal logs.</td>
 <td align="left">Phase 3</td>
 </tr>
-<tr>
-<td align="left">AC4</td>
-<td align="left">Time Optimization</td>
-<td align="left">PMs report at least 50% time reduction in meeting documentation tasks.</td>
-<td align="left">Phase 4</td>
-</tr>
 </tbody></table>
-<h2>4. Technical Requirement Analysis</h2>
-<h3>4.1 Design Principles</h3>
-<p>DailyTools is built on the principle of &quot;Invisible Automation&quot;—integrating deeply into existing workflows without introducing new friction.</p>
+<!-- PLACEHOLDER_SECTION_5 --><h2>5. Technical Architecture</h2>
+<h3>5.1 Target Architecture</h3>
+<p>DailyTools uses a simple Next.js monolithic architecture for rapid MVP delivery.</p>
+<pre><code class="language-text">┌─ CLIENT (Next.js / React) ───────────────┐
+│  ┌──────────────┐  ┌──────────────────┐  │
+│  │ Dev Report   │  │ PM Dashboard     │  │
+│  │ Form         │  │ (Blockers View)  │  │
+│  └──────────────┘  └──────────────────┘  │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ API (Next.js API Routes) ───────────────┐
+│  [Auth]  [Submit Report]  [Get Blockers] │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ SERVICE ────────────────────────────────┐
+│  ┌─────────────────────────────────────┐ │
+│  │ AI Blocker Extraction (GPT-4o)     │ │
+│  │ • Scan text for hidden blockers    │ │
+│  │ • Classify severity                │ │
+│  └─────────────────────────────────────┘ │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ DATA (PostgreSQL / Supabase) ───────────┐
+│  • reports    • blockers    • users      │
+└──────────────────────────────────────────┘
+</code></pre>
+<h3>5.2 Tech Stack</h3>
 <table>
 <thead>
 <tr>
-<th align="left">Principle</th>
-<th align="left">Explanation</th>
-<th align="left">Accepted Trade-off</th>
+<th align="left">Layer</th>
+<th align="left">Technology</th>
+<th align="left">Role</th>
+<th align="left">Why</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">Data Sovereignty</td>
-<td align="left">Meeting data belongs to the user and is never used for training.</td>
-<td align="left">Higher infrastructure cost for private processing.</td>
+<td align="left">Fullstack</td>
+<td align="left">Next.js / TypeScript</td>
+<td align="left">Unified frontend and backend API</td>
+<td align="left">Rapid MVP delivery with single codebase, SSR for fast load</td>
 </tr>
 <tr>
-<td align="left">Workflow First</td>
-<td align="left">Tools should go where the PM already is (Jira/Notion).</td>
-<td align="left">Complex API maintenance for third-party tools.</td>
+<td align="left">AI / NLP</td>
+<td align="left">OpenAI GPT-4o</td>
+<td align="left">Text analysis and blocker extraction</td>
+<td align="left">Best-in-class text understanding, low integration effort</td>
 </tr>
 <tr>
-<td align="left">Precision over Length</td>
-<td align="left">Summaries must be concise and actionable, not verbatim.</td>
-<td align="left">Potential loss of minor contextual nuances.</td>
+<td align="left">Database</td>
+<td align="left">PostgreSQL (Supabase)</td>
+<td align="left">Data storage</td>
+<td align="left">Managed service, built-in auth, real-time subscriptions</td>
+</tr>
+<tr>
+<td align="left">Hosting</td>
+<td align="left">Vercel</td>
+<td align="left">Zero-config deployment</td>
+<td align="left">Native Next.js support, serverless scaling, free tier for MVP</td>
 </tr>
 </tbody></table>
-<h3>4.2 Capacity Planning</h3>
+<h3>5.3 Data Flow</h3>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant Dev
+    participant Form as Web Form
+    participant API as API Route
+    participant AI as GPT-4o
+    participant DB as PostgreSQL
+    participant PM as PM Dashboard
+
+    Dev-&gt;&gt;Form: Fill daily report
+    Form-&gt;&gt;API: POST /api/reports
+    API-&gt;&gt;AI: Extract blockers from text
+    AI--&gt;&gt;API: {blockers: [...], severity}
+    API-&gt;&gt;DB: Save report + blockers
+    API--&gt;&gt;Form: Success
+
+    PM-&gt;&gt;API: GET /api/blockers
+    API-&gt;&gt;DB: Query active blockers
+    DB--&gt;&gt;API: Results
+    API--&gt;&gt;PM: Render blockers list
+</code></pre>
+<h3>5.4 Capacity Planning &amp; Infrastructure Sizing</h3>
 <h4>Traffic Estimation</h4>
 <table>
 <thead>
@@ -207,111 +334,29 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">Avg Meetings / Day</td>
-<td align="left">100</td>
-<td align="left">Initial pilot scale</td>
+<td align="left">Avg Reports / Day</td>
+<td align="left">50</td>
+<td align="left">Initial dev team size</td>
 </tr>
 <tr>
-<td align="left">Storage / Meeting</td>
-<td align="left">500MB</td>
-<td align="left">Avg 1h Zoom recording (transitory)</td>
+<td align="left">Storage / Report</td>
+<td align="left">&lt; 5KB</td>
+<td align="left">Plain text data</td>
 </tr>
 <tr>
 <td align="left">Daily Data Volume</td>
-<td align="left">50GB</td>
-<td align="left">Transitory storage for processing</td>
+<td align="left">&lt; 1MB</td>
+<td align="left">Extremely lightweight</td>
 </tr>
 </tbody></table>
 <h4>Infrastructure Sizing</h4>
 <ul>
-<li><strong>Compute</strong>: Autoscaling nodes for media processing (Whisper/FFmpeg).</li>
-<li><strong>Storage</strong>: Temporary S3 bucket with 24-hour expiration policy.</li>
-<li><strong>Database</strong>: PostgreSQL for metadata and integration settings.</li>
+<li><strong>Compute</strong>: Next.js Serverless functions (Vercel).</li>
+<li><strong>Storage</strong>: None needed beyond the database.</li>
+<li><strong>Database</strong>: PostgreSQL (Supabase/Vercel Postgres) for text logs.</li>
 </ul>
-<h4>Scaling Strategy</h4>
-<table>
-<thead>
-<tr>
-<th align="left">Phase</th>
-<th align="left">Target Load</th>
-<th align="left">Action</th>
-<th align="left">Est. Infra Cost/month</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">MVP</td>
-<td align="left">10-20 PMs</td>
-<td align="left">Single region, shared RDS</td>
-<td align="left">$150 - $300</td>
-</tr>
-<tr>
-<td align="left">Growth</td>
-<td align="left">100-500 PMs</td>
-<td align="left">Multi-AZ, dedicated instances</td>
-<td align="left">$800 - $1,500</td>
-</tr>
-</tbody></table>
-<h2>5. Technical Solutions Propose</h2>
-<h3>5.1 Target Architecture</h3>
-<p>DailyTools uses a serverless-first architecture to handle bursty meeting processing loads efficiently.</p>
-<pre><code class="language-text">[Zoom/Teams API] --&gt; [Webhook Handler] --&gt; [S3 Temporary Storage]
-                                                 |
-                                         [AI Processing Pipeline]
-                                         (Whisper + GPT-4/Claude)
-                                                 |
-[PM Dashboard] &lt;--- [Metadata DB] &lt;--- [Structured Summary]
-      |
-      +------&gt; [Jira API] / [Notion API]
-</code></pre>
-<p><strong>Component Communication:</strong></p>
-<ul>
-<li><strong>Capture</strong>: Webhooks notify DailyTools when a cloud recording is ready.</li>
-<li><strong>AI Processing</strong>: Asynchronous worker pool processes audio into text and then into structured summaries.</li>
-<li><strong>Delivery</strong>: Final summaries are stored in a secured DB and displayed in the Dashboard for approval before API dispatch.</li>
-</ul>
-<h3>5.2 Tech Stack</h3>
-<table>
-<thead>
-<tr>
-<th align="left">Layer</th>
-<th align="left">Technology</th>
-<th align="left">Role</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Backend</td>
-<td align="left">Node.js / TypeScript</td>
-<td align="left">Core logic and API handlers</td>
-</tr>
-<tr>
-<td align="left">AI / NLP</td>
-<td align="left">OpenAI Whisper / GPT-4o</td>
-<td align="left">Transcription and summarization</td>
-</tr>
-<tr>
-<td align="left">Database</td>
-<td align="left">PostgreSQL (Supabase/RDS)</td>
-<td align="left">Integration settings and metadata</td>
-</tr>
-<tr>
-<td align="left">Frontend</td>
-<td align="left">React + Tailwind CSS</td>
-<td align="left">PM Dashboard</td>
-</tr>
-<tr>
-<td align="left">Cloud</td>
-<td align="left">AWS (Lambda, S3, EventBridge)</td>
-<td align="left">Infrastructure and orchestration</td>
-</tr>
-</tbody></table>
-<h3>5.3 UI/UX Concept</h3>
-<p>The UI will be a &quot;Zero-Inbox&quot; inspired dashboard where new meeting summaries appear as cards. PMs can:</p>
-<ol>
-<li><strong>Review</strong>: Edit AI-generated action items.</li>
-<li><strong>Assign</strong>: Map tasks to specific Jira projects/users.</li>
-<li><strong>Sync</strong>: Single-click push to Jira/Notion.</li>
-</ol>
-<h2>6. Product Roadmap</h2>
+<!-- PLACEHOLDER_SECTION_6 --><h2>6. Implementation Plan</h2>
+<h3>6.1 Product Roadmap</h3>
 <table>
 <thead>
 <tr>
@@ -319,17 +364,17 @@
 <th>Feature</th>
 <th>Duration</th>
 <th>Timeline</th>
-<th align="center">M1</th>
-<th align="center">M2</th>
-<th align="center">M3</th>
-<th align="center">M4</th>
+<th align="center">W1</th>
+<th align="center">W2</th>
+<th align="center">W3</th>
+<th align="center">W4</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>P1</td>
-<td>Foundation &amp; Capture (Zoom/Teams)</td>
-<td>4 weeks</td>
-<td>Month 1</td>
+<td>Form &amp; Database</td>
+<td>1 week</td>
+<td>Week 1</td>
 <td align="center">███</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -337,9 +382,9 @@
 </tr>
 <tr>
 <td>P2</td>
-<td>AI Core (Transcription/Summary)</td>
-<td>3 weeks</td>
-<td>Month 2</td>
+<td>AI Blocker Engine</td>
+<td>1 week</td>
+<td>Week 2</td>
 <td align="center"></td>
 <td align="center">███</td>
 <td align="center"></td>
@@ -347,9 +392,9 @@
 </tr>
 <tr>
 <td>P3</td>
-<td>Delivery Sync (Jira/Notion)</td>
-<td>2 weeks</td>
-<td>Month 3</td>
+<td>PM Dashboard View</td>
+<td>1 week</td>
+<td>Week 3</td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center">███</td>
@@ -358,8 +403,8 @@
 <tr>
 <td>P4</td>
 <td>UAT &amp; Launch</td>
-<td>2 weeks</td>
-<td>Month 3</td>
+<td>1 week</td>
+<td>Week 4</td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
@@ -369,19 +414,12 @@
 <p><strong>Legend:</strong> <code>███</code> = Active development period</p>
 <p><strong>Key Highlights:</strong></p>
 <ul>
-<li><strong>Month 1</strong>: Establish secure API tunnels to Zoom and Teams.</li>
-<li><strong>Month 2</strong>: Optimize AI prompts for PM-specific summarization accuracy.</li>
-<li><strong>Month 3</strong>: Finalize bi-directional sync with Jira/Notion and go live.</li>
+<li><strong>Week 1</strong>: Deploy the basic web form for Devs.</li>
+<li><strong>Week 2</strong>: Integrate OpenAI and tune the prompt for blocker extraction.</li>
+<li><strong>Week 3</strong>: Finalize the dashboard for the PM.</li>
+<li><strong>Week 4</strong>: UAT and Live launch of the MVP.</li>
 </ul>
-<h3>6.1 Delivery Plan</h3>
-<p>The project will follow an Agile methodology with bi-weekly sprints. We will prioritize the Zoom integration first as the primary capture source, followed by the AI engine refinement.</p>
-<h2>7. Master Schedule</h2>
-<h3>7.1 Master Schedule Overview</h3>
-<ul>
-<li><strong>Total Duration</strong>: 12 weeks (~3 months)</li>
-<li><strong>Methodology</strong>: Agile (Scrum)</li>
-</ul>
-<h3>7.2 Project Milestone Breakdown</h3>
+<h3>6.2 Project Milestone Breakdown</h3>
 <table>
 <thead>
 <tr>
@@ -395,41 +433,48 @@
 </thead>
 <tbody><tr>
 <td>M1</td>
-<td>Capture Ready</td>
-<td>Week 4</td>
-<td>Zoom/Teams API</td>
-<td>recordings fetched to S3</td>
-<td>Integration Tests</td>
+<td>Form Ready</td>
+<td>Week 1</td>
+<td>Web Form &amp; DB</td>
+<td>Form submits to DB</td>
+<td>Manual Test</td>
 </tr>
 <tr>
 <td>M2</td>
-<td>Engine Ready</td>
-<td>Week 7</td>
-<td>AI Summarization</td>
-<td>85%+ accuracy on 10 tests</td>
+<td>AI Ready</td>
+<td>Week 2</td>
+<td>AI Extraction</td>
+<td>90% accuracy</td>
 <td>QA Review</td>
 </tr>
 <tr>
 <td>M3</td>
-<td>Integration Ready</td>
-<td>Week 9</td>
-<td>Jira/Notion Sync</td>
-<td>Summaries appear in tools</td>
-<td>E2E Testing</td>
+<td>Dashboard</td>
+<td>Week 3</td>
+<td>PM UI</td>
+<td>PM sees blockers</td>
+<td>UI Test</td>
 </tr>
 <tr>
 <td>M4</td>
-<td>MVP Launch</td>
-<td>Week 12</td>
-<td>Launch Prep</td>
-<td>User acceptance signed</td>
-<td>UAT Sign-off</td>
+<td>Launch</td>
+<td>Week 4</td>
+<td>Live Deploy</td>
+<td>Signed off</td>
+<td>UAT</td>
 </tr>
 </tbody></table>
-<h2>8. WBS &amp; Quotations</h2>
-<h3>8.1 Work Breakdown Structure (WBS)</h3>
-<p>Refer to the detailed <a href="../wbs.md">WBS Document</a> for task-level estimates and dependencies.</p>
-<h3>8.2 Resource Plan</h3>
+<h3>6.3 Delivery Plan</h3>
+<ul>
+<li><strong>Model</strong>: Fixed-scope, time-boxed (4 weeks)</li>
+<li><strong>Cadence</strong>: Weekly demo to PM stakeholder at end of each phase</li>
+<li><strong>Handover</strong>: Source code + deployment credentials + prompt documentation</li>
+<li><strong>Support</strong>: 2-week bug-fix warranty post-launch</li>
+</ul>
+<h2>7. WBS &amp; Resources</h2>
+<h3>7.1 WBS Details</h3>
+<p>Refer to the detailed <a href="wbs.md">WBS Document</a> for task-level estimates and dependencies.</p>
+<h3>7.2 Resource Plan</h3>
 <table>
 <thead>
 <tr>
@@ -440,31 +485,26 @@
 </thead>
 <tbody><tr>
 <td align="left">Solutions Architect</td>
-<td align="center">0.2</td>
-<td align="left">System design and API strategy</td>
+<td align="center">0.1</td>
+<td align="left">System design</td>
 </tr>
 <tr>
-<td align="left">Backend Developer</td>
+<td align="left">Fullstack Developer</td>
 <td align="center">1.0</td>
-<td align="left">API integrations and core processing</td>
+<td align="left">Frontend, API, and DB</td>
 </tr>
 <tr>
 <td align="left">AI Engineer</td>
-<td align="center">0.5</td>
-<td align="left">Prompt engineering and transcription tuning</td>
-</tr>
-<tr>
-<td align="left">Frontend Developer</td>
-<td align="center">0.5</td>
-<td align="left">PM Dashboard UI/UX</td>
+<td align="center">0.3</td>
+<td align="left">Prompt engineering</td>
 </tr>
 <tr>
 <td align="left">QA Engineer</td>
-<td align="center">0.3</td>
-<td align="left">End-to-end testing and validation</td>
+<td align="center">0.2</td>
+<td align="left">End-to-end testing</td>
 </tr>
 </tbody></table>
-<h3>8.3 Resource Estimation</h3>
+<h3>7.3 Resource Estimation</h3>
 <table>
 <thead>
 <tr>
@@ -478,43 +518,44 @@
 </thead>
 <tbody><tr>
 <td align="left">P1: Foundation</td>
-<td align="center">80</td>
-<td align="center">16</td>
-<td align="center">96</td>
-<td align="left">Month 1</td>
-<td align="left">Setup and platform integrations</td>
+<td align="center">24</td>
+<td align="center">4</td>
+<td align="center">28</td>
+<td align="left">Week 1</td>
+<td align="left">Setup and Web Form</td>
 </tr>
 <tr>
-<td align="left">P2: AI Core</td>
-<td align="center">60</td>
-<td align="center">12</td>
-<td align="center">72</td>
-<td align="left">Month 2</td>
-<td align="left">Summarization engine logic</td>
+<td align="left">P2: AI Engine</td>
+<td align="center">28</td>
+<td align="center">8</td>
+<td align="center">36</td>
+<td align="left">Week 2</td>
+<td align="left">LLM logic</td>
 </tr>
 <tr>
-<td align="left">P3: Delivery</td>
-<td align="center">50</td>
-<td align="center">10</td>
-<td align="center">60</td>
-<td align="left">Month 3</td>
-<td align="left">Jira/Notion sync modules</td>
+<td align="left">P3: Dashboard</td>
+<td align="center">20</td>
+<td align="center">8</td>
+<td align="center">28</td>
+<td align="left">Week 3</td>
+<td align="left">PM UI</td>
 </tr>
 <tr>
 <td align="left">P4: Launch</td>
+<td align="center">8</td>
+<td align="center">12</td>
 <td align="center">20</td>
-<td align="center">10</td>
-<td align="center">30</td>
-<td align="left">Month 3</td>
-<td align="left">Final testing and UAT</td>
+<td align="left">Week 4</td>
+<td align="left">UAT and Bug fixing</td>
 </tr>
 </tbody></table>
-<h3>8.4 Budget</h3>
+<h2>8. Budget &amp; Commercials</h2>
+<h3>8.1 Development Cost</h3>
 <ul>
-<li><strong>Total Effort</strong>: 258 working hours.</li>
-<li><strong>Development Cost</strong>: Based on a blended rate (TBD by final resource allocation).</li>
-<li><strong>Operational Cost (Infrastructure Estimation)</strong>:</li>
+<li><strong>Total Effort</strong>: 112 working hours.</li>
+<li><strong>Development Cost</strong>: TBD by final resource allocation.</li>
 </ul>
+<h3>8.2 Operational Cost &amp; Scaling Strategy</h3>
 <table>
 <thead>
 <tr>
@@ -525,20 +566,36 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">Pilot</td>
-<td align="left">20 PMs</td>
-<td align="left">$200</td>
-<td align="left">AWS Lambda, Whisper API, S3</td>
-</tr>
-<tr>
 <td align="left">MVP</td>
-<td align="left">100 PMs</td>
-<td align="left">$650</td>
-<td align="left">Dedicated RDS, High-tier LLM API</td>
+<td align="left">50 Devs</td>
+<td align="left">$20</td>
+<td align="left">Vercel, Supabase</td>
 </tr>
 </tbody></table>
-<ul>
-<li><strong>Note</strong>: Costs exclude third-party API usage fees (OpenAI/Claude) which are billed based on volume.</li>
-</ul>
+<h3>8.3 3rd-Party Vendor &amp; Pass-Through Costs</h3>
+<table>
+<thead>
+<tr>
+<th align="left">Service</th>
+<th align="left">Vendor</th>
+<th align="left">Ownership</th>
+<th align="left">Pass-through Cost Model</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Cloud Infrastructure</td>
+<td align="left">Vercel</td>
+<td align="left">Client</td>
+<td align="left">Billed directly to Client&#39;s credit card</td>
+</tr>
+<tr>
+<td align="left">AI / LLM API</td>
+<td align="left">OpenAI (GPT-4o)</td>
+<td align="left">Client</td>
+<td align="left">Pay-as-you-go based on volume</td>
+</tr>
+</tbody></table>
+
+
 </body>
 </html>

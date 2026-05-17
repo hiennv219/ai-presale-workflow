@@ -1,7 +1,7 @@
 ---
 title: "Proposal: DailyTools MVP"
 date: "2026-05-17"
-version: "Final (8-Section v2)"
+version: "Final (8-Section v3)"
 ---
 
 # Proposal Sections
@@ -25,3 +25,4 @@ version: "Final (8-Section v2)"
 | Final (7-Section v2) | 2026-05-17 | 01, 02, 03, 04 | Applied new template: added Solution Overview, restructured Scope/Risks, added Why to Tech Stack |
 | Final (8-Section) | 2026-05-17 | 02, 03, 04 | Tách User Flow & Wireframe thành section riêng; gộp Assumptions vào Risks |
 | Final (8-Section v2) | 2026-05-17 | 05, 06 | Architecture: ASCII box art + Mermaid data flow; added Delivery Plan |
+| Final (8-Section v3) | 2026-05-17 | 03 | Wireframe: replaced text descriptions with ASCII wireframe diagrams |
