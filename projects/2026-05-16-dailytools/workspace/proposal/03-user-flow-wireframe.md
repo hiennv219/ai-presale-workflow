@@ -15,5 +15,60 @@ graph TD
 ```
 
 ### 3.2 High-Level Wireframe
-- **Dev Form**: Three fields — What I did, What I will do, Blockers (Optional). Single submit button.
-- **PM Dashboard**: Active Blockers alert section at the top, followed by a chronological list of standard daily updates.
+
+**Dev Form**
+
+```
+┌─────────────────────────────────────┐
+│  📋 Daily Standup                   │
+├─────────────────────────────────────┤
+│                                     │
+│  What I did yesterday:              │
+│  ┌─────────────────────────────┐    │
+│  │                             │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│  What I will do today:              │
+│  ┌─────────────────────────────┐    │
+│  │                             │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│  Blockers (optional):               │
+│  ┌─────────────────────────────┐    │
+│  │                             │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│           [ Submit ]                │
+└─────────────────────────────────────┘
+```
+
+**PM Dashboard**
+
+```
+┌─────────────────────────────────────┐
+│  📊 PM Dashboard                    │
+├─────────────────────────────────────┤
+│                                     │
+│  ⚠️  Active Blockers (2)            │
+│  ┌─────────────────────────────┐    │
+│  │ • John: API timeout issue   │    │
+│  │ • Mai: Waiting for design   │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│  ─────────────────────────────────  │
+│                                     │
+│  📅 Today's Updates                 │
+│  ┌─────────────────────────────┐    │
+│  │ John - 10:02 AM             │    │
+│  │ Did: Fixed auth module      │    │
+│  │ Will: Start API integration │    │
+│  │ ⚠️ Blocker: API timeout     │    │
+│  ├─────────────────────────────┤    │
+│  │ Mai - 09:45 AM              │    │
+│  │ Did: Completed wireframes   │    │
+│  │ Will: Build prototype       │    │
+│  │ ⚠️ Blocker: Waiting design  │    │
+│  └─────────────────────────────┘    │
+│                                     │
+└─────────────────────────────────────┘
+```

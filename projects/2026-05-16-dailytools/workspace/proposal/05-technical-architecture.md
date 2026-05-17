@@ -4,28 +4,32 @@
 DailyTools uses a simple Next.js monolithic architecture for rapid MVP delivery.
 
 ```text
-CLIENT LAYER        → Web Dashboard (React/Next.js)
-                      - PM Dashboard (Blockers View)
-                      - Dev Daily Report Form
-                      │
-API GATEWAY         → Next.js API Routes / Auth
-                      │
-SERVICE LAYER       → ┌─────────────────────┐
-                      │ AI Blocker Service  │
-                      │ - Scans text input  │
-                      │ - Extracts blockers │
-                      └─────────┬───────────┘
-                                │
-DATA LAYER          → ┌─────────▼───────────┐
-                      │ Relational DB       │
-                      │ - Reports & Blockers│
-                      └─────────────────────┘
+┌─ CLIENT (Next.js / React) ───────────────┐
+│  ┌──────────────┐  ┌──────────────────┐  │
+│  │ Dev Report   │  │ PM Dashboard     │  │
+│  │ Form         │  │ (Blockers View)  │  │
+│  └──────────────┘  └──────────────────┘  │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ API (Next.js API Routes) ───────────────┐
+│  [Auth]  [Submit Report]  [Get Blockers] │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ SERVICE ────────────────────────────────┐
+│  ┌─────────────────────────────────────┐ │
+│  │ AI Blocker Extraction (GPT-4o)     │ │
+│  │ • Scan text for hidden blockers    │ │
+│  │ • Classify severity                │ │
+│  └─────────────────────────────────────┘ │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ DATA (PostgreSQL / Supabase) ───────────┐
+│  • reports    • blockers    • users      │
+└──────────────────────────────────────────┘
 ```
-
-**Component Communication:**
-- **Capture**: Dev submits a Next.js form.
-- **AI Processing**: Next.js API calls OpenAI (GPT-4o) to evaluate text.
-- **Delivery**: PM views the dashboard which queries the DB directly.
 
 ### 5.2 Tech Stack
 | Layer | Technology | Role | Why |
@@ -35,7 +39,31 @@ DATA LAYER          → ┌─────────▼───────�
 | Database | PostgreSQL (Supabase) | Data storage | Managed service, built-in auth, real-time subscriptions |
 | Hosting | Vercel | Zero-config deployment | Native Next.js support, serverless scaling, free tier for MVP |
 
-### 5.3 Capacity Planning & Infrastructure Sizing
+### 5.3 Data Flow
+
+```mermaid
+sequenceDiagram
+    participant Dev
+    participant Form as Web Form
+    participant API as API Route
+    participant AI as GPT-4o
+    participant DB as PostgreSQL
+    participant PM as PM Dashboard
+
+    Dev->>Form: Fill daily report
+    Form->>API: POST /api/reports
+    API->>AI: Extract blockers from text
+    AI-->>API: {blockers: [...], severity}
+    API->>DB: Save report + blockers
+    API-->>Form: Success
+
+    PM->>API: GET /api/blockers
+    API->>DB: Query active blockers
+    DB-->>API: Results
+    API-->>PM: Render blockers list
+```
+
+### 5.4 Capacity Planning & Infrastructure Sizing
 #### Traffic Estimation
 | Metric | Value | Calculation |
 |:-------|:------|:------------|

@@ -46,7 +46,7 @@
 ```
 
 ### 3.2 High-Level Wireframe
-{{wireframe_description}}
+<!-- Use presale-wireframe skill. Draw ASCII wireframes for each core screen. Never use text-only descriptions. -->
 
 ## 4. Risks, Assumptions & Acceptance Criteria
 
@@ -67,21 +67,75 @@
 
 ## 5. Technical Architecture
 
-<!-- Brownfield: include 5.1 AS-IS, 5.2 TO-BE, 5.3 Migration, 5.4 Tech Stack -->
+<!-- Brownfield: include 5.1 AS-IS, 5.2 TO-BE, 5.3 Migration, 5.4 Tech Stack, 5.5 Data Flow, 5.6 Capacity -->
 <!-- Greenfield: skip AS-IS and Migration, start with Target Architecture. Renumber accordingly. -->
+
+<!--
+DIAGRAM GUIDELINES:
+- Target Architecture (static view) → ASCII box art
+- Data Flow (dynamic view) → Mermaid sequence diagram
+
+ASCII rules:
+  • Each layer = outer box ┌─ LAYER NAME ─┐
+  • Components inside = inner boxes or [brackets]
+  • Vertical flow between layers = │ and ▼
+  • Horizontal communication = ◄──►
+  • Capabilities = bullet • inside box
+  • Cross-cutting concerns = [bracket] annotations
+
+Pattern (simple):
+┌─ CLIENT ─────────────────────────────────┐
+│  [Component 1]  [Component 2]            │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ API / SERVICE ──────────────────────────┐
+│  • capability 1                          │
+│  • capability 2                          │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ DATA ───────────────────────────────────┐
+│  [Database]  [Cache]                     │
+└──────────────────────────────────────────┘
+
+Pattern (complex / microservices):
+┌─ CLIENT ─────────────────────────────────┐
+│  [App A]  [App B]  [App C]               │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ GATEWAY ────────────────────────────────┐
+│  [Auth] [Rate Limit] [Routing] [SSL]     │
+└──────────────────────────────────────────┘
+         │              │
+         ▼              ▼
+┌─ SERVICE A ──┐  ┌─ SERVICE B ──┐
+│  • func 1    │  │  • func 1    │
+│  • func 2    │◄─►  • func 2    │
+└──────────────┘  └──────────────┘
+         │              │
+         ▼              ▼
+┌─ DATA ───────────────────────────────────┐
+│  [PostgreSQL]     [MongoDB]              │
+└──────────────────────────────────────────┘
+         │
+         ▼
+┌─ EVENT BUS ──────────────────────────────┐
+│  [event.1] [event.2] [event.3]           │
+└──────────────────────────────────────────┘
+-->
 
 ### 5.1 AS-IS Architecture (brownfield only)
 ```text
-{{as_is_diagram}}
+{{as_is_diagram_ascii_box_art}}
 ```
 **Core Issue**: {{core_architecture_problem}}
 
 ### 5.2 Target Architecture
 ```text
-{{to_be_diagram}}
+{{to_be_diagram_ascii_box_art}}
 ```
-**Component Communication:**
-{{component_communication}}
 
 ### 5.3 Migration Strategy (brownfield only)
 - **Method**: {{migration_method}}
@@ -93,7 +147,13 @@
 |:------|:-----------|:-----|:----|
 | {{layer}} | {{tech}} | {{role}} | {{why}} |
 
-### 5.5 Capacity Planning & Infrastructure Sizing
+### 5.5 Data Flow
+```mermaid
+sequenceDiagram
+    {{data_flow_sequence}}
+```
+
+### 5.6 Capacity Planning & Infrastructure Sizing
 #### Traffic Estimation
 | Metric | Value | Calculation |
 |:-------|:------|:------------|

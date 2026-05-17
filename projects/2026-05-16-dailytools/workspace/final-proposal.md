@@ -1,7 +1,7 @@
 # Proposal: DailyTools MVP
 **Author**: Antigravity AI
 **Date**: 2026-05-17
-**Version**: Final (New 7-Section Template)
+**Version**: Final (8-Section v2)
 
 ---
 
@@ -24,8 +24,13 @@
     - [x] **Risk Mitigation**: Catch and highlight blockers immediately before they cause delays.
     - [x] **Developer Experience**: A frictionless, 3-field form that takes 30 seconds to fill out.
 
+### 1.3 Proposed Solution Overview
+DailyTools is a lightweight web application that automates the collection and analysis of developer daily reports. Developers submit a simple 3-field form (What I did, What I will do, Blockers). An AI engine powered by GPT-4o scans each submission in real-time to detect hidden blockers or risks — even when developers don't explicitly flag them. PMs get a dedicated dashboard showing active blockers at a glance, eliminating the need to manually read through chat messages or lengthy reports.
 
-## 2. Project Scope
+### 1.4 Company Showcase (Optional)
+N/A — No relevant case studies provided for this project.
+
+## 2. Scope & Solution
 
 ### 2.1 In-Scope
 The MVP for DailyTools focuses on a simple text-based data collection and extraction trial, prioritized by the MoSCoW method:
@@ -37,29 +42,11 @@ The MVP for DailyTools focuses on a simple text-based data collection and extrac
 - **Real-time Live Transcription**: Irrelevant to this text-based MVP.
 - **Jira/Notion Sync**: Deferred to Phase 2 to keep the MVP simple.
 
-### 2.3 Strategic Assumptions
-- **Developer Adoption**: Developers will consistently use the ultra-fast web form instead of chat channels.
-- **LLM Accuracy**: GPT-4o will accurately differentiate between standard updates and critical blockers.
+## 3. User Flow & Wireframe
 
-### 2.4 Risk & Mitigation
-| # | Risk | Severity | Impact | Mitigation |
-|:--|:-----|:--------:|:-------|:-----------|
-| R1 | Low adoption by devs | High | No data to extract blockers from | Make the form ultra-fast (3 fields) and mobile-friendly. |
-| R2 | AI missing hidden blockers | Medium | False sense of security for PMs | Allow devs to explicitly tag blockers, plus prompt-tuning. |
+### 3.1 User Flow
+Developers submit daily reports through a simple web form. The AI engine scans each submission for blockers. If a blocker is detected, it is highlighted on the PM Dashboard for immediate action. Otherwise, the report is logged as a normal status update.
 
-
-## 3. Solution Approach
-
-### 3.1 Acceptance Criteria
-| # | Item | Measurement Criteria | Phase |
-|:--|:-----|:---------------------|:------|
-| AC1 | Form Submission | Devs can submit form and data saves to DB correctly. | Phase 1 |
-| AC2 | Blocker Extraction | AI correctly flags blockers in 90% of test inputs. | Phase 2 |
-| AC3 | Dashboard Visibility | PM dashboard renders active blockers clearly above normal logs. | Phase 3 |
-
-### 3.2 Visualizing Solution
-
-#### User Flow
 ```mermaid
 graph TD
     A([Dev opens DailyTools]) --> B[Fills out Daily Report Form]
@@ -71,52 +58,117 @@ graph TD
     F --> H([PM Reviews Blockers])
 ```
 
-#### High-Level Wireframe
-- **Dev Form**: What I did, What I will do, Blockers (Optional).
+### 3.2 High-Level Wireframe
+- **Dev Form**: Three fields — What I did, What I will do, Blockers (Optional). Single submit button.
 - **PM Dashboard**: Active Blockers alert section at the top, followed by a chronological list of standard daily updates.
 
+## 4. Risks, Assumptions & Acceptance Criteria
 
-## 4. Technical Architecture
+### 4.1 Strategic Assumptions
+| # | Category | Assumption | Note |
+|:--|:---------|:-----------|:-----|
+| A1 | Adoption | Developers will consistently use the web form instead of chat channels | Form must be ultra-fast (<30s to fill) |
+| A2 | AI Accuracy | GPT-4o will accurately differentiate between standard updates and critical blockers | Prompt tuning required during Phase 2 |
+| A3 | Scale | Initial team size ~50 developers | Affects infra sizing decisions |
 
-### 4.1 Target Architecture
+### 4.2 Risk & Mitigation
+| # | Risk | Severity | Impact | Mitigation |
+|:--|:-----|:--------:|:-------|:-----------|
+| R1 | Low adoption by devs | High | No data to extract blockers from | Make the form ultra-fast (3 fields) and mobile-friendly. |
+| R2 | AI missing hidden blockers | Medium | False sense of security for PMs | Allow devs to explicitly tag blockers, plus prompt-tuning. |
+
+### 4.3 Acceptance Criteria
+| # | Item | Measurement Criteria | Phase |
+|:--|:-----|:---------------------|:------|
+| AC1 | Form Submission | Devs can submit form and data saves to DB correctly. | Phase 1 |
+| AC2 | Blocker Extraction | AI correctly flags blockers in 90% of test inputs. | Phase 2 |
+| AC3 | Dashboard Visibility | PM dashboard renders active blockers clearly above normal logs. | Phase 3 |
+
+<!-- PLACEHOLDER_SECTION_5 -->
+
+## 5. Technical Architecture
+
+### 5.1 Target Architecture
 DailyTools uses a simple Next.js monolithic architecture for rapid MVP delivery.
 
 ```text
-CLIENT LAYER        → Web Dashboard (React/Next.js)
-                      - PM Dashboard (Blockers View)
-                      - Dev Daily Report Form
-                      │
-API GATEWAY         → Next.js API Routes / Auth
-                      │
-SERVICE LAYER       → ┌─────────────────────┐
-                      │ AI Blocker Service  │
-                      │ - Scans text input  │
-                      │ - Extracts blockers │
-                      └─────────┬───────────┘
-                                │
-DATA LAYER          → ┌─────────▼───────────┐
-                      │ Relational DB       │
-                      │ - Reports & Blockers│
-                      └─────────────────────┘
+┌─ CLIENT (Next.js / React) ───────────────┐
+│  ┌──────────────┐  ┌──────────────────┐  │
+│  │ Dev Report   │  │ PM Dashboard     │  │
+│  │ Form         │  │ (Blockers View)  │  │
+│  └──────────────┘  └──────────────────┘  │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ API (Next.js API Routes) ───────────────┐
+│  [Auth]  [Submit Report]  [Get Blockers] │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ SERVICE ────────────────────────────────┐
+│  ┌─────────────────────────────────────┐ │
+│  │ AI Blocker Extraction (GPT-4o)     │ │
+│  │ • Scan text for hidden blockers    │ │
+│  │ • Classify severity                │ │
+│  └─────────────────────────────────────┘ │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ DATA (PostgreSQL / Supabase) ───────────┐
+│  • reports    • blockers    • users      │
+└──────────────────────────────────────────┘
 ```
 
-**Component Communication:**
-- **Capture**: Dev submits a Next.js form.
-- **AI Processing**: Next.js API calls OpenAI (GPT-4o) to evaluate text.
-- **Delivery**: PM views the dashboard which queries the DB directly.
+### 5.2 Tech Stack
+| Layer | Technology | Role | Why |
+|:------|:-----------|:-----|:----|
+| Fullstack | Next.js / TypeScript | Unified frontend and backend API | Rapid MVP delivery with single codebase, SSR for fast load |
+| AI / NLP | OpenAI GPT-4o | Text analysis and blocker extraction | Best-in-class text understanding, low integration effort |
+| Database | PostgreSQL (Supabase) | Data storage | Managed service, built-in auth, real-time subscriptions |
+| Hosting | Vercel | Zero-config deployment | Native Next.js support, serverless scaling, free tier for MVP |
 
-### 4.2 Tech Stack
-| Layer | Technology | Role |
-|:------|:-----------|:-----|
-| Fullstack | Next.js / TypeScript | Unified frontend and backend API |
-| AI / NLP | OpenAI GPT-4o | Text analysis and blocker extraction |
-| Database | PostgreSQL (Supabase) | Data storage |
-| Hosting | Vercel | Zero-config deployment |
+### 5.3 Data Flow
 
+```mermaid
+sequenceDiagram
+    participant Dev
+    participant Form as Web Form
+    participant API as API Route
+    participant AI as GPT-4o
+    participant DB as PostgreSQL
+    participant PM as PM Dashboard
 
-## 5. Implementation Plan
+    Dev->>Form: Fill daily report
+    Form->>API: POST /api/reports
+    API->>AI: Extract blockers from text
+    AI-->>API: {blockers: [...], severity}
+    API->>DB: Save report + blockers
+    API-->>Form: Success
 
-### 5.1 Product Roadmap
+    PM->>API: GET /api/blockers
+    API->>DB: Query active blockers
+    DB-->>API: Results
+    API-->>PM: Render blockers list
+```
+
+### 5.4 Capacity Planning & Infrastructure Sizing
+#### Traffic Estimation
+| Metric | Value | Calculation |
+|:-------|:------|:------------|
+| Avg Reports / Day | 50 | Initial dev team size |
+| Storage / Report | < 5KB | Plain text data |
+| Daily Data Volume | < 1MB | Extremely lightweight |
+
+#### Infrastructure Sizing
+- **Compute**: Next.js Serverless functions (Vercel).
+- **Storage**: None needed beyond the database.
+- **Database**: PostgreSQL (Supabase/Vercel Postgres) for text logs.
+
+<!-- PLACEHOLDER_SECTION_6 -->
+
+## 6. Implementation Plan
+
+### 6.1 Product Roadmap
 | Phase | Feature | Duration | Timeline | W1 | W2 | W3 | W4 |
 |-------|---------|----------|----------|:--:|:--:|:--:|:--:|
 | P1 | Form & Database | 1 week | Week 1 | ███ |    |    |    |
@@ -132,7 +184,7 @@ DATA LAYER          → ┌─────────▼───────�
 - **Week 3**: Finalize the dashboard for the PM.
 - **Week 4**: UAT and Live launch of the MVP.
 
-### 5.2 Project Milestone Breakdown
+### 6.2 Project Milestone Breakdown
 | # | Milestone | Target Date | Key Modules | DoD | Verification Tool |
 |---|-----------|-------------|-------------|-----|-------------------|
 | M1 | Form Ready | Week 1 | Web Form & DB | Form submits to DB | Manual Test |
@@ -140,13 +192,18 @@ DATA LAYER          → ┌─────────▼───────�
 | M3 | Dashboard | Week 3 | PM UI | PM sees blockers | UI Test |
 | M4 | Launch | Week 4 | Live Deploy | Signed off | UAT |
 
+### 6.3 Delivery Plan
+- **Model**: Fixed-scope, time-boxed (4 weeks)
+- **Cadence**: Weekly demo to PM stakeholder at end of each phase
+- **Handover**: Source code + deployment credentials + prompt documentation
+- **Support**: 2-week bug-fix warranty post-launch
 
-## 6. Work Breakdown Structure
+## 7. WBS & Resources
 
-### 6.1 WBS Details
-Refer to the detailed [WBS Document](../wbs.md) for task-level estimates and dependencies.
+### 7.1 WBS Details
+Refer to the detailed [WBS Document](wbs.md) for task-level estimates and dependencies.
 
-### 6.2 Resource Plan
+### 7.2 Resource Plan
 | Role | FTE | Responsibility |
 |:-----|:---:|:---------------|
 | Solutions Architect | 0.1 | System design |
@@ -154,7 +211,7 @@ Refer to the detailed [WBS Document](../wbs.md) for task-level estimates and dep
 | AI Engineer | 0.3 | Prompt engineering |
 | QA Engineer | 0.2 | End-to-end testing |
 
-### 6.3 Resource Estimation
+### 7.3 Resource Estimation
 | Phase | Dev/Ops (h) | QA (h) | Total | Target | Quick summary |
 |:------|:-----------:|:------:|:-----:|:-------|:--------------|
 | P1: Foundation | 24 | 4 | 28 | Week 1 | Setup and Web Form |
@@ -162,35 +219,19 @@ Refer to the detailed [WBS Document](../wbs.md) for task-level estimates and dep
 | P3: Dashboard | 20 | 8 | 28 | Week 3 | PM UI |
 | P4: Launch | 8 | 12 | 20 | Week 4 | UAT and Bug fixing |
 
-### 6.4 Capacity Planning & Infrastructure Sizing
-#### Traffic Estimation
-| Metric | Value | Calculation |
-|:-------|:------|:------------|
-| Avg Reports / Day | 50 | Initial dev team size |
-| Storage / Report | < 5KB | Plain text data |
-| Daily Data Volume | < 1MB | Extremely lightweight |
+## 8. Budget & Commercials
 
-#### Infrastructure Sizing
-- **Compute**: Next.js Serverless functions (Vercel).
-- **Storage**: None needed beyond the database.
-- **Database**: PostgreSQL (Supabase/Vercel Postgres) for text logs.
-
-
-## 7. Budget & Commercials
-
-### 7.1 Development Cost
+### 8.1 Development Cost
 - **Total Effort**: 112 working hours.
 - **Development Cost**: TBD by final resource allocation.
 
-### 7.2 Operational Cost & Scaling Strategy
+### 8.2 Operational Cost & Scaling Strategy
 | Phase | Capacity | Infra Cost/month | Main Components |
 |:------|:---------|:-----------------|:----------------|
 | MVP | 50 Devs | $20 | Vercel, Supabase |
 
-### 7.3 3rd-Party Vendor & Pass-Through Costs
+### 8.3 3rd-Party Vendor & Pass-Through Costs
 | Service | Vendor | Ownership | Pass-through Cost Model |
 |:--------|:-------|:----------|:------------------------|
 | Cloud Infrastructure | Vercel | Client | Billed directly to Client's credit card |
 | AI / LLM API | OpenAI (GPT-4o) | Client | Pay-as-you-go based on volume |
-
-

@@ -16,11 +16,12 @@
 |---|---------|------|--------|--------------|
 | 1 | Project Overview | `01-project-overview.md` | Pending | — |
 | 2 | Scope & Solution | `02-scope-solution.md` | Pending | — |
-| 3 | Risks & Acceptance Criteria | `03-risks-acceptance.md` | Pending | — |
-| 4 | Technical Architecture | `04-technical-architecture.md` | Pending | — |
-| 5 | Implementation Plan | `05-implementation-plan.md` | Pending | — |
-| 6 | WBS & Resources | `06-wbs-resources.md` | Pending | — |
-| 7 | Budget & Commercials | `07-budget-commercials.md` | Pending | — |
+| 3 | User Flow & Wireframe | `03-user-flow-wireframe.md` | Pending | — |
+| 4 | Risks, Assumptions & Acceptance | `04-risks-assumptions-acceptance.md` | Pending | — |
+| 5 | Technical Architecture | `05-technical-architecture.md` | Pending | — |
+| 6 | Implementation Plan | `06-implementation-plan.md` | Pending | — |
+| 7 | WBS & Resources | `07-wbs-resources.md` | Pending | — |
+| 8 | Budget & Commercials | `08-budget-commercials.md` | Pending | — |
 
 ## Change History
 

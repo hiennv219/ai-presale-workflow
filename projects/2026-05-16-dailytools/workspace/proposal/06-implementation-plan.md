@@ -23,3 +23,9 @@
 | M2 | AI Ready | Week 2 | AI Extraction | 90% accuracy | QA Review |
 | M3 | Dashboard | Week 3 | PM UI | PM sees blockers | UI Test |
 | M4 | Launch | Week 4 | Live Deploy | Signed off | UAT |
+
+### 6.3 Delivery Plan
+- **Model**: Fixed-scope, time-boxed (4 weeks)
+- **Cadence**: Weekly demo to PM stakeholder at end of each phase
+- **Handover**: Source code + deployment credentials + prompt documentation
+- **Support**: 2-week bug-fix warranty post-launch

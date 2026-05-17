@@ -8,12 +8,13 @@ description: Create or revise presale proposal from context, scope, WBS, and ris
 ## Procedure
 
 1. Reflect customer context and pain points before solution.
-2. Use approved scope register. Ensure features are grouped by MoSCoW priority, and include the generated Mermaid User Flow and High-Level Wireframe descriptions.
-3. For new features or greenfield projects: include User Flow in section 2.3 with Mermaid diagram + short description explaining the flow. Skip for upgrade-only projects with no logic changes.
-4. Use WBS summary for implementation plan.
-5. Include assumptions, risks, out-of-scope, next steps.
-6. Never add deliverables missing from WBS.
-7. For section 4: use `workspace/technical.md` if available. If not, derive from scope + context. Ensure 3rd-Party Services and Pass-through Costs are explicitly detailed.
+2. Use approved scope register. Ensure features are grouped by MoSCoW priority.
+3. Section 3 (User Flow & Wireframe): include Mermaid user flow for core features only. For wireframes, delegate to `presale-wireframe` skill. Skip for upgrade-only projects with no logic changes.
+4. Section 4 (Risks, Assumptions & Acceptance): order is Assumptions → Risks → Acceptance Criteria.
+5. Section 5 (Technical Architecture): delegate to `presale-architecture` skill for diagrams. Use `workspace/technical.md` if available.
+6. Use WBS summary for implementation plan.
+7. Never add deliverables missing from WBS.
+8. Ensure 3rd-Party Services and Pass-through Costs are explicitly detailed in section 8.
 
 ## File Structure
 
@@ -38,8 +39,8 @@ Revise affected sections only. Never regenerate full proposal unless scope/posit
 
 ## Full Export
 
-Only on `/presale-finalize`. Concat sections 01→07, prepend metadata, write `workspace/final-proposal.md`.
+Only on `/presale-finalize`. Concat sections 01→08, prepend metadata, write `workspace/final-proposal.md`.
 
 ## Legacy Compatibility
 
-If an existing project uses the old 13-section format or 8-section format, continue working in that format for that project. New projects always use the 7-section format.
+If an existing project uses the old 13-section format or 7-section format, continue working in that format for that project. New projects always use the 8-section format.

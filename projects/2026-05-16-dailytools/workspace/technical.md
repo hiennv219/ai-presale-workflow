@@ -2,23 +2,32 @@
 
 ## System Architecture
 
-```
-CLIENT LAYER        → Web Dashboard (React/Next.js)
-                      - PM Dashboard (Blockers View)
-                      - Dev Daily Report Form
-                      │
-API GATEWAY         → Next.js API Routes / Auth
-                      │
-SERVICE LAYER       → ┌─────────────────────┐
-                      │ AI Blocker Service  │
-                      │ - Scans text input  │
-                      │ - Extracts blockers │
-                      └─────────┬───────────┘
-                                │
-DATA LAYER          → ┌─────────▼───────────┐
-                      │ Relational DB       │
-                      │ - Reports & Blockers│
-                      └─────────────────────┘
+```text
+┌─ CLIENT (Next.js / React) ───────────────┐
+│  ┌──────────────┐  ┌──────────────────┐  │
+│  │ Dev Report   │  │ PM Dashboard     │  │
+│  │ Form         │  │ (Blockers View)  │  │
+│  └──────────────┘  └──────────────────┘  │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ API (Next.js API Routes) ───────────────┐
+│  [Auth]  [Submit Report]  [Get Blockers] │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ SERVICE ────────────────────────────────┐
+│  ┌─────────────────────────────────────┐ │
+│  │ AI Blocker Extraction (GPT-4o)     │ │
+│  │ • Scan text for hidden blockers    │ │
+│  │ • Classify severity                │ │
+│  └─────────────────────────────────────┘ │
+└──────────────────────────────────────────┘
+              │
+              ▼
+┌─ DATA (PostgreSQL / Supabase) ───────────┐
+│  • reports    • blockers    • users      │
+└──────────────────────────────────────────┘
 ```
 
 ## Component Communication
