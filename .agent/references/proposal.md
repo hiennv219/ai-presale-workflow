@@ -3,26 +3,24 @@
 **Date**: {{date}}
 **Version**: {{version}}
 
----
-
 ## 1. Project Overview & Business Value
 
 ### 1.1 Context & Problem Statement
 {{current_state_narrative — 2-3 sentences describing the current state, written in prose}}
 
 **Core Pain Points:**
-- **{{pain_point_1}}** — {{root_cause_1}}. {{impact_if_not_solved}}.
-- **{{pain_point_2}}** — {{root_cause_2}}. {{impact_if_not_solved}}.
+- **{{pain_point_1}}**: {{root_cause_1}}. {{impact_if_not_solved}}.
+- **{{pain_point_2}}**: {{root_cause_2}}. {{impact_if_not_solved}}.
 
-> 💡 {{key_insight — 1 sentence summarizing why this problem needs immediate resolution}}
+> Note: {{key_insight — 1 sentence summarizing why this problem needs immediate resolution}}
 
 ### 1.2 Goals & Business Impact
 - **Goal**: {{core_goal — 1 clear sentence}}
 - **Type**: {{project_type}}
 
 **Business Benefits**:
-- **{{benefit_1_title}}** — {{benefit_1_detail}}.
-- **{{benefit_2_title}}** — {{benefit_2_detail}}.
+- **{{benefit_1_title}}**: {{benefit_1_detail}}.
+- **{{benefit_2_title}}**: {{benefit_2_detail}}.
 
 ## 2. Proposed Solution & UX
 
@@ -59,18 +57,18 @@
 ## 4. Risks & Strategic Assumptions
 
 ### 4.1 Strategic Assumptions
-{{intro — 1 sentence: "This proposal is built upon the following assumptions:"}}
-- **{{category_1}}** — {{assumption_1}}.
-- **{{category_2}}** — {{assumption_2}}.
+This proposal is built upon the following assumptions:
+- **{{category_1}}**: {{assumption_1}}.
+- **{{category_2}}**: {{assumption_2}}.
 
 ### 4.2 Risk & Mitigation
-**🔴 R1: {{risk_name}} (High)**
-{{risk_description}}
-→ *Mitigation*: {{specific_solution}}
+- **Risk 1: {{risk_name}} (High Risk)**:
+  {{risk_description}}
+  Mitigation: {{specific_solution}}
 
 ## 5. Technical Architecture
 
-> 💡 {{1 sentence summarizing the architecture philosophy}}
+> Note: {{1 sentence summarizing the architecture philosophy}}
 
 ### 5.1 Target Architecture
 ```text
@@ -78,10 +76,10 @@
 ```
 
 ### 5.2 Tech Stack
-- **Frontend**: **{{tech}}** — {{why}}.
-- **Backend**: **{{tech}}** — {{why}}.
-- **Database**: **{{tech}}** — {{why}}.
-- **Infrastructure**: **{{tech}}** — {{why}}.
+- **Frontend**: **{{tech}}**: {{why}}.
+- **Backend**: **{{tech}}**: {{why}}.
+- **Database**: **{{tech}}**: {{why}}.
+- **Infrastructure**: **{{tech}}**: {{why}}.
 
 ### 5.3 Data Flow
 ```mermaid
@@ -134,8 +132,8 @@ sequenceDiagram
 | {{phase}} | {{cap}} | {{cost}} | {{components}} |
 
 ### 7.3 3rd-Party Vendor Costs
-- **{{Vendor 1}}**: {{cost}} — {{note}}
-- **{{Vendor 2}}**: {{cost}} — {{note}}
+- **{{Vendor 1}}**: {{cost}}: {{note}}
+- **{{Vendor 2}}**: {{cost}}: {{note}}
 
 ## 8. Development Cost & Payment Schedule
 {{1-2 sentences summarizing the total contract value for the development services.}}
@@ -147,5 +145,4 @@ sequenceDiagram
 - **Milestone 1 Payment**: {{conditions}}
 - **Milestone 2 Payment**: {{conditions}}
 
----
 *Company Showcase is attached in the appendix PDF if requested by the customer.*

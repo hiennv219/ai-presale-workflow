@@ -12,14 +12,14 @@
 
 | WBS ID | Phase | Task | Deliverable | Owner Role | Dependency | Assumption | Estimate Range | Acceptance Criteria | Scope Ref |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1.0 | P1: Foundation | Project Kickoff & Env Setup | Dev Environment | SA / Lead Dev | — | — | 4 - 8h | Repo setup, Next.js init | SCOPE008 |
-| 1.1 | P1: Foundation | Database Setup | DB Schema | Backend Dev | 1.0 | Supabase/Postgres | 8 - 12h | DB accepts daily report logs | SCOPE006 |
-| 2.1 | P2: Core App | Dev Daily Report Form | Web Form UI | Frontend Dev | 1.1 | Mobile-friendly | 12 - 16h | Devs can submit form to DB | SCOPE006 |
-| 2.2 | P2: Core App | PM Dashboard (Blocker View) | Dashboard UI | Frontend Dev | 1.1 | Clear highlights | 16 - 24h | PM can view submitted reports | SCOPE008 |
-| 3.1 | P3: AI Engine | LLM API Integration | API Module | Backend Dev | 1.0 | OpenAI GPT-4o | 8 - 12h | Text is sent and received | SCOPE007 |
-| 3.2 | P3: AI Engine | Blocker Extraction Prompting | AI Logic | AI Engineer | 3.1 | Text holds context | 12 - 20h | AI correctly flags blockers | SCOPE007 |
-| 4.1 | P4: Launch | E2E Testing & Bug Fixing | QA Report | QA | 2.1, 2.2, 3.2 | — | 12 - 16h | Flow from form to dashboard works | ALL |
-| 4.2 | P4: Launch | User Acceptance (UAT) | Sign-off | PM | 4.1 | Client availability | 4 - 8h | PM confirms blockers are visible | REQ008 |
+| 1.0 | P1: Foundation | Project Kickoff & Env Setup | Dev Environment | Solutions Arch | — | — | 4 - 8h | Repo setup, Next.js init | S-3 |
+| 1.1 | P1: Foundation | Database Setup | DB Schema | Fullstack Dev | 1.0 | Supabase/Postgres | 8 - 12h | DB accepts daily report logs | S-1 |
+| 2.1 | P2: Core App | Dev Daily Report Form | Web Form UI | Fullstack Dev | 1.1 | Mobile-friendly | 12 - 16h | Devs can submit form to DB | S-1 |
+| 2.2 | P2: Core App | PM Dashboard (Blocker View) | Dashboard UI | Fullstack Dev | 1.1 | Clear highlights | 16 - 24h | PM can view submitted reports | S-3 |
+| 3.1 | P3: AI Engine | LLM API Integration | API Module | Fullstack Dev | 1.0 | OpenAI GPT-4o | 8 - 12h | Text is sent and received | S-2 |
+| 3.2 | P3: AI Engine | Blocker Extraction Prompting | AI Logic | AI Engineer | 3.1 | Text holds context | 12 - 20h | AI correctly flags blockers | S-2 |
+| 4.1 | P4: Launch | E2E Testing & Bug Fixing | QA Report | QA Engineer | 2.1, 2.2, 3.2 | — | 12 - 16h | Flow from form to dashboard works | ALL |
+| 4.2 | P4: Launch | User Acceptance (UAT) | Sign-off | Solutions Arch | 4.1 | Client availability | 4 - 8h | PM confirms blockers are visible | ALL |
 
 ## Milestones
 

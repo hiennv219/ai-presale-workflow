@@ -1,23 +1,23 @@
 ## 2. Proposed Solution & UX
 
 ### 2.1 Solution Overview
-DailyTools is a centralized daily reporting hub that automatically surfaces development bottlenecks. By parsing unstructured developer updates, it immediately alerts PMs to potential risks without requiring developers to log into complex project management tools.
+DailyTools is a centralized daily reporting hub designed to automatically identify and surface development bottlenecks. By analyzing unstructured developer updates, the system instantly flags potential risks and alerts project managers, eliminating the need for developers to manually configure complex project management tools or write long status logs.
 
 ### 2.2 Key Features
-*(The following features are designed to directly address the highest priority requirements from the Deal Context).*
+To address the primary needs of project managers and development teams, the system comprises three key modules:
 
 **Developer Workspace**
-- **Frictionless Web Form (Critical)**: A fast, mobile-friendly interface for developers to quickly note down what they did, their plans, and any challenges, without disrupting their workflow.
-- **Zero-Login Submission**: Magic links or simple authentication to ensure developers actually use the tool.
+- **Frictionless Web Form**: A clean, mobile-responsive layout allowing developers to quickly submit daily status notes—focusing on accomplishments, upcoming tasks, and challenges—without disrupting their active coding workflow.
+- **Passwordless Authentication**: Quick login options (such as magic links) that eliminate username and password fatigue, encouraging consistent daily submission rates.
 
-**AI Engine**
-- **Smart Blocker Extraction (Critical)**: Automatically reads through daily logs and identifies hidden risks or issues, even if the developer doesn't explicitly label them as problems.
+**AI Processing Engine**
+- **Intelligent Blocker Extraction**: A natural language processing layer that automatically reads daily updates to flag implicit blocks or team dependencies, even if developers do not explicitly mark them as issues.
 
-**Project Management Console**
-- **Alert Dashboard**: A prioritized view that automatically pushes all detected roadblocks to the top, ensuring critical issues are addressed first.
+**Project Management Dashboard**
+- **Priority Roadblock Alerts**: A centralized view that automatically promotes flagged blockers to the top of the interface, ensuring management handles high-risk dependencies immediately.
 
 ### 2.3 User Flow
-Developers submit daily reports through a simple web form. The AI engine scans each submission for blockers. If a blocker is detected, it is highlighted on the PM Dashboard for immediate action. Otherwise, the report is logged as a normal status update.
+Developers submit their updates via a simple three-field form. The AI engine processes the text to identify potential blockers. If an issue is flagged, it is immediately highlighted at the top of the PM Dashboard. Otherwise, the submission is categorized as a standard, on-track daily update.
 
 ```mermaid
 graph TD
@@ -32,56 +32,56 @@ graph TD
 
 ### 2.4 High-Level Wireframe
 
-**Dev Form**
+**Developer Submission Form**
 ```text
 ┌─────────────────────────────────────┐
-│  📋 Daily Standup                   │
+│  Daily Standup Submission           │
 ├─────────────────────────────────────┤
 │                                     │
-│  What I did yesterday:              │
+│  What did you accomplish yesterday? │
 │  ┌─────────────────────────────┐    │
 │  │                             │    │
 │  └─────────────────────────────┘    │
 │                                     │
-│  What I will do today:              │
+│  What are you working on today?     │
 │  ┌─────────────────────────────┐    │
 │  │                             │    │
 │  └─────────────────────────────┘    │
 │                                     │
-│  Blockers (optional):               │
+│  Any blockers? (Optional)           │
 │  ┌─────────────────────────────┐    │
 │  │                             │    │
 │  └─────────────────────────────┘    │
 │                                     │
-│           [ Submit ]                │
+│           [ Submit Update ]         │
 └─────────────────────────────────────┘
 ```
 
-**PM Dashboard**
+**Project Manager Dashboard**
 ```text
 ┌─────────────────────────────────────┐
-│  📊 PM Dashboard                    │
+│  PM Management Console              │
 ├─────────────────────────────────────┤
 │                                     │
-│  ⚠️  Active Blockers (2)            │
+│  Active Project Blockers (2)        │
 │  ┌─────────────────────────────┐    │
-│  │ • John: API timeout issue   │    │
-│  │ • Mai: Waiting for design   │    │
+│  │ * John: API timeout issue   │    │
+│  │ * Mai: Waiting for design   │    │
 │  └─────────────────────────────┘    │
 │                                     │
 │  ─────────────────────────────────  │
 │                                     │
-│  📅 Today's Updates                 │
+│  Today's Standup Logs               │
 │  ┌─────────────────────────────┐    │
 │  │ John - 10:02 AM             │    │
 │  │ Did: Fixed auth module      │    │
 │  │ Will: Start API integration │    │
-│  │ ⚠️ Blocker: API timeout     │    │
+│  │ Blocker: API timeout        │    │
 │  ├─────────────────────────────┤    │
 │  │ Mai - 09:45 AM              │    │
 │  │ Did: Completed wireframes   │    │
 │  │ Will: Build prototype       │    │
-│  │ ⚠️ Blocker: Waiting design  │    │
+│  │ Blocker: Waiting on design  │    │
 │  └─────────────────────────────┘    │
 │                                     │
 └─────────────────────────────────────┘

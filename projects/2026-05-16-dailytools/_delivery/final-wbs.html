@@ -3,41 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WBS: DailyTools MVP</title>
+  <title>WBS: 2026 05 16 Dailytools</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    h1 { color: #001f3f; border-bottom: 3px solid #0074D9; padding-bottom: 0.5rem; }
-    h2 { color: #001f3f; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem; }
-    h3 { color: #0074D9; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
-    th { background-color: #001f3f; color: white; text-align: left; padding: 12px; font-size: 0.9rem; }
-    td { border-bottom: 1px solid #ddd; padding: 12px; font-size: 0.9rem; }
-    tr:nth-child(even) { background-color: #f8f9fa; }
-    tr:hover { background-color: #e9ecef; }
-    ul, ol { margin-bottom: 1.5rem; }
-    li { margin-bottom: 0.5rem; }
-    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background-color: #f4f4f4; border-radius: 4px; }
-    pre { padding: 1rem; overflow-x: auto; border: 1px solid #ddd; }
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #000000;
+      background-color: #E2E7EC; /* MS Word workspace canvas background */
+      margin: 0;
+      padding: 40px 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .word-page {
+      background-color: #FFFFFF;
+      width: 210mm;
+      min-height: 297mm;
+      padding: 20mm 20mm 20mm 30mm; /* Top Right Bottom Left margins */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    h1, h2, h3, h4 {
+      margin-top: 18pt;
+      margin-bottom: 6pt;
+      line-height: 1.3;
+      page-break-after: avoid;
+    }
+
+    h1 {
+      font-size: 20pt;
+      color: #1b365d; /* Deep Navy Blue */
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 24pt;
+    }
+
+    h2 {
+      font-size: 16pt;
+      color: #1b365d; /* Deep Navy Blue */
+      border-bottom: 2px solid #cbd5e1; /* Elegant light-blue border separator */
+      padding-bottom: 4px;
+      margin-top: 24pt;
+      margin-bottom: 8pt;
+    }
+
+    h3 {
+      font-size: 14pt;
+      color: #2b6cb0; /* Vibrant Steel Blue */
+      font-weight: bold;
+      margin-top: 18pt;
+      margin-bottom: 6pt;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+      text-indent: 1.27cm; /* Regulatory 0.5 in indentation */
+      text-align: justify; /* Justified paragraphs */
+      padding-bottom: 8pt;
+    }
+
+    ul, ol {
+      margin-top: 0;
+      margin-bottom: 12pt;
+      padding-left: 1.5cm;
+    }
+
+    li {
+      margin-bottom: 4pt;
+      text-align: justify;
+    }
+
+    .table-container {
+      width: 100%;
+      margin: 12pt 0;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px; /* Slightly smaller table typography */
+      margin: 12pt 0;
+    }
+
+    th, td {
+      border: 1px solid #000000; /* Distinct black grid border */
+      padding: 6px 8px;
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: #F2F2F2; /* Standard table header color */
+      color: #1b365d;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .caption {
+      font-size: 12px;
+      font-style: italic;
+      text-align: center;
+      margin-top: 6pt;
+      margin-bottom: 12pt;
+      color: #333333;
+    }
+
+    .media-container {
+      width: 100%;
+      margin: 18pt 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .media-container img,
+    .media-container .chart-mockup {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #D0D0D0;
+      background-color: #FFFFFF;
+    }
+
+    pre, code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    pre {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin-left: 1.27cm; /* Indent code blocks like paragraphs */
+    }
+
+    code {
+      background-color: #f8f9fa;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 0.95em;
+    }
+
     @media print {
-      body { max-width: 100%; padding: 0; margin: 0; }
-      table { page-break-inside: auto; }
-      tr { page-break-inside: avoid; page-break-after: auto; }
-      thead { display: table-header-group; }
-      tfoot { display: table-footer-group; }
+      body {
+        background-color: #FFFFFF;
+        padding: 0;
+        margin: 0;
+      }
+      .word-page {
+        width: 100%;
+        box-shadow: none;
+        padding: 0;
+      }
+    }
+
+    @media screen and (max-width: 210mm) {
+      body {
+        padding: 10px;
+        background-color: #FFFFFF;
+      }
+      .word-page {
+        width: 100%;
+        padding: 15px;
+        box-shadow: none;
+      }
+      p {
+        text-indent: 20px;
+      }
     }
   </style>
 </head>
 <body>
-<h1>WBS: DailyTools MVP</h1>
-<p><strong>Version</strong>: Final
-<strong>Date</strong>: 2026-05-16</p>
+  <div class="word-page">
+    <h1>WBS: DailyTools MVP</h1>
 <h2>Metadata</h2>
 <ul>
 <li>Artifact ID: WBS-DT-001</li>
 <li>Version: Final</li>
 <li>Status: Approved</li>
-<li>Context Version: 1.0</li>
-<li>Date: 2026-05-16</li>
+<li>Context Version: 1.1</li>
+<li>Date: 2026-05-17</li>
 </ul>
 <h2>WBS</h2>
 <table>
@@ -51,8 +204,6 @@
 <th>Dependency</th>
 <th>Assumption</th>
 <th>Estimate Range</th>
-<th>Acceptance Criteria</th>
-<th>Scope Ref</th>
 </tr>
 </thead>
 <tbody><tr>
@@ -60,108 +211,80 @@
 <td>P1: Foundation</td>
 <td>Project Kickoff &amp; Env Setup</td>
 <td>Dev Environment</td>
-<td>SA / Lead Dev</td>
+<td>Solutions Arch</td>
 <td>—</td>
 <td>—</td>
-<td>8 - 12h</td>
-<td>Repo setup, CI/CD ready</td>
-<td>SCOPE004</td>
+<td>4 - 8h</td>
 </tr>
 <tr>
 <td>1.1</td>
 <td>P1: Foundation</td>
-<td>Zoom API Integration</td>
-<td>Integration Module</td>
-<td>Backend Dev</td>
-<td>—</td>
-<td>Zoom OAuth access</td>
-<td>24 - 40h</td>
-<td>Can fetch recordings from Zoom</td>
-<td>SCOPE001</td>
-</tr>
-<tr>
-<td>1.2</td>
-<td>P1: Foundation</td>
-<td>Teams API Integration</td>
-<td>Integration Module</td>
-<td>Backend Dev</td>
-<td>—</td>
-<td>Teams OAuth access</td>
-<td>24 - 40h</td>
-<td>Can fetch recordings from Teams</td>
-<td>SCOPE001</td>
+<td>Database Setup</td>
+<td>DB Schema</td>
+<td>Fullstack Dev</td>
+<td>1.0</td>
+<td>Supabase/Postgres</td>
+<td>8 - 12h</td>
 </tr>
 <tr>
 <td>2.1</td>
-<td>P2: AI Core</td>
-<td>Audio-to-Transcript Layer</td>
-<td>Transcript JSON</td>
-<td>AI Engineer</td>
-<td>1.1, 1.2</td>
-<td>LLM API availability</td>
-<td>16 - 24h</td>
-<td>High accuracy transcript output</td>
-<td>SCOPE002</td>
+<td>P2: Core App</td>
+<td>Dev Daily Report Form</td>
+<td>Web Form UI</td>
+<td>Fullstack Dev</td>
+<td>1.1</td>
+<td>Mobile-friendly</td>
+<td>12 - 16h</td>
 </tr>
 <tr>
 <td>2.2</td>
-<td>P2: AI Core</td>
-<td>AI Summarization Engine</td>
-<td>Summary JSON</td>
-<td>AI Engineer</td>
-<td>2.1</td>
-<td>PM-optimized prompts</td>
-<td>24 - 32h</td>
-<td>Summaries contain Action Items/Decisions</td>
-<td>SCOPE002</td>
+<td>P2: Core App</td>
+<td>PM Dashboard (Blocker View)</td>
+<td>Dashboard UI</td>
+<td>Fullstack Dev</td>
+<td>1.1</td>
+<td>Clear highlights</td>
+<td>16 - 24h</td>
 </tr>
 <tr>
 <td>3.1</td>
-<td>P3: Delivery</td>
-<td>Jira Integration (Push)</td>
-<td>Jira Add-on/App</td>
+<td>P3: AI Engine</td>
+<td>LLM API Integration</td>
+<td>API Module</td>
 <td>Fullstack Dev</td>
-<td>2.2</td>
-<td>Jira API Write access</td>
-<td>20 - 30h</td>
-<td>Summary appears as Jira ticket/comment</td>
-<td>SCOPE003</td>
+<td>1.0</td>
+<td>OpenAI GPT-4o</td>
+<td>8 - 12h</td>
 </tr>
 <tr>
 <td>3.2</td>
-<td>P3: Delivery</td>
-<td>Notion Integration (Push)</td>
-<td>Notion Integration</td>
-<td>Fullstack Dev</td>
-<td>2.2</td>
-<td>Notion API Write access</td>
-<td>16 - 24h</td>
-<td>Summary appears as Notion page</td>
-<td>SCOPE003</td>
+<td>P3: AI Engine</td>
+<td>Blocker Extraction Prompting</td>
+<td>AI Logic</td>
+<td>AI Engineer</td>
+<td>3.1</td>
+<td>Text holds context</td>
+<td>12 - 20h</td>
 </tr>
 <tr>
 <td>4.1</td>
 <td>P4: Launch</td>
 <td>E2E Testing &amp; Bug Fixing</td>
 <td>QA Report</td>
-<td>QA</td>
-<td>3.1, 3.2</td>
+<td>QA Engineer</td>
+<td>2.1, 2.2, 3.2</td>
 <td>—</td>
-<td>16 - 24h</td>
-<td>Zero critical bugs in flow</td>
-<td>ALL</td>
+<td>12 - 16h</td>
 </tr>
 <tr>
 <td>4.2</td>
 <td>P4: Launch</td>
 <td>User Acceptance (UAT)</td>
 <td>Sign-off</td>
-<td>PM</td>
+<td>Solutions Arch</td>
 <td>4.1</td>
 <td>Client availability</td>
-<td>8 - 16h</td>
-<td>Client confirms UX meets goals</td>
-<td>REQ004</td>
+<td>4 - 8h</td>
 </tr>
 </tbody></table>
 <h2>Milestones</h2>
@@ -174,24 +297,24 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>M1: Capture Ready</td>
-<td>Successful recording fetch from Zoom/Teams</td>
-<td>Functional API connection in dev env</td>
+<td>M1: Form Ready</td>
+<td>Web form accepts and stores Dev reports</td>
+<td>Form submits to DB successfully</td>
 </tr>
 <tr>
-<td>M2: Engine Ready</td>
-<td>Reliable meeting summarization (text-to-summary)</td>
-<td>80%+ accuracy on test cases</td>
+<td>M2: AI Ready</td>
+<td>AI extracts blockers accurately</td>
+<td>90% accuracy on sample text</td>
 </tr>
 <tr>
-<td>M3: Integration Ready</td>
-<td>End-to-end flow from meeting to Jira/Notion</td>
-<td>Integrated workflow without manual copy</td>
+<td>M3: Dashboard Live</td>
+<td>PM can see blockers highlighted</td>
+<td>UI renders correctly with AI data</td>
 </tr>
 <tr>
 <td>M4: Launch</td>
 <td>Project hand-over and MVP live</td>
-<td>All P0/P1 tasks completed and signed off</td>
+<td>All tasks signed off</td>
 </tr>
 </tbody></table>
 <h2>Delivery Assumptions</h2>
@@ -206,22 +329,19 @@
 </thead>
 <tbody><tr>
 <td>DA001</td>
-<td>Meeting recordings provide high-quality audio</td>
+<td>Devs will type enough text for AI to detect issues</td>
 <td>Active</td>
-<td>Summarization accuracy will drop</td>
+<td>AI extraction will return false negatives</td>
 </tr>
 <tr>
 <td>DA002</td>
-<td>OAuth permissions are granted by Client/IT</td>
+<td>Client has OpenAI API Key for processing</td>
 <td>Active</td>
-<td>Integration will be blocked</td>
-</tr>
-<tr>
-<td>DA003</td>
-<td>Third-party LLM (OpenAI/Claude) is used for summary</td>
-<td>Active</td>
-<td>Internal model training needed (higher cost)</td>
+<td>Development blocked until key provided</td>
 </tr>
 </tbody></table>
+
+
+  </div>
 </body>
 </html>

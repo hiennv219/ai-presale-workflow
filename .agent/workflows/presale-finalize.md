@@ -27,6 +27,21 @@ If not met → report what's missing, do NOT export.
 3. Write `workspace/final-wbs.md` (from `workspace/wbs.md` + final metadata).
 4. Update `status.md`: mark Final Proposal + Final WBS as Done.
 
+## Reusable Automation Script (Recommended)
+
+To save thousands of LLM context tokens and prevent manual errors, a Python script is available at `.agent/scripts/presale_helper.py`.
+
+Run this script to automatically execute proposal concatenation, WBS finalization, and styled HTML/Marp slide-deck compilation for any project:
+```bash
+# To run all steps (concat, wbs, and html/marp export):
+python3 .agent/scripts/presale_helper.py --project projects/{{project-dir}} --all
+
+# To run specific steps:
+python3 .agent/scripts/presale_helper.py --project projects/{{project-dir}} --concat
+python3 .agent/scripts/presale_helper.py --project projects/{{project-dir}} --wbs
+python3 .agent/scripts/presale_helper.py --project projects/{{project-dir}} --export
+```
+
 ## Output
 
 ```

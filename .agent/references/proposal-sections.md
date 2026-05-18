@@ -37,5 +37,14 @@ workspace/proposal/
    - Section 1 & 2: Kể chuyện, mô tả tính năng (Business language).
    - Section 4 (Risks, Assumptions): Bullet list có in đậm title.
    - Section 5 (Tech Stack, Capacity, Security): Tuyệt đối dùng Bullet list, giải thích rõ "Tại sao chọn công nghệ này".
-   
    - Section 7.3 (3rd-Party Costs): Bullet list.
+
+## Checklist viết văn bản như người thật (Humanization Checklist)
+
+Để văn bản mất hoàn toàn "vết AI" và trông giống như do chuyên gia con người biên soạn:
+1. **Không dùng `---`**: Loại bỏ tất cả đường kẻ ngang giữa các tiêu đề phần lớn.
+2. **Không dùng Emoji trang trí**: Tuyệt đối không chèn `💡`, `🔴`, `⭐`, `⚠️` vào tiêu đề dự án hoặc trích dẫn. Hãy dùng text thuần và chuyên nghiệp.
+3. **Đa dạng hóa danh sách (Bullets)**: Tránh lặp đi lặp lại cấu trúc `- **Title** — Description` dài dằng dặc. Đan xen giữa văn xuôi tự nhiên, dấu hai chấm `:`, hoặc viết trực tiếp mô tả mà không cần bôi đậm tiêu đề phụ.
+4. **Loại bỏ hướng dẫn thiết kế**: Xóa hết các đoạn ghi chú kỹ thuật dạng ngoặc đơn `*(Illustrative...)*` hay `*(Note: ...)*`.
+5. **Cách diễn đạt tự nhiên**: Tránh các cụm từ sáo rỗng của AI như "giải pháp đột phá", "kiến trúc tối tân", "bịt kín kẽ", "vận hành trơn tru (seamless)". Hãy dùng ngôn từ kỹ thuật và kinh doanh thực tế, rõ ràng.
+

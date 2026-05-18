@@ -19,6 +19,12 @@ description: Create or revise WBS from approved scope with phases, tasks, estima
 - Mark customer dependencies explicitly.
 - Trace every item to scope reference.
 
+## Consistency Rules (Rule #10)
+
+- **Scope Coverage Check**: After building WBS, verify every `S-{n}` from the approved In-Scope register has at least 1 WBS task referencing it. List any orphan scope items — these indicate incomplete WBS coverage.
+- **Role Registry**: After building WBS, extract the unique set of `Owner Role` values across all tasks. Output this as a **Role Registry** list at the bottom of the WBS. This becomes the definitive list of roles that MUST appear in Proposal Section 7.1 (Resource Allocation table).
+- **Milestone-WBS Mapping**: Each milestone's "Key Deliverables" must map to specific WBS IDs. No milestone can reference deliverables that don't exist as WBS tasks. No WBS task can be unassigned to a milestone.
+
 ## Output
 
 Use [references/wbs.md](../../references/wbs.md).
