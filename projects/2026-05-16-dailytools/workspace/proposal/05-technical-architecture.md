@@ -1,8 +1,8 @@
 ## 5. Technical Architecture
 
-### 5.1 Target Architecture
-DailyTools uses a simple Next.js monolithic architecture for rapid MVP delivery.
+> 💡 DailyTools uses a modern, serverless Next.js monolithic architecture for rapid MVP delivery, ensuring low cost and high scalability.
 
+### 5.1 Target Architecture
 ```text
 ┌─ CLIENT (Next.js / React) ───────────────┐
 │  ┌──────────────┐  ┌──────────────────┐  │
@@ -32,15 +32,12 @@ DailyTools uses a simple Next.js monolithic architecture for rapid MVP delivery.
 ```
 
 ### 5.2 Tech Stack
-| Layer | Technology | Role | Why |
-|:------|:-----------|:-----|:----|
-| Fullstack | Next.js / TypeScript | Unified frontend and backend API | Rapid MVP delivery with single codebase, SSR for fast load |
-| AI / NLP | OpenAI GPT-4o | Text analysis and blocker extraction | Best-in-class text understanding, low integration effort |
-| Database | PostgreSQL (Supabase) | Data storage | Managed service, built-in auth, real-time subscriptions |
-| Hosting | Vercel | Zero-config deployment | Native Next.js support, serverless scaling, free tier for MVP |
+- **Frontend & Backend**: **Next.js / TypeScript** — Single codebase for both UI and API routes. Rapid MVP delivery, SSR for fast load times.
+- **AI Engine**: **OpenAI GPT-4o** — Best-in-class understanding for text analysis and blocker extraction with low integration effort.
+- **Database & Auth**: **PostgreSQL (Supabase)** — Managed service, built-in auth (JWT), real-time subscriptions, free tier is fully sufficient for MVP.
+- **Infrastructure**: **Vercel** — Zero-config deployment, native Next.js support, serverless auto-scaling.
 
 ### 5.3 Data Flow
-
 ```mermaid
 sequenceDiagram
     participant Dev
@@ -63,15 +60,13 @@ sequenceDiagram
     API-->>PM: Render blockers list
 ```
 
-### 5.4 Capacity Planning & Infrastructure Sizing
-#### Traffic Estimation
-| Metric | Value | Calculation |
-|:-------|:------|:------------|
-| Avg Reports / Day | 50 | Initial dev team size |
-| Storage / Report | < 5KB | Plain text data |
-| Daily Data Volume | < 1MB | Extremely lightweight |
+### 5.4 Capacity & Sizing
+- **Target Users**: ~50 Developers.
+- **Concurrent Connections**: Low. ~50 reports/day, each report <5KB. Total storage <1MB/day.
+- **Storage Strategy**: Relational storage in Supabase PostgreSQL is more than enough. The entire system will run comfortably on free/hobby tiers until scaling past 200+ users.
 
-#### Infrastructure Sizing
-- **Compute**: Next.js Serverless functions (Vercel).
-- **Storage**: None needed beyond the database.
-- **Database**: PostgreSQL (Supabase/Vercel Postgres) for text logs.
+### 5.5 Security & Privacy
+- **Transport**: TLS 1.3 (Vercel default).
+- **Storage**: AES-256 encryption (Supabase default).
+- **Auth**: Supabase Auth (JWT) with RBAC (Dev = submit only, PM = read dashboard).
+- **LLM Privacy**: Zero-retention API — OpenAI does not store or train on input data. Report text will be anonymized before sending to GPT-4o.

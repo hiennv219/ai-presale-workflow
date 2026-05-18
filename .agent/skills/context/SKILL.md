@@ -8,10 +8,11 @@ description: Update and compress deal context from customer answers, notes, Q&A,
 ## Procedure
 
 1. Classify new input: fact, clarification, correction, decision, assumption, constraint, risk, scope change, preference.
-2. Update deal context before artifact edits.
-3. Merge duplicates, remove obsolete notes.
-4. Preserve traceability via decisions + change log.
-5. Compress long history into rolling summary.
+2. **Customer Feedback Priority**: Any explicit concern, direct feedback, or strong preference mentioned by the customer must be marked with **Critical** in the `Priority` column of the `Confirmed Requirements` table in the Deal Context.
+3. Update deal context before artifact edits.
+4. Merge duplicates, remove obsolete notes.
+5. Preserve traceability via decisions + change log.
+6. Compress long history into rolling summary.
 
 ## Deal Context
 

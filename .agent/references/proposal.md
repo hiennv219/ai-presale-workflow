@@ -5,152 +5,147 @@
 
 ---
 
-## 1. Project Overview
-### 1.1 Context & Problem Statement
-- **Current State**: {{current_state}}
-- **Root Cause Analysis**:
+## 1. Project Overview & Business Value
 
-| # | Pain Point | Root Cause | Severity |
-|:--|:-----------|:----------------|:------:|
-| P1 | {{pain_point_1}} | {{root_cause_1}} | {{severity_1}} |
+### 1.1 Context & Problem Statement
+{{current_state_narrative — 2-3 sentences describing the current state, written in prose}}
+
+**Core Pain Points:**
+- **{{pain_point_1}}** — {{root_cause_1}}. {{impact_if_not_solved}}.
+- **{{pain_point_2}}** — {{root_cause_2}}. {{impact_if_not_solved}}.
+
+> 💡 {{key_insight — 1 sentence summarizing why this problem needs immediate resolution}}
 
 ### 1.2 Goals & Business Impact
-- **Goal**: {{core_goal}}
+- **Goal**: {{core_goal — 1 clear sentence}}
 - **Type**: {{project_type}}
-- **Business Benefits**:
-    - [x] {{benefit_1}}
-    - [x] {{benefit_2}}
-    - [x] {{benefit_3}}
 
-### 1.3 Proposed Solution Overview
-{{solution_overview}}
+**Business Benefits**:
+- **{{benefit_1_title}}** — {{benefit_1_detail}}.
+- **{{benefit_2_title}}** — {{benefit_2_detail}}.
 
-### 1.4 Company Showcase (Optional)
-{{showcase}}
+## 2. Proposed Solution & UX
 
-## 2. Scope & Solution
-### 2.1 In-Scope
-{{in_scope_phases}}
+### 2.1 Solution Overview
+{{solution_overview — 3-5 sentences describing the overall solution, written in prose}}
 
-### 2.2 Out-of-Scope
-{{out_of_scope}}
+### 2.2 Key Features
+*(List 3-5 core features using business language. Group by module (Admin, User App, etc.) for large projects. Absolutely do not use complex technical jargon)*
 
-## 3. User Flow & Wireframe
-<!-- Chỉ vẽ cho tính năng chính (core features), không vẽ hết tất cả flows -->
+**{{module_or_feature_group_1}}**
+- **{{feature_1_name}}**: {{feature_1_business_value}}
+- **{{feature_2_name}}**: {{feature_2_business_value}}
 
-### 3.1 User Flow
-{{user_flow_description}}
+### 2.3 User Flow
+{{user_flow_description — 2-3 sentences of prose describing the main flow}}
 
 ```mermaid
 {{user_flow_diagram}}
 ```
 
-### 3.2 High-Level Wireframe
-<!-- Use wireframe skill. Draw ASCII wireframes for each core screen. Never use text-only descriptions. -->
+### 2.4 High-Level Wireframe
+{{wireframes_here}}
 
-## 4. Risks, Assumptions & Acceptance Criteria
+## 3. Project Scope
+
+### 3.1 In-Scope
+- **{{phase_or_module_1}}**: {{description}}
+- **{{phase_or_module_2}}**: {{description}}
+
+### 3.2 Out-of-Scope
+- **{{item_1}}**: {{reason_for_deferral}}
+- **{{item_2}}**: {{reason_for_deferral}}
+
+## 4. Risks & Strategic Assumptions
 
 ### 4.1 Strategic Assumptions
-| # | Category | Assumption | Note |
-|:--|:---------|:-----------|:-----|
-| A1 | {{category_1}} | {{assumption_1}} | {{note_1}} |
+{{intro — 1 sentence: "This proposal is built upon the following assumptions:"}}
+- **{{category_1}}** — {{assumption_1}}.
+- **{{category_2}}** — {{assumption_2}}.
 
 ### 4.2 Risk & Mitigation
-| # | Risk | Severity | Impact | Mitigation |
-|:--|:-----|:--------:|:-------|:-----------|
-| R1 | {{risk_1}} | {{level}} | {{impact}} | {{mitigation}} |
-
-### 4.3 Acceptance Criteria
-| # | Item | Measurement Criteria | Phase |
-|:--|:-----|:---------------------|:------|
-| AC1 | {{item_1}} | {{criteria_1}} | {{phase}} |
+**🔴 R1: {{risk_name}} (High)**
+{{risk_description}}
+→ *Mitigation*: {{specific_solution}}
 
 ## 5. Technical Architecture
 
-<!-- Brownfield: include 5.1 AS-IS, 5.2 TO-BE, 5.3 Migration, 5.4 Tech Stack, 5.5 Data Flow, 5.6 Capacity -->
-<!-- Greenfield: skip AS-IS and Migration, start with Target Architecture. Renumber accordingly. -->
-<!-- Use architecture skill for all diagrams. ASCII box art for static views, Mermaid sequence for dynamic flows. -->
+> 💡 {{1 sentence summarizing the architecture philosophy}}
 
-### 5.1 AS-IS Architecture (brownfield only)
-```text
-{{as_is_diagram_ascii_box_art}}
-```
-**Core Issue**: {{core_architecture_problem}}
-
-### 5.2 Target Architecture
+### 5.1 Target Architecture
 ```text
 {{to_be_diagram_ascii_box_art}}
 ```
 
-### 5.3 Migration Strategy (brownfield only)
-- **Method**: {{migration_method}}
-- **Steps**:
-{{migration_steps}}
+### 5.2 Tech Stack
+- **Frontend**: **{{tech}}** — {{why}}.
+- **Backend**: **{{tech}}** — {{why}}.
+- **Database**: **{{tech}}** — {{why}}.
+- **Infrastructure**: **{{tech}}** — {{why}}.
 
-### 5.4 Tech Stack
-| Layer | Technology | Role | Why |
-|:------|:-----------|:-----|:----|
-| {{layer}} | {{tech}} | {{role}} | {{why}} |
-
-### 5.5 Data Flow
+### 5.3 Data Flow
 ```mermaid
 sequenceDiagram
     {{data_flow_sequence}}
 ```
 
-### 5.6 Capacity Planning & Infrastructure Sizing
-#### Traffic Estimation
-| Metric | Value | Calculation |
-|:-------|:------|:------------|
-| {{metric}} | {{value}} | {{formula}} |
+### 5.4 Capacity & Sizing
+- **Target Users**: {{number}}
+- **Concurrent Connections**: {{number}}
+- **Storage Strategy**: {{strategy}}
 
-#### Infrastructure Sizing
-{{infra_sizing}}
+### 5.5 Security & Privacy
+- **Transport**: {{approach}}
+- **Storage**: {{approach}}
+- **Auth**: {{approach}}
 
-## 6. Implementation Plan
+## 6. Execution & Delivery Plan
+
 ### 6.1 Product Roadmap
+{{2-3 sentences of prose describing the overall timeline allocation strategy, why it is divided into these phases, and when the delivery point is.}}
+
 | Phase | Feature | Duration | Timeline | {{month_headers}} |
 |-------|---------|----------|----------|{{month_separators}}|
 {{roadmap_rows}}
 
-**Legend:** `███` = Active development period
+### 6.2 Milestones & Acceptance Criteria
+{{2-3 sentences of prose specifying the acceptance method. E.g., "The project is accepted by Milestones. Below is the Definition of Done (DoD) and corresponding acceptance criteria for each phase."}}
 
-**Key Highlights:**
-{{roadmap_highlights}}
+| # | Milestone | Target Date | Key Deliverables | Acceptance Criteria |
+|---|-----------|-------------|------------------|---------------------|
+| M1 | {{milestone_1}} | {{date}} | {{modules}} | {{ac_1}} |
 
-### 6.2 Project Milestone Breakdown
-| # | Milestone | Target Date | Key Modules | DoD | Verification Tool |
-|---|-----------|-------------|-------------|-----|-------------------|
-| M1 | {{milestone_1}} | {{date}} | {{modules}} | {{dod}} | {{tool}} |
 
-### 6.3 Delivery Plan
-{{delivery_plan}}
+## 7. Budget & Commercials
 
-## 7. WBS & Resources
-### 7.1 WBS Details
-{{wbs_detail}}
+### 7.1 Resource Allocation & Development Cost
+{{Prose explaining the pricing model (Fixed price or T&M), total project duration, and budget commitment for the agreed Scope.}}
 
-### 7.2 Resource Plan
-| Role | FTE | Responsibility |
-|:-----|:---:|:---------------|
-| {{role}} | {{count}} | {{responsibility}} |
+| Position | Seniority | Unit Price | {{Month 1}} | {{Month 2}} | {{Month 3}} | Total Effort | Total Cost |
+|:---------|:----------|:-----------|:-----------:|:-----------:|:-----------:|:------------:|:-----------|
+| {{Role}} | {{Level}} | {{Price}} | {{FTE}} | {{FTE}} | {{FTE}} | {{Total FTE}} | {{Cost}} |
+| **Total**| | | | | | | **{{total_cost}}** |
 
-### 7.3 Resource Estimation
-| Phase | Dev/Ops (h) | QA (h) | Total | Target | Quick summary |
-|:------|:-----------:|:------:|:-----:|:-------|:--------------|
-| {{phase}} | {{dev_h}} | {{qa_h}} | {{total_h}} | {{deadline}} | {{summary}} |
+### 7.2 Operational Cost (Infra)
+{{Prose explaining the server cost optimization philosophy (E.g., "Use serverless to save 80% cost when there is no traffic").}}
 
-## 8. Budget & Commercials
-### 8.1 Development Cost
-- **Total Effort**: {{total_hours}} working hours.
-- **Development Cost**: {{dev_cost_note}}
+| Phase | Users | Infra Cost/month | Main Components |
+|:----------|:------|:-----------------|:----------------|
+| {{phase}} | {{cap}} | {{cost}} | {{components}} |
 
-### 8.2 Operational Cost & Scaling Strategy
-| Phase | Capacity | Infra Cost/month | Main Components |
-|:------|:---------|:-----------------|:----------------|
-| {{phase}} | {{capacity}} | {{infra_cost}} | {{components}} |
+### 7.3 3rd-Party Vendor Costs
+- **{{Vendor 1}}**: {{cost}} — {{note}}
+- **{{Vendor 2}}**: {{cost}} — {{note}}
 
-### 8.3 3rd-Party Vendor & Pass-Through Costs
-| Service | Vendor | Ownership | Pass-through Cost Model |
-|:--------|:-------|:----------|:------------------------|
-| {{service}} | {{vendor}} | {{ownership}} | {{cost_model}} |
+## 8. Development Cost & Payment Schedule
+{{1-2 sentences summarizing the total contract value for the development services.}}
+
+- **Total Development Cost**: **{{total_dev_cost}}** 
+*(This is the total amount payable to the development team. It excludes operational infrastructure and 3rd-party vendor costs which are paid directly to those providers).*
+
+**Payment Schedule**:
+- **Milestone 1 Payment**: {{conditions}}
+- **Milestone 2 Payment**: {{conditions}}
+
+---
+*Company Showcase is attached in the appendix PDF if requested by the customer.*

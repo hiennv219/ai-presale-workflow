@@ -1,50 +1,49 @@
 # Proposal: DailyTools MVP
 **Author**: Antigravity AI
-**Date**: 2026-05-17
-**Version**: Final (8-Section v3)
+**Date**: 2026-05-18
+**Version**: Final (8-Section Standardized)
 
 ---
 
-## 1. Project Overview
+## 1. Project Overview & Business Value
 
 ### 1.1 Context & Problem Statement
-- **Current State**: Project Managers (PMs) currently lack immediate visibility into critical blockers. Daily updates from the development team are often unstructured, too long, or buried in chat channels. This leads to PMs missing critical issues and wasting time manually parsing text.
-- **Root Cause Analysis**:
+Project Managers (PMs) currently lack immediate visibility into critical blockers. Daily updates from the development team are often unstructured, too long, or buried in chat channels. This leads to PMs missing critical issues and wasting time manually parsing text.
 
-| # | Pain Point | Root Cause | Severity |
-|:--|:-----------|:----------------|:------:|
-| P1 | Lack of visibility into dev blockers | Daily reports are too long or unstructured | High |
-| P2 | Manual parsing of updates | Devs write unstructured text in chat | High |
+**Core Pain Points:**
+- **Lack of visibility into dev blockers** — Daily reports are too long or unstructured. High risk of delays.
+- **Manual parsing of updates** — Devs write unstructured text in chat, forcing PMs to manually extract status.
+
+> 💡 **CRITICAL FOCUS**: To solve this, we must absolutely **optimize effort for PMs** by fully automating the extraction of blockers from raw text.
 
 ### 1.2 Goals & Business Impact
 - **Goal**: Provide a lightweight, automated way to collect dev updates and instantly extract blockers using AI.
 - **Type**: Greenfield MVP Development (Simple Trial)
-- **Business Benefits**:
-    - [x] **Time Savings**: Reduce PM effort in parsing daily reports.
-    - [x] **Risk Mitigation**: Catch and highlight blockers immediately before they cause delays.
-    - [x] **Developer Experience**: A frictionless, 3-field form that takes 30 seconds to fill out.
 
-### 1.3 Proposed Solution Overview
-DailyTools is a lightweight web application that automates the collection and analysis of developer daily reports. Developers submit a simple 3-field form (What I did, What I will do, Blockers). An AI engine powered by GPT-4o scans each submission in real-time to detect hidden blockers or risks — even when developers don't explicitly flag them. PMs get a dedicated dashboard showing active blockers at a glance, eliminating the need to manually read through chat messages or lengthy reports.
+**Business Benefits**:
+- **Effort Optimization (Priority)** — Drastically reduce PM effort in parsing daily reports by automatically summarizing and highlighting issues.
+- **Risk Mitigation** — Catch and highlight blockers immediately before they cause timeline delays.
+- **Developer Experience** — A frictionless, 3-field form that takes 30 seconds to fill out, ensuring high adoption.
 
-### 1.4 Company Showcase (Optional)
-N/A — No relevant case studies provided for this project.
+## 2. Proposed Solution & UX
 
-## 2. Scope & Solution
+### 2.1 Solution Overview
+DailyTools is a centralized daily reporting hub that automatically surfaces development bottlenecks. By parsing unstructured developer updates, it immediately alerts PMs to potential risks without requiring developers to log into complex project management tools.
 
-### 2.1 In-Scope
-The MVP for DailyTools focuses on a simple text-based data collection and extraction trial, prioritized by the MoSCoW method:
-- **Web Form for Devs (Must-have)**: A simple web form (What I did, What I will do, Blockers) for daily submission.
-- **AI Blocker Extraction (Must-have)**: Processing the submitted text with GPT-4o to flag and highlight hidden blockers.
-- **PM Dashboard (Must-have)**: A clean view for PMs to instantly see active blockers and historical daily logs.
+### 2.2 Key Features
+*(The following features are designed to directly address the highest priority requirements from the Deal Context).*
 
-### 2.2 Out-of-Scope
-- **Real-time Live Transcription**: Irrelevant to this text-based MVP.
-- **Jira/Notion Sync**: Deferred to Phase 2 to keep the MVP simple.
+**Developer Workspace**
+- **Frictionless Web Form (Critical)**: A fast, mobile-friendly interface for developers to quickly note down what they did, their plans, and any challenges, without disrupting their workflow.
+- **Zero-Login Submission**: Magic links or simple authentication to ensure developers actually use the tool.
 
-## 3. User Flow & Wireframe
+**AI Engine**
+- **Smart Blocker Extraction (Critical)**: Automatically reads through daily logs and identifies hidden risks or issues, even if the developer doesn't explicitly label them as problems.
 
-### 3.1 User Flow
+**Project Management Console**
+- **Alert Dashboard**: A prioritized view that automatically pushes all detected roadblocks to the top, ensuring critical issues are addressed first.
+
+### 2.3 User Flow
 Developers submit daily reports through a simple web form. The AI engine scans each submission for blockers. If a blocker is detected, it is highlighted on the PM Dashboard for immediate action. Otherwise, the report is logged as a normal status update.
 
 ```mermaid
@@ -58,11 +57,10 @@ graph TD
     F --> H([PM Reviews Blockers])
 ```
 
-### 3.2 High-Level Wireframe
+### 2.4 High-Level Wireframe
 
 **Dev Form**
-
-```
+```text
 ┌─────────────────────────────────────┐
 │  📋 Daily Standup                   │
 ├─────────────────────────────────────┤
@@ -87,8 +85,7 @@ graph TD
 ```
 
 **PM Dashboard**
-
-```
+```text
 ┌─────────────────────────────────────┐
 │  📊 PM Dashboard                    │
 ├─────────────────────────────────────┤
@@ -117,35 +114,39 @@ graph TD
 └─────────────────────────────────────┘
 ```
 
-## 4. Risks, Assumptions & Acceptance Criteria
+## 3. Project Scope
+
+### 3.1 In-Scope
+- **Web Form for Dev Daily Reports**: Responsive, mobile-friendly. 3 text fields + submit. Platform: iOS Safari, Android Chrome, Desktop. Deliverable: deployed page + API endpoint.
+- **AI extraction of Blockers from text**: GPT-4o integration with custom prompt. Confidence scoring (0–1). Deliverable: extraction service + prompt documentation.
+- **PM Dashboard to view Blockers**: Active blockers view (sorted by severity) + historical daily logs (filterable by date/person). Deliverable: deployed dashboard + role-based access.
+
+### 3.2 Out-of-Scope & Future Phases
+- **Real-time live transcription**: MVP focuses on daily text reports only.
+- **Meeting platform integrations (Zoom/Teams)**: Deferred to Phase 2.
+- **AI Voice Summarization engine**: Deferred to Phase 2.
+- **PM Tool Push (Jira/Notion)**: Deferred to Phase 2.
+
+## 4. Risks & Strategic Assumptions
 
 ### 4.1 Strategic Assumptions
-| # | Category | Assumption | Note |
-|:--|:---------|:-----------|:-----|
-| A1 | Adoption | Developers will consistently use the web form instead of chat channels | Form must be ultra-fast (<30s to fill) |
-| A2 | AI Accuracy | GPT-4o will accurately differentiate between standard updates and critical blockers | Prompt tuning required during Phase 2 |
-| A3 | Scale | Initial team size ~50 developers | Affects infra sizing decisions |
+This proposal is built upon the following assumptions:
+- **PM tools APIs** — PM tools have accessible APIs for pushing content (N/A for MVP, assumed for Phase 2).
+- **Adoption** — Devs will reliably fill out the Daily Report web form. If this fails, there will be no blockers to aggregate.
 
 ### 4.2 Risk & Mitigation
-| # | Risk | Severity | Impact | Mitigation |
-|:--|:-----|:--------:|:-------|:-----------|
-| R1 | Low adoption by devs | High | No data to extract blockers from | Make the form ultra-fast (3 fields) and mobile-friendly. |
-| R2 | AI missing hidden blockers | Medium | False sense of security for PMs | Allow devs to explicitly tag blockers, plus prompt-tuning. |
-
-### 4.3 Acceptance Criteria
-| # | Item | Measurement Criteria | Phase |
-|:--|:-----|:---------------------|:------|
-| AC1 | Form Submission | Devs can submit form and data saves to DB correctly. | Phase 1 |
-| AC2 | Blocker Extraction | AI correctly flags blockers in 90% of test inputs. | Phase 2 |
-| AC3 | Dashboard Visibility | PM dashboard renders active blockers clearly above normal logs. | Phase 3 |
-
-<!-- PLACEHOLDER_SECTION_5 -->
+- 🔴 **R1: Low adoption by dev team (High)**
+  Developers might resist using a new tool if it takes too much time.
+  → *Mitigation*: Keep the form extremely short (3 fields max) and fast (<30s to submit). Make it mobile-friendly so they can do it on the go.
+- 🟡 **R2: AI summary inaccuracy (Medium)**
+  GPT-4o might miss subtle blockers or flag false positives.
+  → *Mitigation*: Implement a Human-in-the-loop review option, allowing PMs to manually adjust or tune the prompt if needed.
 
 ## 5. Technical Architecture
 
-### 5.1 Target Architecture
-DailyTools uses a simple Next.js monolithic architecture for rapid MVP delivery.
+> 💡 DailyTools uses a modern, serverless Next.js monolithic architecture for rapid MVP delivery, ensuring low cost and high scalability.
 
+### 5.1 Target Architecture
 ```text
 ┌─ CLIENT (Next.js / React) ───────────────┐
 │  ┌──────────────┐  ┌──────────────────┐  │
@@ -175,15 +176,12 @@ DailyTools uses a simple Next.js monolithic architecture for rapid MVP delivery.
 ```
 
 ### 5.2 Tech Stack
-| Layer | Technology | Role | Why |
-|:------|:-----------|:-----|:----|
-| Fullstack | Next.js / TypeScript | Unified frontend and backend API | Rapid MVP delivery with single codebase, SSR for fast load |
-| AI / NLP | OpenAI GPT-4o | Text analysis and blocker extraction | Best-in-class text understanding, low integration effort |
-| Database | PostgreSQL (Supabase) | Data storage | Managed service, built-in auth, real-time subscriptions |
-| Hosting | Vercel | Zero-config deployment | Native Next.js support, serverless scaling, free tier for MVP |
+- **Frontend & Backend**: **Next.js / TypeScript** — Single codebase for both UI and API routes. Rapid MVP delivery, SSR for fast load times.
+- **AI Engine**: **OpenAI GPT-4o** — Best-in-class understanding for text analysis and blocker extraction with low integration effort.
+- **Database & Auth**: **PostgreSQL (Supabase)** — Managed service, built-in auth (JWT), real-time subscriptions, free tier is fully sufficient for MVP.
+- **Infrastructure**: **Vercel** — Zero-config deployment, native Next.js support, serverless auto-scaling.
 
 ### 5.3 Data Flow
-
 ```mermaid
 sequenceDiagram
     participant Dev
@@ -206,24 +204,22 @@ sequenceDiagram
     API-->>PM: Render blockers list
 ```
 
-### 5.4 Capacity Planning & Infrastructure Sizing
-#### Traffic Estimation
-| Metric | Value | Calculation |
-|:-------|:------|:------------|
-| Avg Reports / Day | 50 | Initial dev team size |
-| Storage / Report | < 5KB | Plain text data |
-| Daily Data Volume | < 1MB | Extremely lightweight |
+### 5.4 Capacity & Sizing
+- **Target Users**: ~50 Developers.
+- **Concurrent Connections**: Low. ~50 reports/day, each report <5KB. Total storage <1MB/day.
+- **Storage Strategy**: Relational storage in Supabase PostgreSQL is more than enough. The entire system will run comfortably on free/hobby tiers until scaling past 200+ users.
 
-#### Infrastructure Sizing
-- **Compute**: Next.js Serverless functions (Vercel).
-- **Storage**: None needed beyond the database.
-- **Database**: PostgreSQL (Supabase/Vercel Postgres) for text logs.
+### 5.5 Security & Privacy
+- **Transport**: TLS 1.3 (Vercel default).
+- **Storage**: AES-256 encryption (Supabase default).
+- **Auth**: Supabase Auth (JWT) with RBAC (Dev = submit only, PM = read dashboard).
+- **LLM Privacy**: Zero-retention API — OpenAI does not store or train on input data. Report text will be anonymized before sending to GPT-4o.
 
-<!-- PLACEHOLDER_SECTION_6 -->
-
-## 6. Implementation Plan
+## 6. Execution & Delivery Plan
 
 ### 6.1 Product Roadmap
+The MVP is designed for a rapid 4-week delivery, divided into logical phases to validate core assumptions early. We deploy the Form first to test adoption, followed by AI integration, and finally the PM dashboard.
+
 | Phase | Feature | Duration | Timeline | W1 | W2 | W3 | W4 |
 |-------|---------|----------|----------|:--:|:--:|:--:|:--:|
 | P1 | Form & Database | 1 week | Week 1 | ███ |    |    |    |
@@ -231,62 +227,51 @@ sequenceDiagram
 | P3 | PM Dashboard View | 1 week | Week 3 |     |     | ███ |    |
 | P4 | UAT & Launch | 1 week | Week 4 |     |     |     | ███ |
 
-**Legend:** `███` = Active development period
+### 6.2 Milestones & Acceptance Criteria
+The project is accepted by Milestones. Below is the Definition of Done (DoD) and corresponding acceptance criteria for each phase.
 
-**Key Highlights:**
-- **Week 1**: Deploy the basic web form for Devs.
-- **Week 2**: Integrate OpenAI and tune the prompt for blocker extraction.
-- **Week 3**: Finalize the dashboard for the PM.
-- **Week 4**: UAT and Live launch of the MVP.
+| # | Milestone | Target Date | Key Deliverables | Acceptance Criteria |
+|---|-----------|-------------|------------------|---------------------|
+| M1 | Form Ready | End of W1 | Web Form & DB | Devs can submit form and data saves correctly |
+| M2 | AI Ready | End of W2 | AI Extraction | AI correctly flags blockers in 90% of test inputs |
+| M3 | Dashboard | End of W3 | PM UI | Dashboard renders active blockers clearly above normal logs |
+| M4 | Launch | End of W4 | Live Deploy | Signed off UAT on production environment |
 
-### 6.2 Project Milestone Breakdown
-| # | Milestone | Target Date | Key Modules | DoD | Verification Tool |
-|---|-----------|-------------|-------------|-----|-------------------|
-| M1 | Form Ready | Week 1 | Web Form & DB | Form submits to DB | Manual Test |
-| M2 | AI Ready | Week 2 | AI Extraction | 90% accuracy | QA Review |
-| M3 | Dashboard | Week 3 | PM UI | PM sees blockers | UI Test |
-| M4 | Launch | Week 4 | Live Deploy | Signed off | UAT |
 
-### 6.3 Delivery Plan
-- **Model**: Fixed-scope, time-boxed (4 weeks)
-- **Cadence**: Weekly demo to PM stakeholder at end of each phase
-- **Handover**: Source code + deployment credentials + prompt documentation
-- **Support**: 2-week bug-fix warranty post-launch
+## 7. Budget & Commercials
 
-## 7. WBS & Resources
+### 7.1 Resource Allocation
+We allocate a cross-functional team on a Fixed-Price model to deliver the MVP within 4 weeks.
 
-### 7.1 WBS Details
-Refer to the detailed [WBS Document](wbs.md) for task-level estimates and dependencies.
+| Position | Seniority | Unit Price | P1 | P2 | P3 | P4 | Total Effort |
+|:---------|:----------|:-----------|:--:|:--:|:--:|:--:|:------------:|
+| Solutions Arch | Senior | $60/hr | 4h | 2h | 2h | 0h | 8h |
+| Fullstack Dev | Mid | $40/hr | 20h| 18h| 20h| 8h | 66h|
+| AI Engineer | Senior | $60/hr | 0h | 12h| 0h | 2h | 14h|
+| QA Engineer | Mid | $30/hr | 4h | 4h | 6h | 10h| 24h|
+| **Total**| | | **28h** | **36h**| **28h**| **20h**| **112h**|
 
-### 7.2 Resource Plan
-| Role | FTE | Responsibility |
-|:-----|:---:|:---------------|
-| Solutions Architect | 0.1 | System design |
-| Fullstack Developer | 1.0 | Frontend, API, and DB |
-| AI Engineer | 0.3 | Prompt engineering |
-| QA Engineer | 0.2 | End-to-end testing |
+### 7.2 Operational Cost (Infra)
+By utilizing a Serverless architecture, we keep MVP running costs near zero, only scaling costs when adoption grows significantly.
 
-### 7.3 Resource Estimation
-| Phase | Dev/Ops (h) | QA (h) | Total | Target | Quick summary |
-|:------|:-----------:|:------:|:-----:|:-------|:--------------|
-| P1: Foundation | 24 | 4 | 28 | Week 1 | Setup and Web Form |
-| P2: AI Engine | 28 | 8 | 36 | Week 2 | LLM logic |
-| P3: Dashboard | 20 | 8 | 28 | Week 3 | PM UI |
-| P4: Launch | 8 | 12 | 20 | Week 4 | UAT and Bug fixing |
+| Phase | Users | Infra Cost/month | Main Components |
+|:----------|:------|:-----------------|:----------------|
+| MVP | 50 Devs | ~$0 | Vercel (Hobby), Supabase (Free Tier) |
+| Phase 2 | 200+ | ~$50–100 | Vercel Pro, Supabase Pro |
 
-## 8. Budget & Commercials
+### 7.3 3rd-Party Vendor Costs
+- **OpenAI (GPT-4o)**: ~$5–15/month — Estimated at 50 reports/day × ~$0.01/call.
 
-### 8.1 Development Cost
-- **Total Effort**: 112 working hours.
-- **Development Cost**: TBD by final resource allocation.
+## 8. Development Cost & Payment Schedule
+Summary of the total contract value for the development and handover of the DailyTools MVP.
 
-### 8.2 Operational Cost & Scaling Strategy
-| Phase | Capacity | Infra Cost/month | Main Components |
-|:------|:---------|:-----------------|:----------------|
-| MVP | 50 Devs | $20 | Vercel, Supabase |
+- **Total Development Cost**: **$4,680**
+*(Note: This is the total fixed price payable to the development team. It excludes operational infrastructure and 3rd-party vendor costs which are paid directly to those providers).*
 
-### 8.3 3rd-Party Vendor & Pass-Through Costs
-| Service | Vendor | Ownership | Pass-through Cost Model |
-|:--------|:-------|:----------|:------------------------|
-| Cloud Infrastructure | Vercel | Client | Billed directly to Client's credit card |
-| AI / LLM API | OpenAI (GPT-4o) | Client | Pay-as-you-go based on volume |
+**Payment Schedule**:
+- **Advance Payment**: 30% upon contract signing (kick-off).
+- **Milestone P2**: 30% upon delivery of the AI engine (End of W2).
+- **Milestone P4**: 40% upon UAT sign-off and launch (End of W4).
+
+---
+*Company Showcase and relevant Case Studies are attached in the appendix PDF if requested.*
