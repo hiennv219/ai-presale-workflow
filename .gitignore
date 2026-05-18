@@ -5,3 +5,6 @@ artifacts/*.md
 !contexts/.gitkeep
 !artifacts/.gitkeep
 
+# Project-specific ignores
+projects/2026-05-11-terrafuse/
+
