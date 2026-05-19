@@ -149,6 +149,104 @@ def run_wbs_finalize(project_path):
     print(f"✔ Successfully finalized WBS into {final_wbs_path}")
     return True
 
+def merge_html_tables(html_content):
+    table_pattern = re.compile(r'<table>.*?</table>', re.DOTALL)
+    
+    def process_table(table_match):
+        table_html = table_match.group(0)
+        
+        thead_match = re.search(r'<thead>(.*?)</thead>', table_html, re.DOTALL)
+        if not thead_match:
+            return f'<div class="table-container">\n{table_html}\n</div>'
+            
+        headers = re.findall(r'<th>(.*?)</th>', thead_match.group(1), re.DOTALL)
+        headers = [re.sub(r'<[^>]*>', '', h).strip() for h in headers]
+        
+        columns_to_merge = ['Category', 'Module', 'Function', 'Sub-function']
+        column_indices = []
+        for col_name in columns_to_merge:
+            for idx, h in enumerate(headers):
+                if h.lower() == col_name.lower():
+                    column_indices.append(idx)
+                    break
+                    
+        if not column_indices:
+            return f'<div class="table-container">\n{table_html}\n</div>'
+            
+        tbody_match = re.search(r'<tbody>(.*?)</tbody>', table_html, re.DOTALL)
+        if not tbody_match:
+            return f'<div class="table-container">\n{table_html}\n</div>'
+            
+        tbody_content = tbody_match.group(1)
+        
+        tr_matches = re.findall(r'<tr>(.*?)</tr>', tbody_content, re.DOTALL)
+        if not tr_matches:
+            return f'<div class="table-container">\n{table_html}\n</div>'
+            
+        rows_cells = []
+        for tr in tr_matches:
+            tds = re.findall(r'<td[^>]*>(.*?)</td>', tr, re.DOTALL)
+            rows_cells.append([{'content': td, 'rowspan': 1, 'visible': True} for td in tds])
+            
+        if not rows_cells:
+            return f'<div class="table-container">\n{table_html}\n</div>'
+            
+        num_rows = len(rows_cells)
+        for list_idx, col_idx in enumerate(column_indices):
+            prev_cell_dict = None
+            rowspan = 1
+            
+            for row_idx in range(num_rows):
+                if col_idx >= len(rows_cells[row_idx]):
+                    continue
+                cell = rows_cells[row_idx][col_idx]
+                cell_text = re.sub(r'<[^>]*>', '', cell['content']).strip()
+                
+                should_merge = cell_text != "" and cell_text != "—" and cell_text != "-"
+                
+                parents_match = True
+                for k in range(list_idx):
+                    parent_col_idx = column_indices[k]
+                    if row_idx > 0:
+                        if parent_col_idx < len(rows_cells[row_idx]) and parent_col_idx < len(rows_cells[row_idx - 1]):
+                            current_parent_text = re.sub(r'<[^>]*>', '', rows_cells[row_idx][parent_col_idx]['content']).strip()
+                            prev_parent_text = re.sub(r'<[^>]*>', '', rows_cells[row_idx - 1][parent_col_idx]['content']).strip()
+                            if current_parent_text != prev_parent_text:
+                                parents_match = False
+                                break
+                        else:
+                            parents_match = False
+                            break
+                    else:
+                        parents_match = False
+                        
+                if prev_cell_dict and should_merge and parents_match and cell_text == re.sub(r'<[^>]*>', '', prev_cell_dict['content']).strip():
+                    rowspan += 1
+                    prev_cell_dict['rowspan'] = rowspan
+                    cell['visible'] = False
+                else:
+                    prev_cell_dict = cell
+                    rowspan = 1
+                    
+        new_tbody_lines = []
+        for row in rows_cells:
+            new_tbody_lines.append("  <tr>")
+            for cell in row:
+                if not cell['visible']:
+                    continue
+                if cell['rowspan'] > 1:
+                    new_tbody_lines.append(f'    <td rowspan="{cell["rowspan"]}">{cell["content"]}</td>')
+                else:
+                    new_tbody_lines.append(f'    <td>{cell["content"]}</td>')
+            new_tbody_lines.append("  </tr>")
+            
+        new_tbody_content = "\n" + "\n".join(new_tbody_lines) + "\n"
+        
+        new_table_html = table_html.replace(tbody_content, new_tbody_content)
+        return f'<div class="table-container">\n{new_table_html}\n</div>'
+        
+    return table_pattern.sub(process_table, html_content)
+
 def convert_md_to_html(md_path, html_path, title, default_template_path, project_path):
     if not os.path.exists(md_path):
         print(f"File not found for HTML conversion: {md_path}")
@@ -159,12 +257,20 @@ def convert_md_to_html(md_path, html_path, title, default_template_path, project
     template_to_use = custom_template if os.path.exists(custom_template) else default_template_path
     
     print(f"Converting {md_path} to HTML using template: {template_to_use}...")
-    result = subprocess.run(['npx', 'marked', '-i', md_path, '--gfm'], capture_output=True, text=True)
+    
+    with open(md_path, 'r', encoding='utf-8') as f:
+        md_content = f.read()
+        
+    # Exclude internal-only sections from the HTML export
+    md_content = re.sub(r'## Scope Coverage Check.*?(?=## |\Z)', '', md_content, flags=re.DOTALL)
+    
+    result = subprocess.run(['npx', 'marked', '--gfm'], input=md_content, capture_output=True, text=True)
     if result.returncode != 0:
         print(f"Error converting markdown via marked: {result.stderr}")
         return False
         
     html_body = result.stdout
+    html_body = merge_html_tables(html_body)
     
     with open(template_to_use, 'r', encoding='utf-8') as f:
         template = f.read()
@@ -180,6 +286,12 @@ def convert_md_to_html(md_path, html_path, title, default_template_path, project
         print(f"ℹ Injected custom styles from {custom_css_path}")
         
     output_html = template.replace("{{title}}", title).replace("{{body}}", html_body)
+    
+    # Apply landscape classes if it's WBS
+    is_landscape = "wbs" in html_path.lower() or "wbs" in md_path.lower() or "wbs" in title.lower()
+    if is_landscape:
+        output_html = output_html.replace('class="word-page"', 'class="word-page landscape"')
+        output_html = output_html.replace('<body>', '<body class="has-landscape">')
     
     os.makedirs(os.path.dirname(html_path), exist_ok=True)
     with open(html_path, 'w', encoding='utf-8') as f:

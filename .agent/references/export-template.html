@@ -30,6 +30,12 @@
       position: relative;
     }
 
+    .word-page.landscape {
+      width: 297mm;
+      min-height: 210mm;
+      padding: 20mm;
+    }
+
     h1, h2, h3, h4 {
       margin-top: 18pt;
       margin-bottom: 6pt;
@@ -91,13 +97,13 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 13px; /* Slightly smaller table typography */
-      margin: 12pt 0;
+      margin: 12pt auto;
     }
 
     th, td {
       border: 1px solid #000000; /* Distinct black grid border */
       padding: 6px 8px;
-      vertical-align: middle;
+      vertical-align: top;
     }
 
     th {
@@ -152,6 +158,16 @@
       font-size: 0.95em;
     }
 
+    @page {
+      size: A4 portrait;
+      margin: 20mm 20mm 20mm 30mm;
+    }
+
+    @page landscape-page {
+      size: A4 landscape;
+      margin: 20mm;
+    }
+
     @media print {
       body {
         background-color: #FFFFFF;
@@ -161,6 +177,11 @@
       .word-page {
         width: 100%;
         box-shadow: none;
+        padding: 0;
+      }
+      .word-page.landscape {
+        page: landscape-page;
+        width: 100%;
         padding: 0;
       }
     }
@@ -177,6 +198,18 @@
       }
       p {
         text-indent: 20px;
+      }
+    }
+
+    @media screen and (max-width: 297mm) {
+      body.has-landscape {
+        padding: 10px;
+        background-color: #FFFFFF;
+      }
+      .word-page.landscape {
+        width: 100%;
+        padding: 15px;
+        box-shadow: none;
       }
     }
   </style>
