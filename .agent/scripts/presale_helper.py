@@ -22,7 +22,7 @@ def get_latest_project_dir():
 def get_proposal_header(final_proposal_path, project_name):
     default_title = f"Proposal: {project_name.replace('-', ' ').title()}"
     default_header = f"""# {default_title}
-**Author**: Sotek Engineering
+**Author**: Ryan Nguyen
 **Date**: 2026-05-18
 **Version**: Final (8-Section Standardized)
 
@@ -300,24 +300,10 @@ def convert_md_to_html(md_path, html_path, title, default_template_path, project
     print(f"✔ Exported styled HTML to {html_path}")
     return True
 
-def compile_marp_deck(deck_path, html_path):
-    if not os.path.exists(deck_path):
-        print(f"Slide deck {deck_path} not found. Skipping Marp compile.")
-        return False
-        
-    print(f"Compiling Marp deck {deck_path} to HTML...")
-    result = subprocess.run(['npx', '@marp-team/marp-cli', deck_path, '-o', html_path], capture_output=True, text=True)
-    if result.returncode != 0:
-        print(f"Error compiling Marp deck: {result.stderr}")
-        return False
-        
-    print(f"✔ Compiled Marp slide deck to {html_path}")
-    return True
-
 def run_export(project_path):
     workspace_dir = os.path.join(project_path, "workspace")
     delivery_dir = os.path.join(project_path, "_delivery")
-    template_path = ".agent/references/export-template.html"
+    template_path = ".agent/references/designs/export-template.html"
     
     if not os.path.exists(template_path):
         print(f"Error: Export template not found at {template_path}")
@@ -334,11 +320,6 @@ def run_export(project_path):
     wbs_md = os.path.join(workspace_dir, "final-wbs.md")
     wbs_html = os.path.join(delivery_dir, "final-wbs.html")
     convert_md_to_html(wbs_md, wbs_html, f"WBS: {project_name.replace('-', ' ').title()}", template_path, project_path)
-    
-    # 3. Compile Slide Deck via Marp
-    deck_md = os.path.join(workspace_dir, "slide-deck.md")
-    deck_html = os.path.join(delivery_dir, "slide-deck.html")
-    compile_marp_deck(deck_md, deck_html)
     
     return True
 

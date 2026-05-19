@@ -13,7 +13,6 @@ When the user types a command starting with `/`, match it against the list below
 - `/presale-update` : Update/revise any section in proposal/WBS (Read `.agent/workflows/presale-update.md`)
 - `/presale-finalize` : Export final-proposal.md + final-wbs.md for internal review (Read `.agent/workflows/presale-finalize.md`)
 - `/presale-export` : Export styled HTML → send to client (Read `.agent/workflows/presale-export.md`)
-- `/presale-deck` : Generate presentation slide deck from proposal (Read `.agent/workflows/presale-deck.md`)
 
 ## Load Order
 

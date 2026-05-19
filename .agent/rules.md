@@ -54,7 +54,7 @@
 
 - Must output [THINKING] or [PLAN] before creating/regenerating long artifacts.
 - User reviews direction before AI generates.
-- Applies to: proposal, WBS, slide deck, technical solution.
+- Applies to: proposal, WBS, technical solution.
 
 ## Artifact Integrity
 

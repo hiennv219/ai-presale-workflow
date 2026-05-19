@@ -31,9 +31,9 @@ If not met → report what's missing, do NOT export.
 
 To save thousands of LLM context tokens and prevent manual errors, a Python script is available at `.agent/scripts/presale_helper.py`.
 
-Run this script to automatically execute proposal concatenation, WBS finalization, and styled HTML/Marp slide-deck compilation for any project:
+Run this script to automatically execute proposal concatenation, WBS finalization, and styled HTML export for any project:
 ```bash
-# To run all steps (concat, wbs, and html/marp export):
+# To run all steps (concat, wbs, and html export):
 python3 .agent/scripts/presale_helper.py --project projects/{{project-dir}} --all
 
 # To run specific steps:

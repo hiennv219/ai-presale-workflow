@@ -30,6 +30,12 @@
       position: relative;
     }
 
+    .word-page.landscape {
+      width: 297mm;
+      min-height: 210mm;
+      padding: 20mm;
+    }
+
     h1, h2, h3, h4 {
       margin-top: 18pt;
       margin-bottom: 6pt;
@@ -40,9 +46,13 @@
     h1 {
       font-size: 20pt;
       color: #1b365d; /* Deep Navy Blue */
+      text-align: left;
+      margin-bottom: 24pt;
+    }
+
+    h1:first-child {
       text-align: center;
       text-transform: uppercase;
-      margin-bottom: 24pt;
     }
 
     h2 {
@@ -73,12 +83,18 @@
     ul, ol {
       margin-top: 0;
       margin-bottom: 12pt;
-      padding-left: 1.5cm;
+      padding-left: 0.8cm;
     }
 
     li {
       margin-bottom: 4pt;
       text-align: justify;
+    }
+
+    li p {
+      text-indent: 0;
+      margin-bottom: 0;
+      padding-bottom: 4pt;
     }
 
     .table-container {
@@ -91,13 +107,13 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 13px; /* Slightly smaller table typography */
-      margin: 12pt 0;
+      margin: 12pt auto;
     }
 
     th, td {
       border: 1px solid #000000; /* Distinct black grid border */
       padding: 6px 8px;
-      vertical-align: middle;
+      vertical-align: top;
     }
 
     th {
@@ -152,6 +168,16 @@
       font-size: 0.95em;
     }
 
+    @page {
+      size: A4 portrait;
+      margin: 20mm 20mm 20mm 30mm;
+    }
+
+    @page landscape-page {
+      size: A4 landscape;
+      margin: 20mm;
+    }
+
     @media print {
       body {
         background-color: #FFFFFF;
@@ -161,6 +187,11 @@
       .word-page {
         width: 100%;
         box-shadow: none;
+        padding: 0;
+      }
+      .word-page.landscape {
+        page: landscape-page;
+        width: 100%;
         padding: 0;
       }
     }
@@ -177,6 +208,18 @@
       }
       p {
         text-indent: 20px;
+      }
+    }
+
+    @media screen and (max-width: 297mm) {
+      body.has-landscape {
+        padding: 10px;
+        background-color: #FFFFFF;
+      }
+      .word-page.landscape {
+        width: 100%;
+        padding: 15px;
+        box-shadow: none;
       }
     }
   </style>
@@ -394,6 +437,7 @@ GPT-4o might miss subtle blockers or flag false positives.
 <h2>6. Execution &amp; Delivery Plan</h2>
 <h3>6.1 Product Roadmap</h3>
 <p>The MVP is designed for a rapid 4-week delivery, divided into logical phases to validate core assumptions early. We deploy the Form first to test adoption, followed by AI integration, and finally the PM dashboard.</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -448,8 +492,10 @@ GPT-4o might miss subtle blockers or flag false positives.
 <td align="center">███</td>
 </tr>
 </tbody></table>
+</div>
 <h3>6.2 Milestones &amp; Acceptance Criteria</h3>
 <p>The project is accepted by Milestones. Below is the Definition of Done (DoD) and corresponding acceptance criteria for each phase.</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -489,9 +535,11 @@ GPT-4o might miss subtle blockers or flag false positives.
 <td>Signed off UAT on production environment</td>
 </tr>
 </tbody></table>
+</div>
 <h2>7. Budget &amp; Commercials</h2>
 <h3>7.1 Resource Allocation</h3>
 <p>We allocate a cross-functional team on a Fixed-Price model to deliver the MVP within 4 weeks.</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -556,8 +604,10 @@ GPT-4o might miss subtle blockers or flag false positives.
 <td align="center"><strong>112h</strong></td>
 </tr>
 </tbody></table>
+</div>
 <h3>7.2 Operational Cost (Infra)</h3>
 <p>By utilizing a Serverless architecture, we keep MVP running costs near zero, only scaling costs when adoption grows significantly.</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -580,6 +630,7 @@ GPT-4o might miss subtle blockers or flag false positives.
 <td align="left">Vercel Pro, Supabase Pro</td>
 </tr>
 </tbody></table>
+</div>
 <h3>7.3 3rd-Party Vendor Costs</h3>
 <ul>
 <li><strong>OpenAI (GPT-4o)</strong>: ~$5–15/month — Estimated at 50 reports/day × ~$0.01/call.</li>
