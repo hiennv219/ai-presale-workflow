@@ -10,7 +10,7 @@
 
 ## WBS
 
-| WBS ID | Phase | Task | Deliverable | Owner Role | Dependency | Assumption | Estimate Range | Acceptance Criteria | Scope Ref |
+| # | Category | Module | Function | Sub-function | Description | Effort (BE) | Effort (FE) | Dependency | Note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
 ## Milestones
@@ -22,4 +22,3 @@
 
 | ID | Assumption | Status | Impact If False |
 | --- | --- | --- | --- |
-

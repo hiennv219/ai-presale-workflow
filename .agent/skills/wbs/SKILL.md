@@ -12,12 +12,28 @@ description: Create or revise WBS from approved scope with phases, tasks, estima
 3. Break each phase into tasks with: deliverable, owner role, dependency, assumption, estimate range, acceptance criteria, scope ref.
 4. Flag any task not mapped to approved scope.
 
+## 4-Level Decomposition
+
+| Level | Meaning | Example |
+| --- | --- | --- |
+| Level 1 | Category — major functional group | Common, Investor, Admin, Integrations |
+| Level 2 | Module — business module | Authentication, Secondary Marketplace |
+| Level 3 | Function — specific feature | Sign-in, Signup, Create Package |
+| Level 4 | Sub-function — atomic action | Email registration, Social login (Google) |
+
+Principle: never stop at Level 2 or 3 if a feature has multiple steps, inputs, or states.
+
 ## Rules
 
 - No out-of-scope items.
 - Estimate as range if detail incomplete.
 - Mark customer dependencies explicitly.
 - Trace every item to scope reference.
+- **Table format** — Must use the 10-column table from `wbs.md` template, no custom formats.
+- **Effort by stack** — Effort in man.days, split by stack (BE, FE, SC, MobileApp) depending on project.
+- **Note = User Story** — Note column must contain a specific User Story or Business Logic, not generic descriptions.
+- **No CRUD bundling** — View list, Filter, Search, Create, Edit, Delete must each be a separate row.
+- **Atomic line items** — Each distinct action/state = 1 row in WBS.
 
 ## Consistency Rules (Rule #10)
 

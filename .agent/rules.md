@@ -15,19 +15,19 @@
 
 ## Assumptions vs Questions
 
-- Discovery stage KHÔNG được đưa thẳng vào Assumptions mà chưa hỏi client trước.
-- Quy trình: hỏi client → nếu không trả lời → chuyển thành assumption (ghi rõ "đã hỏi, chưa nhận phản hồi").
-- Ngoại lệ: Technical details thuần túy (caching strategy, message queue choice, internal tooling) có thể assume luôn.
-- Technical decisions ảnh hưởng lớn (rewrite vs upgrade, platform choice, architecture pattern) vẫn PHẢI hỏi trước.
-- Mọi item trong Assumptions phải hoặc (a) đã được hỏi và chưa có phản hồi, hoặc (b) là technical detail thuần túy không ảnh hưởng lớn đến scope/effort.
+- Discovery stage must NOT push items directly into Assumptions without asking the client first.
+- Process: ask client → if no response → convert to assumption (note "asked, no response received").
+- Exception: Pure technical details (caching strategy, message queue choice, internal tooling) can be assumed directly.
+- High-impact technical decisions (rewrite vs upgrade, platform choice, architecture pattern) MUST be asked first.
+- Every item in Assumptions must either (a) have been asked with no response, or (b) be a pure technical detail with no significant impact on scope/effort.
 
 ## Conditional Sections
 
-- Section 5.1 (AS-IS Architecture) và 5.3 (Migration Strategy) chỉ xuất hiện khi client có hệ thống hiện tại (brownfield).
-- Nếu client xây mới hoàn toàn (greenfield): bỏ 5.1 AS-IS và 5.3 Migration, đánh số lại các section còn lại.
-- Khi greenfield: section Technical Solutions bắt đầu trực tiếp với Target Architecture.
-- Xác định brownfield/greenfield trong giai đoạn Discovery dựa trên input khách hàng.
-- Với greenfield, AS-IS và Migration không có ý nghĩa — chỉ tạo noise trong proposal.
+- Section 5.1 (AS-IS Architecture) and 5.3 (Migration Strategy) only appear when client has an existing system (brownfield).
+- If client is building from scratch (greenfield): remove 5.1 AS-IS and 5.3 Migration, renumber remaining sections.
+- For greenfield: Technical Solutions section starts directly with Target Architecture.
+- Determine brownfield/greenfield during Discovery based on client input.
+- For greenfield, AS-IS and Migration are meaningless — they only create noise in the proposal.
 
 ## Scope Control
 
@@ -43,6 +43,18 @@
 - Proposal must not promise deliverables missing from WBS.
 - Risks/assumptions consistent across artifacts.
 - Final artifacts require finalization review.
+
+## Language Guardrail
+
+- Output language follows client input language (VIE → VIE, ENG → ENG).
+- Do not mix languages within the same artifact.
+- Maintain professional, consistent tone throughout.
+
+## Think-Before-Act
+
+- Must output [THINKING] or [PLAN] before creating/regenerating long artifacts.
+- User reviews direction before AI generates.
+- Applies to: proposal, WBS, slide deck, technical solution.
 
 ## Token Discipline
 

@@ -22,7 +22,7 @@ If not met → report what's missing, do NOT export.
 3. Output path: place `.html` in `_delivery/` of the same project (create if needed).
 4. Asset synchronization: If a `workspace/assets/` directory exists in the project root, copy it to `_delivery/assets/` to ensure relative image paths work in the exported HTML.
 5. Convert markdown to HTML body: `npx marked <target_file>`.
-6. Read `references/export-template.html`. Replace `{{title}}` with document heading, `{{body}}` with converted HTML.
+6. Read `references/designs/export-template.html`. Replace `{{title}}` with document heading, `{{body}}` with converted HTML.
 7. Write final HTML to output path.
 8. Open in browser for preview.
 
