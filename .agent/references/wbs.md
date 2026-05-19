@@ -10,13 +10,18 @@
 
 ## WBS
 
-| # | Category | Module | Function | Sub-function | Description | Effort (BE) | Effort (FE) | Dependency | Note |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| # | Category | Module | Function | Sub-function | Description | Note |
+| --- | --- | --- | --- | --- | --- | --- |
 
 ## Milestones
 
 | Milestone | Description | Exit Criteria |
 | --- | --- | --- |
+
+## Dependencies
+
+| # | From (WBS #) | To (WBS #) | Type | Description |
+| --- | --- | --- | --- | --- |
 
 ## Delivery Assumptions
 

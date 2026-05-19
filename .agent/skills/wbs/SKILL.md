@@ -8,9 +8,10 @@ description: Create or revise WBS from approved scope with phases, tasks, estima
 ## Procedure
 
 1. Use approved in-scope items only.
-2. Group into delivery phases.
-3. Break each phase into tasks with: deliverable, owner role, dependency, assumption, estimate range, acceptance criteria, scope ref.
-4. Flag any task not mapped to approved scope.
+2. Decompose using 4-level structure (Category → Module → Function → Sub-function).
+3. Fill WBS table with: description, note (user story / business logic).
+4. Build Dependencies table separately.
+5. Flag any task not mapped to approved scope.
 
 ## 4-Level Decomposition
 
@@ -29,8 +30,7 @@ Principle: never stop at Level 2 or 3 if a feature has multiple steps, inputs, o
 - Estimate as range if detail incomplete.
 - Mark customer dependencies explicitly.
 - Trace every item to scope reference.
-- **Table format** — Must use the 10-column table from `wbs.md` template, no custom formats.
-- **Effort by stack** — Effort in man.days, split by stack (BE, FE, SC, MobileApp) depending on project.
+- **Table format** — Must use the 7-column table from `wbs.md` template, no custom formats.
 - **Note = User Story** — Note column must contain a specific User Story or Business Logic, not generic descriptions.
 - **No CRUD bundling** — View list, Filter, Search, Create, Edit, Delete must each be a separate row.
 - **Atomic line items** — Each distinct action/state = 1 row in WBS.
