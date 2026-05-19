@@ -7,4 +7,5 @@ artifacts/*.md
 
 # Project-specific ignores
 projects/2026-05-11-terrafuse/
+projects/2026-05-19-stack-trading/
 

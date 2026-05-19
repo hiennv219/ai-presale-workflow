@@ -56,6 +56,13 @@
 - User reviews direction before AI generates.
 - Applies to: proposal, WBS, slide deck, technical solution.
 
+## Artifact Integrity
+
+- NEVER mark an artifact as "Done" in status.md before the file physically exists on disk.
+- Correct order: (1) Write file → (2) Confirm file exists → (3) Update status.md to Done.
+- If output was delivered in conversation only (not persisted to file), status remains "Pending" until file is written.
+- Applies to all artifacts: discovery.md, context.md, scope.md, wbs.md, proposal sections, etc.
+
 ## Token Discipline
 
 - Use compact deal context, not full chat history.
