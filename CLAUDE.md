@@ -20,6 +20,7 @@ When the user types a command starting with `/`, match it against the list below
 - `/presale-run` : Run the analysis pipeline: customer input → proposal + WBS (Read `.agent/workflows/presale-run.md`)
 - `/presale-update` : Update/revise any section in proposal/WBS (Read `.agent/workflows/presale-update.md`)
 - `/presale-preview` : Quick concat proposal sections → proposal-full.md (no gate) (Read `.agent/workflows/presale-preview.md`)
+- `/presale-slides` : Generate slide-deck Markdown from proposal for GPT/Gemini handoff (Read `.agent/workflows/presale-slides.md`)
 - `/presale-finalize` : Export final-proposal.md + final-wbs.md for internal review (Read `.agent/workflows/presale-finalize.md`)
 - `/presale-export` : Export styled HTML → send to client (Read `.agent/workflows/presale-export.md`)
 

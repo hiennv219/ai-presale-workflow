@@ -13,7 +13,7 @@ User runs `/presale-preview` to read the full proposal as a single file without 
 1. Locate active project folder (most recent `projects/YYYY-MM-DD-*`).
 2. Verify `workspace/proposal/` directory exists with at least 1 section file.
    - If not → report "No proposal sections found yet", stop.
-3. Run: `python3 .agent/scripts/presale_helper.py --project <project_path> --concat`
+3. Run: `python3 .agent/scripts/presale_cli.py --project <project_path> --concat`
 4. Report output path and word count.
 
 ## Output

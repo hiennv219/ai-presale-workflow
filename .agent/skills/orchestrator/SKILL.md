@@ -16,6 +16,7 @@ description: Route presale workflow to correct skill based on user input type.
 | Need delivery plan, tasks | `wbs` |
 | Need proposal draft/revision | `proposal` |
 | Need review or finalization | `review-finalize` |
+| Need slide deck from proposal | `slides` |
 | Need document translation (EN/JA/VI) | `transale` |
 
 ## Procedure
