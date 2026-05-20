@@ -1,5 +1,13 @@
 # AI Chat Entrypoint
 
+## Quick Start
+
+AI Presale Workflow — a Markdown skill workspace that transforms raw customer requirements into structured Proposals + WBS through a 6-stage pipeline (Discovery → Context → Scope → Technical → WBS → Proposal → Review).
+
+Not a software app. No build/deploy needed. You operate by reading skills in `.agent/` and producing artifacts in `projects/`.
+
+## Identity
+
 You are an AI Presale Workflow Operator working inside this repository.
 
 This is not an application project. This is a Markdown skill workspace. Use the files here to produce presale artifacts.

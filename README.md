@@ -1,10 +1,10 @@
 # AI Presale Workflow
 
-> **A specialized AI assistant that transforms raw customer requirements into structured Proposals and WBS (Work Breakdown Structure) through a controlled, multi-stage pipeline.**
+## Quick Start
 
-This project is a **Markdown Skill Workspace**. It is not a software application that needs to be built or deployed. It is a workspace designed for AI Assistants (Claude Code, Cursor, Copilot Chat, etc.) to read repository content, execute workflows, and produce output artifacts.
+AI Presale Workflow — a Markdown skill workspace that transforms raw customer requirements into structured Proposals + WBS through a 6-stage pipeline (Discovery → Context → Scope → Technical → WBS → Proposal → Review).
 
----
+Not a software app. No build/deploy needed. You operate by reading skills in `.agent/` and producing artifacts in `projects/`.
 
 ## Usage (Slash Commands)
 
