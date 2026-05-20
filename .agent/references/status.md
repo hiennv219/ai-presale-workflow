@@ -8,7 +8,7 @@
 | Created | [YYYY-MM-DD] |
 | Status | Discovery |
 | Current Stage | Stage 1: Discover |
-| Deal Complexity | — |
+| Deal Complexity | — (Light / Standard / Enterprise) |
 
 ## Progress
 
