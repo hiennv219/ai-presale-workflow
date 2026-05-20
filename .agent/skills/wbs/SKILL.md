@@ -22,7 +22,10 @@ description: Create or revise WBS from approved scope with phases, tasks, estima
 | Level 3 | Function — specific feature | Sign-in, Signup, Create Package |
 | Level 4 | Sub-function — atomic action | Email registration, Social login (Google) |
 
-Principle: never stop at Level 2 or 3 if a feature has multiple steps, inputs, or states.
+Principle: never stop at Level 2. **Minimum decomposition is Level 3** (Category → Module → Function).
+
+- **Light deals**: Use 3-level (stop at Function). Only go to Level 4 if a function has genuinely distinct sub-steps.
+- **Standard/Enterprise deals**: Use full 4-level. Never stop at Level 3 if a feature has multiple steps, inputs, or states.
 
 ## Rules
 

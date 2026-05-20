@@ -41,3 +41,35 @@ Prioritize questions that reduce delivery risk or scope ambiguity.
 - `discovery.md` keeps questions inline for context (next to missing info/assumptions).
 - `backlog-questions.md` is the single source of truth for question status (open/answered).
 - When client answers → move question to "Answered" in backlog + update discovery (confirmed facts, assumptions, missing info) as needed.
+
+## Deal Complexity Classification
+
+After completing discovery analysis, classify the deal complexity based on confirmed facts:
+
+| Signal | Light | Standard | Enterprise |
+|--------|-------|----------|------------|
+| Modules/features | 1-3 | 4-10 | 10+ |
+| Platforms | 1 | 2 | Multi + admin |
+| Integrations | 0-1 | 2-4 | 5+ or legacy |
+| User roles | 1-2 | 3-5 | 5+ complex RBAC |
+| Compliance | None | Basic | Required (PCI, HIPAA, SOC2) |
+| Migration | None | Maybe | Required (brownfield) |
+
+**Output** (append to discovery.md):
+
+```
+## Deal Complexity: {{Light / Standard / Enterprise}}
+
+Reasoning: {{1-2 sentences citing signals above}}
+
+Recommended pipeline adjustments:
+- {{list of skips or additions}}
+```
+
+**Pipeline adjustments by profile:**
+
+- **Light**: Skip Stage 3.5 (Technical). WBS uses 3-level decomposition (Category → Module → Function). Skip wireframe in proposal.
+- **Standard**: Run all stages as normal. WBS uses 4-level decomposition.
+- **Enterprise**: Run all stages. Add Compliance/Security and Migration sections to proposal. WBS uses 4-level decomposition.
+
+Present classification to user for confirmation before proceeding to next stage.

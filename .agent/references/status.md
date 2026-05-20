@@ -8,6 +8,7 @@
 | Created | [YYYY-MM-DD] |
 | Status | Discovery |
 | Current Stage | Stage 1: Discover |
+| Deal Complexity | — |
 
 ## Progress
 
@@ -18,6 +19,12 @@
 - [ ] WBS built
 - [ ] Proposal drafted
 - [ ] Review & Finalize
+
+## Next Action
+
+**What:** —
+**Waiting on:** — (user / client / none)
+**Blockers:** —
 
 ## Artifacts
 

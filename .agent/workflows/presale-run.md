@@ -28,3 +28,29 @@ description: Presale pipeline — raw input to Final Proposal + Final WBS
 | 4 | [wbs](../skills/wbs/SKILL.md) | Approved scope, solution direction, constraints | WBS draft, milestones, delivery assumptions | Every WBS item maps to in-scope |
 | 5 | [proposal](../skills/proposal/SKILL.md) | Context, pain points, scope, WBS, risks | Proposal draft (multi-section) | Proposal scope = WBS scope |
 | 6 | [review-finalize](../skills/review-finalize/SKILL.md) | Context, proposal, WBS, open questions | Review findings OR finalization approval | No critical open question; proposal ↔ WBS consistent |
+
+## Session Handoff (Auto-maintained)
+
+After completing each stage, update `workspace/context.md` with a rolling summary so any new session can resume without re-reading all artifacts.
+
+**When to write/update:**
+- After Stage 1 (Discovery): create `context.md` with initial deal context.
+- After Stage 2+: update existing `context.md` — merge new info, don't append chat history.
+
+**What to include** (compact, max ~200 lines):
+- Deal summary (1-2 sentences)
+- Current stage + what's done vs pending
+- Confirmed requirements (table)
+- Key decisions made
+- Active assumptions
+- Open questions (blocking vs non-blocking)
+- Scope register summary (in/out/future — IDs only if scope.md exists)
+- Risks
+- Artifact index (which files exist, their version/status)
+
+**What NOT to include:**
+- Full chat history or conversation quotes
+- Duplicate content already in stage artifacts
+- Detailed WBS or proposal content (just reference the file)
+
+**Resume behavior:** When starting a new session, if `workspace/context.md` exists → read it first as primary context. Only read other artifacts if needed for the current stage's work.

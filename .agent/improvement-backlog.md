@@ -1,0 +1,33 @@
+# Pipeline Improvement Backlog
+
+> Ghi nhận từ review ngày 2026-05-20. Sửa đổi khi có thời gian.
+
+## Đã có / Đã implement
+
+- [x] #7 — Cascade preview trước khi thực hiện update (presale-update Step 1 đã có impact summary + wait confirm)
+- [x] #1 — Cho phép paste input trực tiếp trong `/presale-run` (updated presale-run.md + presale-init.md)
+- [x] #2 — `/presale-preview` command chạy script concat on-demand, không cần gate (presale-preview.md + CLAUDE.md)
+- [x] #3 — Deal complexity auto-classification sau Discovery (discovery SKILL.md + wbs SKILL.md, min level 3)
+- [x] #4 — Thêm "Next Action" + "Blockers" + "Deal Complexity" vào status.md template (không cần command riêng)
+
+## Cần sửa
+
+### #5 — Question format linh hoạt
+- **Vấn đề**: Bắt buộc 3 options + 1 rec cho mọi câu hỏi → câu hỏi open-ended bị ép format giả tạo
+- **Giải pháp**: Cho phép 3 loại: open-ended, yes/no confirm, multi-option (giữ 3-option cho decisions)
+- **Effort**: Thấp
+
+### #6 — PDF export
+- **Vấn đề**: Chỉ có HTML, presale cần PDF gửi email
+- **Giải pháp**: Thêm `--pdf` flag vào presale_helper.py, dùng puppeteer hoặc wkhtmltopdf
+- **Effort**: Trung bình
+
+### #8 — Slide deck generation
+- **Vấn đề**: Presale luôn cần deck cho meeting, hiện phải làm tay
+- **Giải pháp**: Skill mới tóm tắt proposal → slide structure (Marp hoặc reveal.js markdown)
+- **Effort**: Cao
+
+### #10 — Multi-project dashboard
+- **Vấn đề**: Presale handle 3-5 deal cùng lúc, không có overview
+- **Giải pháp**: `/presale-dashboard` scan tất cả projects/, hiển thị table: deal, stage, last updated, blockers
+- **Effort**: Cao
