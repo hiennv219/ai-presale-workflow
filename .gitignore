@@ -9,5 +9,12 @@ artifacts/*.md
 projects/2026-05-11-terrafuse/
 projects/2026-05-19-stack-trading/
 projects/2026-05-20-genvideo/
+# OS generated files
 .DS_Store
-
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
