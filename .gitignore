@@ -9,4 +9,5 @@ artifacts/*.md
 projects/2026-05-11-terrafuse/
 projects/2026-05-19-stack-trading/
 projects/2026-05-20-genvideo/
+.DS_Store
 
