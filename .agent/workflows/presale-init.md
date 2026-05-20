@@ -58,11 +58,11 @@ YYYY-MM-DD
 ✓ Project initialized: projects/YYYY-MM-DD-<project-name>/
 
 Structure:
-  _source/client-input.md  ← fill this with customer info
+  _source/client-input.md  ← customer info goes here
   workspace/               ← artifacts will go here
   _delivery/               ← final exports
 
-→ Next: Open _source/client-input.md, paste customer input, then run /presale-run
+→ Next: Run /presale-run and paste customer input directly, or fill _source/client-input.md first
 ```
 
 ## Gate
@@ -75,4 +75,4 @@ Structure:
 
 - Do NOT ask for customer content during init.
 - Do NOT ask additional questions beyond project name.
-- The user will fill `client-input.md` in their editor at their own pace.
+- User can fill `client-input.md` in their editor OR paste directly when running `/presale-run`.
