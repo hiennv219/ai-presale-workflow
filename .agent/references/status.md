@@ -11,7 +11,7 @@
 
 ## Progress
 
-- [x] Received client input
+- [ ] Received client input
 - [ ] Discovery completed
 - [ ] Context updated
 - [ ] Scope analyzed
@@ -32,6 +32,7 @@
 | Proposal (full export) | Pending | `workspace/proposal-full.md` |
 | Final Proposal | Pending | `workspace/final-proposal.md` |
 | Final WBS | Pending | `workspace/final-wbs.md` |
+| Checklist (internal) | Pending | `workspace/checklist.md` |
 
 ## Notes
 

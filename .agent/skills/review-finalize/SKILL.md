@@ -7,6 +7,15 @@ description: Review artifacts for consistency and scope creep. Approve finalizat
 
 ## Procedure
 
+### Update Checklist (Second Pass)
+
+Before running checks, open `workspace/checklist.md` (created at Stage 4) and complete the remaining items:
+- Update **Role Registry**: verify WBS roles = Proposal Section 7.1 roles.
+- Update **Cross-Artifact Consistency**: fill all rows (scope match, roles match, milestones, risks).
+- Update **Overview** table with final Pass/Fail status for each check.
+
+All findings below are also reflected in the checklist.
+
 ### Systemic Consistency Checks (Rule #10)
 
 1. **Scope → WBS**: Every In-Scope item (`S-{n}`) has ≥1 WBS task referencing it. Flag orphan scope items with no WBS coverage.

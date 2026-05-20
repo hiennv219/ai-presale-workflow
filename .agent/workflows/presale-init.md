@@ -1,66 +1,78 @@
 ---
-description: Initialize new presale project — create folders, save input, create status.md
+description: Initialize new presale project — only needs project name, auto-creates all folders and files
 ---
 
 # /presale-init
 
 ## Trigger
 
-On `/presale-run` with customer input, or standalone `/presale-init`.
+User runs `/presale-init` or `/presale-init <project-name>`.
 
-1. Determine `<client-name>` from user input (ask if unclear).
-2. Use current date as `YYYY-MM-DD`.
-3. Run steps below.
-4. After completion → hand off to `/presale-run` Stage 1.
+## Behavior
+
+1. Ask for `<project-name>` if not provided inline.
+2. Convert to slug: lowercase, hyphens, no diacritics.
+3. Use current date as `YYYY-MM-DD`.
+4. Auto-create all folders and files (no further questions).
+5. Inform user to fill `_source/client-input.md` manually before running `/presale-run`.
 
 ## Steps
 
-### Step 1: Gather info
-
-- `<client-name>`: lowercase slug, hyphens, no diacritics.
-- Customer request content (raw bullets, email, brief, notes).
-- Ask if missing.
-
-### Step 2: Create folders
+### Step 1: Create folder structure
 
 ```
-projects/YYYY-MM-DD-<client-name>/
+projects/YYYY-MM-DD-<project-name>/
 ├── _source/
 ├── workspace/
 └── _delivery/
 ```
 
-### Step 3: Write input file
+### Step 2: Write client-input.md template
 
-Path: `projects/YYYY-MM-DD-<client-name>/_source/client-input.md`
+Path: `projects/YYYY-MM-DD-<project-name>/_source/client-input.md`
 
 ```markdown
 # Client Input
+
 ## Source
-{{email / meeting / brief / other}}
+<!-- email / meeting / brief / other -->
+
 ## Date
-{{YYYY-MM-DD}}
+YYYY-MM-DD
+
 ## Content
-{{raw customer content, unedited}}
+<!-- Paste raw customer content here: email, brief, meeting notes, etc. -->
+
 ```
 
-### Step 4: Create status.md
+### Step 3: Create status.md
 
 1. Read `.agent/references/status.md`.
-2. Replace placeholders: `[Project Name]`, `[Client]`, `[YYYY-MM-DD]`.
-3. Write to `projects/YYYY-MM-DD-<client-name>/status.md`.
+2. Replace placeholders: `[Project Name]` → project name, `[Client name]` → project name, `[YYYY-MM-DD]` → date.
+3. Update progress: uncheck "Received client input" (user hasn't filled it yet).
+4. Write to `projects/YYYY-MM-DD-<project-name>/status.md`.
 
 ## Output
 
 ```
-Done: projects/YYYY-MM-DD-<client-name>/
-  - _source/client-input.md saved
-  - status.md created
-→ Next: Stage 1 Discovery
+✓ Project initialized: projects/YYYY-MM-DD-<project-name>/
+
+Structure:
+  _source/client-input.md  ← fill this with customer info
+  workspace/               ← artifacts will go here
+  _delivery/               ← final exports
+
+→ Next: Open _source/client-input.md, paste customer input, then run /presale-run
 ```
 
 ## Gate
 
 - `_source/`, `workspace/`, and `_delivery/` exist.
-- `_source/client-input.md` has content.
+- `_source/client-input.md` exists (template is enough).
 - `status.md` has no unresolved placeholders.
+
+## Important
+
+- Do NOT ask for customer content during init.
+- Do NOT ask additional questions beyond project name.
+- The user will fill `client-input.md` in their editor at their own pace.

@@ -92,6 +92,59 @@ The system operates through 6 sequential stages. Each stage has a **Gate** — t
 
 ---
 
+## Artifact Flow
+
+Each workflow phase produces specific artifacts. Later phases depend on earlier ones.
+
+```text
+/presale-init
+│
+│  projects/YYYY-MM-DD-<client>/
+│  ├── _source/client-input.md        ← template (user fills manually)
+│  ├── workspace/                     ← empty
+│  ├── _delivery/                     ← empty
+│  └── status.md                      ← progress tracker
+│
+▼
+/presale-run (Stage 1 → 6)
+│
+│  Stage 1 - Discovery
+│  └── workspace/discovery.md         ← intake summary, facts, open questions
+│
+│  Stage 2 - Context (optional if input is complete)
+│  └── workspace/context.md           ← decisions, assumptions, risks, change log
+│
+│  Stage 3 - Scope
+│  └── workspace/scope.md             ← pain points, in/out scope, scope register
+│
+│  Stage 3.5 - Technical (optional if SA provided tech context)
+│  └── workspace/technical.md         ← architecture, tech stack, tech decisions
+│
+│  Stage 4 - WBS
+│  └── workspace/wbs.md               ← milestones, tasks, estimates
+│
+│  Stage 5 - Proposal
+│  ├── workspace/proposal/_index.md   ← multi-section draft
+│  └── workspace/proposal-full.md     ← assembled full proposal
+│
+│  Stage 6 - Review & Finalize
+│  └── (no new file — validates consistency across artifacts)
+│
+▼
+/presale-finalize
+│
+│  workspace/final-proposal.md        ← locked proposal after review gate passes
+│  workspace/final-wbs.md             ← locked WBS after review gate passes
+│
+▼
+/presale-export
+│
+│  _delivery/proposal.html            ← styled HTML for client
+│  _delivery/wbs.html                 ← styled HTML for client
+```
+
+---
+
 ## Non-Negotiables
 
 - **No fabrication**: The AI never invents customer facts. If unclear, it asks.

@@ -8,8 +8,9 @@ description: Presale pipeline — raw input to Final Proposal + Final WBS
 
 1. Load `.agent/rules.md` (once per session).
 2. Load orchestrator routing table.
-3. If user provided input → run `presale-init` → Stage 1.
-4. If no input → ask user to paste customer request, then run `presale-init`.
+3. Locate active project folder (most recent `projects/YYYY-MM-DD-*`).
+4. Check `_source/client-input.md` has real content (not just template placeholders).
+   - If empty/template-only → tell user to fill it first, stop.
 5. Resume at next logical stage if prior artifacts exist.
 6. End each stage: state next stage, wait for user confirm.
 7. Save output → `projects/YYYY-MM-DD-<client>/workspace/<stage>.md`.
