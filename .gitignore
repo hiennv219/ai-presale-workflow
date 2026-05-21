@@ -18,3 +18,5 @@ projects/2026-05-20-genvideo/
 ehthumbs.db
 Thumbs.db
 Desktop.ini
+
+node_modules/*
