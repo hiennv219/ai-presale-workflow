@@ -1,8 +1,4 @@
-# Agents
-
-This document describes the AI skill agents available in this workspace and how they collaborate through the orchestrator.
-
-## Architecture
+# Agent System
 
 ```
 User Input → Orchestrator → Skill Agent → Output Artifact
@@ -10,37 +6,27 @@ User Input → Orchestrator → Skill Agent → Output Artifact
                 └──────── Next Stage ──────────┘
 ```
 
-The **Orchestrator** routes user input to the correct skill agent based on intent and available artifacts. Each agent operates independently within its stage, producing structured output that feeds the next stage.
-
 ## Orchestrator
 
-**File:** `.agent/skills/orchestrator/SKILL.md`
+**File:** `skills/orchestrator/SKILL.md`
 
-The orchestrator is the routing layer. It does not produce artifacts itself — it determines which skill to invoke based on:
+Routing layer — does not produce artifacts. Determines which skill to invoke based on:
 
 - User intent (what they typed or asked for)
 - Available artifacts (what has already been produced)
 - Pipeline position (which stage comes next)
 
-### Routing Table
+---
 
-| User Input Type | Routed To |
-|---|---|
-| Raw customer bullets, briefs, emails | `discovery` |
-| Answers, notes, Q&A, feedback | `context` |
-| Need pain points or scope definition | `scope` |
-| Need delivery plan or task breakdown | `wbs` |
-| Need proposal draft or revision | `proposal` |
-| Need review or finalization | `review-finalize` |
-| Need document translation (EN/JA/VI) | `transale` |
+# Skill Agents
+
+Reference for all skill agents in this workspace. The orchestrator routes to these agents based on user intent and pipeline position.
 
 ---
 
-## Skill Agents
+## 1. Discovery Agent
 
-### 1. Discovery Agent
-
-**File:** `.agent/skills/discovery/SKILL.md`
+**File:** `skills/discovery/SKILL.md`
 
 **Purpose:** Normalize raw customer input and generate clarification questions.
 
@@ -56,9 +42,9 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ---
 
-### 2. Context Agent
+## 2. Context Agent
 
-**File:** `.agent/skills/context/SKILL.md`
+**File:** `skills/context/SKILL.md`
 
 **Purpose:** Update and compress deal context from customer answers, notes, Q&A, and feedback.
 
@@ -74,9 +60,9 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ---
 
-### 3. Scope Agent
+## 3. Scope Agent
 
-**File:** `.agent/skills/scope/SKILL.md`
+**File:** `skills/scope/SKILL.md`
 
 **Purpose:** Analyze pain points and define solution scope with scope-creep control.
 
@@ -94,9 +80,9 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ---
 
-### 4. WBS Agent
+## 4. WBS Agent
 
-**File:** `.agent/skills/wbs/SKILL.md`
+**File:** `skills/wbs/SKILL.md`
 
 **Purpose:** Create or revise Work Breakdown Structure from approved scope.
 
@@ -112,9 +98,9 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ---
 
-### 5. Proposal Agent
+## 5. Proposal Agent
 
-**File:** `.agent/skills/proposal/SKILL.md`
+**File:** `skills/proposal/SKILL.md`
 
 **Purpose:** Create or revise the presale proposal from context, scope, WBS, and risks.
 
@@ -132,9 +118,9 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ---
 
-### 6. Review & Finalize Agent
+## 6. Review & Finalize Agent
 
-**File:** `.agent/skills/review-finalize/SKILL.md`
+**File:** `skills/review-finalize/SKILL.md`
 
 **Purpose:** Review artifacts for consistency and scope creep. Approve or block finalization.
 
@@ -158,9 +144,9 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ---
 
-### 7. Transale Agent
+## 7. Transale Agent
 
-**File:** `.agent/skills/transale/SKILL.md`
+**File:** `skills/transale/SKILL.md`
 
 **Purpose:** Translate Markdown documents between English, Japanese, and Vietnamese while preserving structure and technical accuracy.
 
@@ -177,9 +163,9 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ---
 
-### 8. Technical Agent
+## 8. Technical Agent
 
-**File:** `.agent/skills/technical/SKILL.md`
+**File:** `skills/technical/SKILL.md`
 
 **Purpose:** Propose technical decisions when SA has not provided them.
 
@@ -195,9 +181,9 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ---
 
-### 9. Architecture Agent (Sub-skill)
+## 9. Architecture Agent (Sub-skill)
 
-**File:** `.agent/skills/architecture/SKILL.md`
+**File:** `skills/architecture/SKILL.md`
 
 **Purpose:** Draw ASCII architecture diagrams and Mermaid data-flow sequences.
 
@@ -212,9 +198,9 @@ The orchestrator is the routing layer. It does not produce artifacts itself — 
 
 ---
 
-### 10. Wireframe Agent (Sub-skill)
+## 10. Wireframe Agent (Sub-skill)
 
-**File:** `.agent/skills/wireframe/SKILL.md`
+**File:** `skills/wireframe/SKILL.md`
 
 **Purpose:** Draw ASCII wireframes for UI screens in proposals.
 

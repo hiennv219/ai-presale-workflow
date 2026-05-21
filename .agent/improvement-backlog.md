@@ -9,6 +9,7 @@
 - [x] #2 — `/presale-preview` command chạy script concat on-demand, không cần gate (presale-preview.md + CLAUDE.md)
 - [x] #3 — Deal complexity auto-classification sau Discovery (discovery SKILL.md + wbs SKILL.md, min level 3)
 - [x] #4 — Thêm "Next Action" + "Blockers" + "Deal Complexity" vào status.md template (không cần command riêng)
+- [x] #15 — Dynamic & Customizable Proposal Template (Tự tùy biến cấu trúc Proposal)
 
 ## Cần sửa
 
@@ -51,15 +52,3 @@
 - **Vấn đề**: Dịch thuật đang thực hiện trên toàn bộ file proposal-full lớn, mỗi lần sửa đổi nhỏ phải chạy lại toàn bộ.
 - **Giải pháp**: Hỗ trợ dịch từng file section độc lập rồi concat sau, tránh dịch lại các phần không đổi.
 - **Effort**: Thấp (Tiết kiệm ~20k tokens mỗi lần sửa dịch)
-
-### #15 — Dynamic & Customizable Proposal Template (Tự tùy biến cấu trúc Proposal)
-- **Vấn đề**: Cấu trúc proposal 8 section đang bị hard-code cố định trong `proposal/SKILL.md` và `.agent/references/proposal.md`, không cho phép tùy biến cấu trúc cho các khách hàng khác nhau (ví dụ: lite 4 sections cho startup hoặc 10 sections cho khách Enterprise Nhật Bản).
-- **Giải pháp chi tiết**:
-  1. **Khởi tạo (`/presale-init`)**: Khi init dự án, sao chép một file cấu hình cấu trúc `proposal-template.md` mặc định vào `projects/YYYY-MM-DD-<project>/workspace/proposal-template.md`. Người dùng có thể mở file này để thêm, xóa, đổi tên hoặc sửa thứ tự các section tùy ý.
-  2. **Tạo Proposal (Stage 5)**: Điều chỉnh `proposal/SKILL.md` hướng dẫn LLM đọc trực tiếp file `proposal-template.md` nằm trong workspace của dự án hiện tại thay vì sử dụng cấu trúc cứng của hệ thống. LLM sẽ sinh ra chính xác các file tương ứng theo cấu trúc người dùng đã sửa đổi.
-  3. **Script gom file (`presale_cli.py`)**:
-     * Hàm `run_concat` và `run_export` giữ nguyên vì cơ chế hiện tại đã hoạt động động (dynamic) - tự quét và sort alphabet toàn bộ các file `.md` trong thư mục `proposal/`.
-     * Cần sửa nhẹ hàm `get_proposal_header` (dòng 27) để thay thế chuỗi hard-code `Version: Final (8-Section Standardized)` thành `Version: Final` hoặc đọc động từ metadata của `_index.md`.
-- **Effort**: Trung bình
-
-
