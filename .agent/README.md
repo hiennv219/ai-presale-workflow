@@ -1,30 +1,104 @@
 # Agent System
 
 ```
-User Input → Orchestrator → Skill Agent → Output Artifact
-                ↑                              |
-                └──────── Next Stage ──────────┘
+User Input → Orchestrator → Agent (persona) → Skill (procedure) → Output Artifact
+                 ↑                                                      |
+                 └─────────── Handoff / Loop Back ──────────────────────┘
 ```
 
-## Orchestrator
+## Architecture Overview
 
-**File:** `skills/orchestrator/SKILL.md`
+Three-layer model: **Orchestrator → Agents → Skills**.
 
-Routing layer — does not produce artifacts. Determines which skill to invoke based on:
+- **Orchestrator** (`skills/orchestrator/SKILL.md`): Routing layer — reads `status.md`, maps stage → agent, loads AGENT.md + SKILL.md, checks handoff conditions.
+- **Agents** (`agents/<name>/AGENT.md`): Expert personas with stage ownership, Stop/Assume rules, and handoff conditions. Agents do NOT produce artifacts directly — they invoke skills.
+- **Skills** (`skills/<name>/SKILL.md`): Procedures that produce artifacts. Each skill has clear inputs, outputs, and gates.
 
-- User intent (what they typed or asked for)
-- Available artifacts (what has already been produced)
-- Pipeline position (which stage comes next)
-
----
-
-# Skill Agents
-
-Reference for all skill agents in this workspace. The orchestrator routes to these agents based on user intent and pipeline position.
+**Shared components:**
+- **Comm Hub** (`agents/comm-hub/AGENT.md`): Communication specialist — formats questions for clients when Stop Rule triggers.
+- **Assumption Ledger** (`skills/assumption-ledger/SKILL.md`): Tracks all assumptions created during pipeline. Callable by any agent.
 
 ---
 
-## 1. Discovery Agent
+## Agents
+
+### Senior BA
+
+**File:** `agents/senior-ba/AGENT.md`
+
+**Persona:** Business Analyst cấp cao, 10+ năm presale. Focuses on understanding client needs before solution design begins.
+
+**Stages owned:**
+
+| Stage | Skill |
+|-------|-------|
+| 1. Discovery | `discovery` |
+| 2. Context | `context` |
+
+**Handoff → Solution Architect** when: `discovery.md` + `deal-context.md` exist, no Stop Rule questions pending.
+
+---
+
+### Solution Architect
+
+**File:** `agents/solution-architect/AGENT.md`
+
+**Persona:** System design expert. Converts business requirements into deliverable solution scope.
+
+**Stages owned:**
+
+| Stage | Skill |
+|-------|-------|
+| 3. Scope | `scope` |
+| 3.5. Technical | `technical` |
+
+**Sub-skills:** `architecture`, `wireframe`
+
+**Handoff → Senior PM** when: `pain-scope.md` exists, scope register has ≥1 approved item, `technical.md` exists or skip condition met.
+
+**Loop back → Senior BA** when: scope item doesn't map to any requirement in deal-context.
+
+---
+
+### Senior PM
+
+**File:** `agents/senior-pm/AGENT.md`
+
+**Persona:** Project Manager cấp cao — delivery planning and proposal writing.
+
+**Stages owned:**
+
+| Stage | Skill |
+|-------|-------|
+| 4. WBS | `wbs` |
+| 5. Proposal | `proposal` |
+| 6. Review & Finalize | `review-finalize` |
+
+**Sub-skills:** `wireframe`, `slides`
+
+**Handoff → Done** when: Review gate PASS, no High impact assumptions unconfirmed.
+
+**Loop back → Solution Architect** when: WBS task doesn't map to scope item, or scope conflict detected.
+
+---
+
+### Comm Hub
+
+**File:** `agents/comm-hub/AGENT.md`
+
+**Persona:** Communication specialist — called when any agent triggers Stop Rule.
+
+**Functions:**
+- Tone Switcher (CTO → technical, CEO → business, PM → delivery)
+- Batching (max 5 questions per block)
+- Format (3 options + 1 recommendation per question)
+- Language matching (Vietnamese in → Vietnamese out)
+
+---
+
+## Skills
+
+### 1. Discovery
 
 **File:** `skills/discovery/SKILL.md`
 
@@ -36,13 +110,11 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 - Identifies missing info affecting scope/WBS/proposal/timeline/cost/risk
 - Generates clarification questions: 3 options, 1 recommendation each
 
-**Assumptions Rule:** Ask first, assume later. Every item affecting scope/effort/timeline must be a question before it can become an assumption. Minor technical details (caching, tooling, library choices) may be assumed directly.
-
 **Output:** `workspace/discovery.md`, `workspace/backlog-questions.md`
 
 ---
 
-## 2. Context Agent
+### 2. Context
 
 **File:** `skills/context/SKILL.md`
 
@@ -54,13 +126,13 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 - Merges duplicates, removes obsolete notes
 - Preserves traceability via decisions + change log
 - Compresses long history into rolling summary
-- Hands off to Scope Agent if feedback expands scope
+- Hands off to Scope if feedback expands scope
 
 **Output:** `workspace/deal-context.md`, `workspace/change-log.md`
 
 ---
 
-## 3. Scope Agent
+### 3. Scope
 
 **File:** `skills/scope/SKILL.md`
 
@@ -80,7 +152,7 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 
 ---
 
-## 4. WBS Agent
+### 4. WBS
 
 **File:** `skills/wbs/SKILL.md`
 
@@ -98,7 +170,7 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 
 ---
 
-## 5. Proposal Agent
+### 5. Proposal
 
 **File:** `skills/proposal/SKILL.md`
 
@@ -118,7 +190,7 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 
 ---
 
-## 6. Review & Finalize Agent
+### 6. Review & Finalize
 
 **File:** `skills/review-finalize/SKILL.md`
 
@@ -131,6 +203,7 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 - Flags unapproved scope changes
 - Flags assumptions written as facts
 - Flags missing dependencies, risks, acceptance criteria, open questions
+- **Checks Assumption Ledger:** High + unconfirmed → BLOCK; Medium + Active > 7 days → WARNING
 
 **Finalization Gate (all must pass):**
 - No critical open questions
@@ -139,31 +212,29 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 - Assumptions accepted or explicitly listed
 - Out-of-scope explicit
 - Final version and date present
+- Assumption Ledger: no High impact unconfirmed
 
 **Output:** Review findings table (if not ready) or finalization approval (if ready)
 
 ---
 
-## 7. Transale Agent
+### 7. Assumption Ledger (Shared)
 
-**File:** `skills/transale/SKILL.md`
+**File:** `skills/assumption-ledger/SKILL.md`
 
-**Purpose:** Translate Markdown documents between English, Japanese, and Vietnamese while preserving structure and technical accuracy.
+**Purpose:** Track all assumptions created during pipeline. Callable by any agent when Assume Rule triggers.
 
 **Behavior:**
-- Preserves all Markdown formatting: headings, tables, lists, code blocks, links, images
-- Does NOT translate technical terms, acronyms, product names, file paths, or code
-- Adapts tone per language: professional English, です/ます Japanese, natural Vietnamese business writing
-- Validates structure match between source and output (heading count, table count, list items)
-- Supports single file and multi-file (directory) translation
+- Assigns sequential ID (A-{n})
+- Classifies impact: Low / Medium / High
+- Tracks status lifecycle: Active → Confirmed / Rejected / Replaced
+- Escalation: Medium + Active > 7 days → promote to Stop Rule
 
-**Standalone:** This agent runs independently via `/presale-transale` — it is not part of the main pipeline stages.
-
-**Output:** `{{original_name}}_{{lang_code}}.md` in same directory as source
+**Output:** `workspace/assumption-ledger.md`
 
 ---
 
-## 8. Technical Agent
+### 8. Technical
 
 **File:** `skills/technical/SKILL.md`
 
@@ -181,7 +252,7 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 
 ---
 
-## 9. Architecture Agent (Sub-skill)
+### 9. Architecture (Sub-skill)
 
 **File:** `skills/architecture/SKILL.md`
 
@@ -198,7 +269,7 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 
 ---
 
-## 10. Wireframe Agent (Sub-skill)
+### 10. Wireframe (Sub-skill)
 
 **File:** `skills/wireframe/SKILL.md`
 
@@ -214,21 +285,48 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 
 ---
 
-## Agent Communication
+### 11. Transale (Standalone)
 
-Agents do not call each other directly. The orchestrator mediates all transitions:
+**File:** `skills/transale/SKILL.md`
 
-1. Agent completes its stage and produces output
-2. Orchestrator evaluates next stage based on output + user intent
-3. Orchestrator loads the next agent with only the context it needs
+**Purpose:** Translate Markdown documents between English, Japanese, and Vietnamese while preserving structure and technical accuracy.
 
-This keeps each agent focused and prevents token bloat from loading unnecessary context.
+**Behavior:**
+- Preserves all Markdown formatting: headings, tables, lists, code blocks, links, images
+- Does NOT translate technical terms, acronyms, product names, file paths, or code
+- Adapts tone per language: professional English, です/ます Japanese, natural Vietnamese business writing
+- Validates structure match between source and output (heading count, table count, list items)
+- Supports single file and multi-file (directory) translation
+
+**Standalone:** This skill runs independently via `/presale-transale` — it is not part of the main pipeline stages.
+
+**Output:** `{{original_name}}_{{lang_code}}.md` in same directory as source
+
+---
+
+### 12. Slides (Standalone)
+
+**File:** `skills/slides/SKILL.md`
+
+**Purpose:** Transform proposal into slide-deck Markdown structured for external AI handoff.
+
+**Standalone:** Runs via `/presale-slides` — not part of the main pipeline stages.
+
+---
+
+## Agent Communication Rules
+
+1. **Agents do NOT call each other directly.** Orchestrator is the sole mediator for all transitions.
+2. **Agents only invoke skills they own.** Sub-skills (architecture, wireframe) are exceptions — delegated by the owning agent.
+3. **Shared components** (Comm Hub, Assumption Ledger) are callable from any agent.
+4. **Communication via workspace artifacts.** Agents read artifacts produced by prior agents — no direct messaging.
+5. **Handoff requires conditions met.** Each agent defines handoff conditions in its AGENT.md.
 
 ## Token Discipline
 
 All agents follow these rules:
 - Load `rules.md` once per session
-- Load only the current stage's SKILL.md
+- Load only the current agent's `AGENT.md` + current stage's `SKILL.md`
 - Do not re-read prior artifacts unless the current stage needs them as input
 - Use compact deal context, not full chat history
 - For revisions, read only the affected section

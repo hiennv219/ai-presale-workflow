@@ -19,12 +19,9 @@ description: Normalize raw customer input and generate clarification questions f
 - `workspace/discovery.md` — full analysis (internal)
 - `workspace/backlog-questions.md` — questions only, grouped by Open/Answered (client-facing)
 
-## Assumptions Rule
+## Assumptions
 
-- Default: ASK first, assume later. Every item that affects scope/effort/timeline must be a Question before it can become an Assumption.
-- Exception: Minor technical details (caching strategy, internal tooling, library choices) that don't significantly impact scope/cost may be assumed directly to avoid overwhelming non-tech clients.
-- High-impact technical decisions (rewrite vs upgrade, platform choice, architecture pattern, DB strategy) MUST be asked even if client is non-tech.
-- When promoting unanswered questions to assumptions, mark them: "Asked [date], no response → assumed [value]".
+Follow Stop/Assume rules from `agents/senior-ba/AGENT.md`. When promoting unanswered questions to assumptions: mark as "Asked [date], no response → assumed [value]" and record in Assumption Ledger.
 
 ## Missing Info Checklist
 

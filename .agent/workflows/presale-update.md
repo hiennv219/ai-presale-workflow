@@ -46,7 +46,7 @@ Output format:
 
 ### Step 2: Update Context
 
-Skill: [context](../skills/context/SKILL.md)
+Delegate to [orchestrator](../skills/orchestrator/SKILL.md) → routes to correct agent + skill.
 
 - Record change in deal context.
 - Add change log entry.
@@ -62,6 +62,8 @@ Skill: [context](../skills/context/SKILL.md)
 ### Step 3: Cascade
 
 Order: `Context → Scope → WBS → Proposal (section-level)`
+
+Delegate each step to [orchestrator](../skills/orchestrator/SKILL.md) — it routes to the correct agent owner per stage. Agent's Stop/Assume rules apply at each step.
 
 Rules:
 - Revise only affected sections, never regenerate full artifact.
@@ -82,7 +84,7 @@ Proposal (multi-section):
 
 Run ONLY for scope/requirement/timeline changes. Skip for content revision or correction.
 
-Skill: [review-finalize](../skills/review-finalize/SKILL.md) (review mode, no finalize)
+Delegate to orchestrator → routes to `review-finalize` skill (review mode, no finalize).
 
 - Check proposal ↔ WBS.
 - Check WBS ↔ scope.

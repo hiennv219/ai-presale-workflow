@@ -52,3 +52,59 @@
 - **Vấn đề**: Dịch thuật đang thực hiện trên toàn bộ file proposal-full lớn, mỗi lần sửa đổi nhỏ phải chạy lại toàn bộ.
 - **Giải pháp**: Hỗ trợ dịch từng file section độc lập rồi concat sau, tránh dịch lại các phần không đổi.
 - **Effort**: Thấp (Tiết kiệm ~20k tokens mỗi lần sửa dịch)
+
+### #16 - Mô hình agent
+
+[ Ý TƯỞNG KHÁCH HÀNG ]
+                         |
+                         v
+    .----------------> ( + )
+    |                    |
+    |     +===============================+
+    |     | 1. INGESTION & INTERROGATION  |
+    |     |      (Agent: Senior BA)       |
+    |     +===============================+
+    |                    |
+    |                    v
+    |             /=============\
+    |            /   KIỂM TRA    \
+    |            \   THÔNG TIN   /
+    |             \=============/
+    |              |     |     |
+    |     +--------+     |     +---------+
+    |     |              |               |
+    | (Thiếu Cốt Lõi)    |       (Thiếu Chi Tiết Phụ)
+    | (Stop Rule)  (Đủ Thông Tin)    (Assume Rule)
+    |     |              |               |
+    |     v              |               v
+    | +---------------+  |       +----------------+
+    | |TRẠNG THÁI HOLD|  |       | TỰ ĐỘNG GIẢ ĐỊNH|
+    | +---------------+  |       | (Gọi skill:     |
+    |     |              |       | Assumption      |
+    |     v              |       | Ledger)         |
+    | +---------------+  |       +----------------+
+    | |Agent: COMM HUB|  |               |
+    | |(Tone Switcher)|  |               |
+    | +---------------+  |               |
+    |     |              |               |
+    |     v              |               |
+    | [Hỏi Khách]        |               |
+    |     |              |               |
+    '-----+              |               |
+     (Khách trả lời)     |               |
+                         v               v
+                  +===============================+
+                  |    2. SCOPING & PRUNING       |
+                  |  (Agent: Solution Architect)  |
+                  +===============================+
+                                 |
+                                 v
+                  +===============================+
+                  |   3. ARTIFACT GENERATION      |
+                  |       (Agent: Senior PM)      |
+                  |     (Skill: WBS Generator)    |
+                  +===============================+
+                                 |
+                                 v
+                 [ OUTPUT: PROPOSAL + BẢNG WBS ]
+                 [  (Kèm danh sách Assumptions)  ]
