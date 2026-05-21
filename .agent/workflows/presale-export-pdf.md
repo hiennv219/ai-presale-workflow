@@ -18,21 +18,21 @@ Convert a finalized document to styled PDF via HTML intermediate.
 
 1. Determine project path (most recent in `projects/` or from context).
 2. Check if target HTML exists in `<project>/_delivery/`:
-   - If not, run the export step first: `python .agent/scripts/presale_cli.py --export --project <project_path>`
+   - If not, run the export step first: `python scripts/presale_cli.py --export --project <project_path>`
 3. Run PDF conversion:
    ```bash
-   python .agent/scripts/presale_cli.py --pdf --project <project_path>
+   python scripts/presale_cli.py --pdf --project <project_path>
    ```
    Or for a single file:
    ```bash
-   node .agent/scripts/html-to-pdf.js <project>/_delivery/<name>.html <project>/_delivery/<name>.pdf
+   node scripts/html-to-pdf.js <project>/_delivery/<name>.html <project>/_delivery/<name>.pdf
    ```
 4. Confirm output file exists and report size.
 
 ## Dependencies
 
 - `puppeteer` (auto-installed if missing)
-- `.agent/scripts/html-to-pdf.js`
+- `scripts/html-to-pdf.js`
 
 ## Output
 

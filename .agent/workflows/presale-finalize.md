@@ -29,18 +29,18 @@ If not met → report what's missing, do NOT export.
 
 ## Reusable Automation Script (Recommended)
 
-To save thousands of LLM context tokens and prevent manual errors, a Python script is available at `.agent/scripts/presale_cli.py`.
+To save thousands of LLM context tokens and prevent manual errors, a Python script is available at `scripts/presale_cli.py`.
 
 Run this script to automatically execute proposal concatenation, WBS finalization, and styled HTML/PDF export for any project:
 ```bash
 # To run all steps (concat, wbs, html export, pdf):
-python3 .agent/scripts/presale_cli.py --project projects/{{project-dir}} --all
+python3 scripts/presale_cli.py --project projects/{{project-dir}} --all
 
 # To run specific steps:
-python3 .agent/scripts/presale_cli.py --project projects/{{project-dir}} --concat
-python3 .agent/scripts/presale_cli.py --project projects/{{project-dir}} --wbs
-python3 .agent/scripts/presale_cli.py --project projects/{{project-dir}} --export
-python3 .agent/scripts/presale_cli.py --project projects/{{project-dir}} --pdf
+python3 scripts/presale_cli.py --project projects/{{project-dir}} --concat
+python3 scripts/presale_cli.py --project projects/{{project-dir}} --wbs
+python3 scripts/presale_cli.py --project projects/{{project-dir}} --export
+python3 scripts/presale_cli.py --project projects/{{project-dir}} --pdf
 ```
 
 ## Output
