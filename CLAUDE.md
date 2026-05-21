@@ -16,6 +16,7 @@ READ the corresponding `.agent/workflows/<name>.md` BEFORE executing:
 | `/presale-slides` | Generate slide-deck Markdown for handoff |
 | `/presale-finalize` | Export final-proposal.md + final-wbs.md |
 | `/presale-export` | Export styled HTML for client |
+| `/presale-export-pdf` | Export PDF from HTML deliverables |
 
 ## Load Order
 
