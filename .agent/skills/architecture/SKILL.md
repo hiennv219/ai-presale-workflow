@@ -37,50 +37,14 @@ EVENT/MESSAGING     → Async communication (if applicable)
 EXTERNAL            → 3rd-party integrations
 ```
 
-### Format
+### Format Rules
 
-```
-┌─── CLIENT LAYER ────────────────────────────────────┐
-│                                                     │
-│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
-│  │ Web App  │  │ Mobile   │  │ Admin Portal     │  │
-│  │ (React)  │  │ (Flutter)│  │ (Phase 2)        │  │
-│  └────┬─────┘  └────┬─────┘  └────────┬─────────┘  │
-│       │              │                 │            │
-└───────┼──────────────┼─────────────────┼────────────┘
-        │              │                 │
-        ▼              ▼                 ▼
-┌─── API GATEWAY ─────────────────────────────────────┐
-│  ┌───────────────────────────────────────────────┐  │
-│  │ Kong / AWS API Gateway                        │  │
-│  │ • Auth check  • Rate limit  • Request routing │  │
-│  └───────────────────────────────────────────────┘  │
-└─────────────────────────┬───────────────────────────┘
-                          │
-                          ▼
-┌─── SERVICE LAYER ───────────────────────────────────┐
-│                                                     │
-│  ┌─────────────┐  ┌─────────────┐  ┌───────────┐   │
-│  │ Service A   │  │ Service B   │  │ Service C │   │
-│  │ • resp 1    │  │ • resp 1    │  │ • resp 1  │   │
-│  │ • resp 2    │  │ • resp 2    │  │ (Phase 2) │   │
-│  └──────┬──────┘  └──────┬──────┘  └───────────┘   │
-│         │                │                          │
-└─────────┼────────────────┼──────────────────────────┘
-          ▼                ▼
-┌─── DATA LAYER ──────────────────────────────────────┐
-│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
-│  │ Postgres │  │ Redis    │  │ S3 / Blob Store  │  │
-│  └──────────┘  └──────────┘  └──────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
-
-### Characters
-
-- Box-drawing: `┌ ┐ └ ┘ │ ─ ├ ┤ ┬ ┴`
-- Arrows: `▼ ▶ ◀ ▲` (direction of data/request flow)
-- Connections: `│` vertical, `─` horizontal, `┼` crossing
-- Phase tags: `(Phase N)` inside or next to component box
+- Use box-drawing chars: `┌ ┐ └ ┘ │ ─ ├ ┤ ┬ ┴`, arrows: `▼ ▶ ◀ ▲`
+- Each layer = one large box containing component boxes
+- Label each component box with technology + bullet responsibilities
+- Connect layers with arrows and protocol labels (REST, gRPC, WebSocket, Pub/Sub)
+- Tag phase-specific components with `(Phase N)`
+- Keep width under 80 characters
 
 ## Dynamic View: Mermaid Sequence Diagram
 

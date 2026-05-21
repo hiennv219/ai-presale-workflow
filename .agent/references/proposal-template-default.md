@@ -111,3 +111,23 @@ This file defines the default proposal structure. Copy it to `workspace/proposal
     Payment Schedule bullets: each milestone payment with conditions.
     RULE: Payment milestones must match Section 6.2 milestones (same names, same sequence).
 - content: Tổng chi phí phát triển và lịch thanh toán theo milestone.
+
+---
+
+## Format Guidelines (Table vs Prose)
+
+1. **CHỈ DÙNG BẢNG cho 4 nội dung sau** (bắt buộc có 1 đoạn văn dẫn dắt trước bảng):
+   - 6.1 Roadmap, 6.2 Milestones & AC, 7.1 Resource Allocation & Cost, 7.2 Operational Cost.
+2. **DÙNG PROSE / BULLET POINTS cho tất cả phần còn lại**:
+   - Section 1 & 2: Business language, kể chuyện.
+   - Section 4: Bullet list có bold title.
+   - Section 5: Bullets only, giải thích "tại sao chọn".
+   - Section 7.3: Bullet list.
+
+## Humanization Checklist
+
+1. Không dùng `---` giữa các heading.
+2. Không dùng emoji trang trí (`💡`, `🔴`, `⭐`, `⚠️`) trong heading/blockquote.
+3. Đa dạng hóa bullets — tránh lặp `- **Title** — Description`. Đan xen prose, dấu `:`, viết trực tiếp.
+4. Loại bỏ hướng dẫn dạng ngoặc đơn `*(Illustrative...)*`.
+5. Tránh cụm từ AI: "giải pháp đột phá", "kiến trúc tối tân", "seamless", "robust". Dùng ngôn từ thực tế.
