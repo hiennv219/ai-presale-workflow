@@ -50,10 +50,15 @@ def get_proposal_header(final_proposal_path, project_name):
         
     return default_header
 
-def run_concat(project_path):
+def run_concat(project_path, lang=None):
     workspace_dir = os.path.join(project_path, "workspace")
-    proposal_dir = os.path.join(workspace_dir, "proposal")
-    final_proposal_path = os.path.join(workspace_dir, "final-proposal.md")
+
+    if lang:
+        proposal_dir = os.path.join(workspace_dir, f"proposal_{lang}")
+        final_proposal_path = os.path.join(workspace_dir, f"proposal-full_{lang}.md")
+    else:
+        proposal_dir = os.path.join(workspace_dir, "proposal")
+        final_proposal_path = os.path.join(workspace_dir, "final-proposal.md")
     
     if not os.path.exists(proposal_dir):
         print(f"Error: Proposal directory not found at {proposal_dir}")
@@ -68,8 +73,8 @@ def run_concat(project_path):
         return False
         
     project_name = os.path.basename(os.path.abspath(project_path))
-    header = get_proposal_header(final_proposal_path, project_name)
-    
+    header = "" if lang else get_proposal_header(final_proposal_path, project_name)
+
     body_parts = []
     for f_name in files:
         f_path = os.path.join(proposal_dir, f_name)
@@ -80,7 +85,10 @@ def run_concat(project_path):
             content = content.replace("../assets/", "assets/")
             body_parts.append(content)
             
-    combined = header.rstrip() + "\n\n" + "\n\n".join(body_parts) + "\n"
+    if header:
+        combined = header.rstrip() + "\n\n" + "\n\n".join(body_parts) + "\n"
+    else:
+        combined = "\n\n".join(body_parts) + "\n"
     
     with open(final_proposal_path, 'w', encoding='utf-8') as f:
         f.write(combined)
@@ -323,12 +331,49 @@ def run_export(project_path):
     
     return True
 
+def run_pdf_export(project_path):
+    delivery_dir = os.path.join(project_path, "_delivery")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    pdf_script = os.path.join(script_dir, "html-to-pdf.js")
+
+    html_files = [f for f in os.listdir(delivery_dir) if f.endswith(".html") and f != "export-template.html"] if os.path.exists(delivery_dir) else []
+
+    if not html_files:
+        print(f"Error: No HTML files found in {delivery_dir}. Run --export first.")
+        return False
+
+    # Check puppeteer availability
+    check = subprocess.run(["node", "-e", "require('puppeteer')"], capture_output=True)
+    if check.returncode != 0:
+        print("Installing puppeteer...")
+        install = subprocess.run(["npm", "install", "--no-save", "puppeteer"], capture_output=True, text=True)
+        if install.returncode != 0:
+            print(f"Error installing puppeteer: {install.stderr}")
+            return False
+
+    success = True
+    for html_file in html_files:
+        html_path = os.path.join(delivery_dir, html_file)
+        pdf_path = os.path.join(delivery_dir, html_file.replace(".html", ".pdf"))
+        print(f"Converting {html_file} → PDF...")
+        result = subprocess.run(["node", pdf_script, html_path, pdf_path], capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"Error: {result.stderr}")
+            success = False
+        else:
+            print(result.stdout.strip())
+
+    return success
+
+
 def main():
     parser = argparse.ArgumentParser(description="Automate presale proposal concatenation, WBS finalization, and HTML exports.")
     parser.add_argument("--project", help="Path to the project directory (e.g., projects/2026-05-11-terrafuse)")
     parser.add_argument("--concat", action="store_true", help="Concatenate proposal sections into final-proposal.md")
+    parser.add_argument("--lang", help="Language code for translated section concat (e.g., ja, vi, en)")
     parser.add_argument("--wbs", action="store_true", help="Finalize WBS into final-wbs.md")
     parser.add_argument("--export", action="store_true", help="Compile and export documents into _delivery/ HTML formats")
+    parser.add_argument("--pdf", action="store_true", help="Export PDF versions of deliverables (requires puppeteer)")
     parser.add_argument("--all", action="store_true", help="Execute all steps (concat, wbs, export)")
     
     args = parser.parse_args()
@@ -351,23 +396,28 @@ def main():
     success = True
     
     # Default behavior if no action specified is --all
-    run_all = args.all or (not args.concat and not args.wbs and not args.export)
-    
+    run_all = args.all or (not args.concat and not args.wbs and not args.export and not args.pdf)
+
     if run_all or args.concat:
         print("\n--- Step 1: Concatenating Proposal ---")
-        if not run_concat(project_path):
+        if not run_concat(project_path, lang=args.lang):
             success = False
-            
+
     if run_all or args.wbs:
         print("\n--- Step 2: Finalizing WBS ---")
         if not run_wbs_finalize(project_path):
             success = False
-            
+
     if run_all or args.export:
         print("\n--- Step 3: Exporting Deliverables ---")
         if not run_export(project_path):
             success = False
-            
+
+    if args.pdf:
+        print("\n--- Step 4: Exporting PDFs ---")
+        if not run_pdf_export(project_path):
+            success = False
+
     if success:
         print("\n🎉 Presale automation finished successfully!")
     else:

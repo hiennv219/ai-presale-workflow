@@ -155,11 +155,22 @@ Reference for all skill agents in this workspace. The orchestrator routes to the
 - Does NOT translate technical terms, acronyms, product names, file paths, or code
 - Adapts tone per language: professional English, です/ます Japanese, natural Vietnamese business writing
 - Validates structure match between source and output (heading count, table count, list items)
-- Supports single file and multi-file (directory) translation
+- Supports single file, directory, and incremental translation
 
 **Standalone:** This agent runs independently via `/presale-transale` — it is not part of the main pipeline stages.
 
-**Output:** `{{original_name}}_{{lang_code}}.md` in same directory as source
+### Usage
+
+```
+/presale-transale proposal ja        → Incremental: chỉ dịch section thay đổi, concat kết quả
+/presale-transale proposal ja force  → Dịch lại toàn bộ sections
+/presale-transale wbs ja             → Dịch single file
+/presale-transale workspace/scope/ vi → Dịch cả thư mục
+```
+
+**Output:**
+- Single/directory: `{{name}}_{{lang}}.md` cùng thư mục source
+- Incremental: `workspace/proposal_{{lang}}/` + `workspace/proposal-full_{{lang}}.md`
 
 ---
 

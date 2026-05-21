@@ -11,6 +11,14 @@ Translate presale artifacts (proposals, WBS, scope, discovery) between supported
 
 `/presale-transale <file-or-directory-path> [target-language]`
 
+### Modes
+
+| Mode | Trigger | Behavior |
+|------|---------|----------|
+| **Single file** | Path to a `.md` file | Translate that file |
+| **Directory** | Path to a directory | Translate all `.md` files inside |
+| **Incremental** | `proposal` or path to `workspace/proposal/` | Translate only changed sections, concat result |
+
 ### Supported Languages
 
 | Code | Language   | Native Name |
@@ -22,9 +30,9 @@ Translate presale artifacts (proposals, WBS, scope, discovery) between supported
 ### Prerequisites
 
 1. Resolve target path:
-   - Name only (e.g. `proposal`) → `workspace/proposal.md`
-   - Directory (e.g. `workspace/proposal/`) → all `.md` files inside
-   - Full path → use as-is
+   - Name only (e.g. `proposal`) → `workspace/proposal/` (incremental mode)
+   - Directory (e.g. `workspace/proposal/`) → incremental mode if contains numbered section files (`01-*.md`, `02-*.md`...)
+   - Full path to single file → single file mode
 2. File(s) must exist and be non-empty.
 3. Target language must be one of: `en`, `ja`, `vi`.
    - If not provided → ask user to choose.
@@ -34,6 +42,8 @@ Translate presale artifacts (proposals, WBS, scope, discovery) between supported
 If not met → report what's missing, do NOT translate.
 
 ## Procedure
+
+### Standard Mode (single file or non-proposal directory)
 
 1. Read source file(s) completely.
 2. Detect source language.
@@ -45,6 +55,29 @@ If not met → report what's missing, do NOT translate.
    - Filename: `{{original_name}}_{{lang_code}}.md` (e.g. `wbs_ja.md`)
    - Already-translated file (e.g. `proposal_ja.md` → Vietnamese): output `proposal_vi.md`, not `proposal_ja_vi.md`.
 7. Report output summary.
+
+### Incremental Mode (proposal sections)
+
+Triggered when target is `workspace/proposal/` or shorthand `proposal`.
+
+1. Identify section files: all `NN-*.md` files in `workspace/proposal/` (e.g. `01-project-overview.md`).
+2. Determine output directory: `workspace/proposal_{{lang_code}}/` (e.g. `workspace/proposal_ja/`).
+3. **Change detection** — for each section file:
+   - If translated version does NOT exist → mark as **needs translation**.
+   - If translated version exists → compare source file's modification time vs translated file's modification time.
+     - Source is newer → mark as **needs translation**.
+     - Source is same or older → mark as **skip** (already up-to-date).
+4. Report change detection summary:
+   ```
+   Incremental translation ({{source_lang}} → {{target_lang}}):
+     - Needs translation: {{list of changed files}}
+     - Up-to-date (skipped): {{list of unchanged files}}
+   ```
+5. Translate only the files marked as **needs translation**, following Translation Rules below.
+6. Write each translated section to `workspace/proposal_{{lang_code}}/{{same_filename}}`.
+7. Run quality checks on each translated section.
+8. **Concat** — concatenate all translated sections (in sort order) into `workspace/proposal-full_{{lang_code}}.md`.
+9. Report output summary.
 
 ## Translation Rules
 
@@ -134,8 +167,24 @@ Total: {{count}} files translated
 Source directory: {{source_dir}}
 ```
 
+Incremental (proposal sections):
+```
+Incremental translation ({{source_lang}} → {{target_lang}}):
+  Translated ({{count_translated}} sections):
+    - {{section_file_1}} ({{size}})
+    - {{section_file_2}} ({{size}})
+  Skipped ({{count_skipped}} sections, unchanged):
+    - {{section_file_3}}
+    - {{section_file_4}}
+  Concatenated: workspace/proposal-full_{{lang_code}}.md ({{total_words}} words)
+  Saved ~{{tokens_saved}} tokens by skipping unchanged sections.
+```
+
 ## Edge Cases
 
 - **Mixed-language source**: Treat the dominant language as source. Translate only the source-language portions; keep other-language technical terms as-is.
 - **Empty sections**: Keep empty sections with translated headings.
 - **Images with alt text**: Translate alt text, keep image path unchanged.
+- **Force re-translate all**: If user says "force" or "all" with incremental mode, skip change detection and translate every section.
+- **New section added**: A new source section without a translated counterpart is always translated.
+- **Section deleted from source**: If a translated section exists but source was removed, delete the orphaned translated file and exclude from concat.

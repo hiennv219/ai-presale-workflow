@@ -10,6 +10,8 @@
 - [x] #3 — Deal complexity auto-classification sau Discovery (discovery SKILL.md + wbs SKILL.md, min level 3)
 - [x] #4 — Thêm "Next Action" + "Blockers" + "Deal Complexity" vào status.md template (không cần command riêng)
 - [x] #15 — Dynamic & Customizable Proposal Template (Tự tùy biến cấu trúc Proposal)
+- [x] #8 — Slide deck generation
+- [x] #6 — PDF export
 
 ## Cần sửa
 
@@ -18,15 +20,10 @@
 - **Giải pháp**: Cho phép 3 loại: open-ended, yes/no confirm, multi-option (giữ 3-option cho decisions)
 - **Effort**: Thấp
 
-### #6 — PDF export
+### #6 — PDF export ✅
 - **Vấn đề**: Chỉ có HTML, presale cần PDF gửi email
 - **Giải pháp**: Thêm `--pdf` flag vào presale_cli.py, dùng puppeteer (đã implement)
 - **Effort**: Trung bình
-
-### #8 — Slide deck generation ✅
-- **Vấn đề**: Presale luôn cần deck cho meeting, hiện phải làm tay
-- **Giải pháp**: `/presale-slides` — skill tóm tắt proposal → slide Markdown, handoff cho GPT/Gemini
-- **Implemented**: workflow + skill (17 slides, co giãn theo nội dung)
 
 ### #10 — Multi-project dashboard
 - **Vấn đề**: Presale handle 3-5 deal cùng lúc, không có overview
