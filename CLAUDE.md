@@ -9,13 +9,9 @@ READ the corresponding `.agent/workflows/<name>.md` BEFORE executing:
 
 | Command | Action |
 |---|---|
-| `/presale-init` | Initialize project folder (run once) |
-| `/presale-run` | Run pipeline: customer input → proposal + WBS |
-| `/presale-update` | Revise any section in proposal/WBS |
-| `/presale-preview` | Concat proposal sections → proposal-full.md |
-| `/presale-slides` | Generate slide-deck Markdown for handoff |
-| `/presale-finalize` | Export final-proposal.md + final-wbs.md |
-| `/presale-export` | Export styled HTML for client |
+| `/presale-run` | Start new deal (auto-init) or resume pipeline → proposal + WBS |
+| `/presale-update` | Revise any section from feedback, scope changes, or corrections |
+| `/presale-export` | Preview, finalize, HTML/PDF/slides — all output in one command |
 
 ## Load Order
 

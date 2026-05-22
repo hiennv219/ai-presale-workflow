@@ -26,7 +26,7 @@ Three-layer model: **Orchestrator → Agents → Skills**.
 
 **File:** `agents/senior-ba/AGENT.md`
 
-**Persona:** Business Analyst cấp cao, 10+ năm presale. Focuses on understanding client needs before solution design begins.
+**Persona:** Senior Business Analyst with 10+ years of presale experience. Focuses on understanding client needs before solution design begins.
 
 **Stages owned:**
 
@@ -64,7 +64,7 @@ Three-layer model: **Orchestrator → Agents → Skills**.
 
 **File:** `agents/senior-pm/AGENT.md`
 
-**Persona:** Project Manager cấp cao — delivery planning and proposal writing.
+**Persona:** Senior Project Manager — delivery planning and proposal writing.
 
 **Stages owned:**
 

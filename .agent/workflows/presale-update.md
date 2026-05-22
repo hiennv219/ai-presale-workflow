@@ -15,7 +15,7 @@ description: Update any component of existing proposal/WBS from feedback, scope 
 
 | Type | Example | Cascade |
 | --- | --- | --- |
-| Question answered | Client trả lời câu hỏi từ backlog | Backlog-questions → Discovery → Context → Scope (if needed) |
+| Question answered | Client answered question from backlog | Backlog-questions → Discovery → Context → Scope (if needed) |
 | Scope change | Add/remove module, platform | Scope → WBS → Proposal |
 | Requirement update | Change user count, SLA, stack | Context → Scope → WBS → Proposal |
 | Timeline change | Shorten/extend deadline | WBS → Proposal |

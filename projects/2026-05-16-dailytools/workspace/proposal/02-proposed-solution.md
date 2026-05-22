@@ -1,88 +1,56 @@
-## 2. Proposed Solution & UX
+# 02 - Giải Pháp Đề Xuất & Quy Trình Trải Nghiệm
 
-### 2.1 Solution Overview
-DailyTools is a centralized daily reporting hub designed to automatically identify and surface development bottlenecks. By analyzing unstructured developer updates, the system instantly flags potential risks and alerts project managers, eliminating the need for developers to manually configure complex project management tools or write long status logs.
+## 2.1 Tổng Quan Giải Pháp (Solution Overview)
 
-### 2.2 Key Features
-To address the primary needs of project managers and development teams, the system comprises three key modules:
+DailyTools là ứng dụng Web responsive, tối giản, thiết kế chuyên biệt cho PM. Hệ thống tích hợp Cloud API để tự động hóa toàn bộ quy trình: tiếp nhận âm thanh cuộc họp → chuyển đổi văn bản → phân tích tóm tắt — loại bỏ hoàn toàn tác vụ hành chính thủ công.
 
-**Developer Workspace**
-- **Frictionless Web Form**: A clean, mobile-responsive layout allowing developers to quickly submit daily status notes—focusing on accomplishments, upcoming tasks, and challenges—without disrupting their active coding workflow.
-- **Passwordless Authentication**: Quick login options (such as magic links) that eliminate username and password fatigue, encouraging consistent daily submission rates.
+## 2.2 Các Tính Năng Chính (Key Features)
 
-**AI Processing Engine**
-- **Intelligent Blocker Extraction**: A natural language processing layer that automatically reads daily updates to flag implicit blocks or team dependencies, even if developers do not explicitly mark them as issues.
+**Đăng nhập & Bảo mật tài khoản PM**
+Xác thực tài khoản cá nhân cho từng PM, mỗi người sở hữu không gian lưu trữ và quản lý cuộc họp độc lập, đảm bảo bảo mật dữ liệu dự án.
 
-**Project Management Dashboard**
-- **Priority Roadblock Alerts**: A centralized view that automatically promotes flagged blockers to the top of the interface, ensuring management handles high-risk dependencies immediately.
+**Dashboard quản lý lịch sử họp**
+Dashboard tập trung hiển thị toàn bộ cuộc họp đã xử lý. PM dễ dàng tìm kiếm, xem lại nội dung họp cũ chỉ với vài thao tác.
 
-### 2.3 User Flow
-Developers submit their updates via a simple three-field form. The AI engine processes the text to identify potential blockers. If an issue is flagged, it is immediately highlighted at the top of the PM Dashboard. Otherwise, the submission is categorized as a standard, on-track daily update.
+**Tiếp nhận dữ liệu đa định dạng (Upload Module)**
+Hỗ trợ tải file âm thanh (.mp3, .wav) và văn bản thô (.txt), giúp PM linh hoạt đưa dữ liệu từ nhiều nguồn vào hệ thống.
+
+**Chuyển đổi âm thanh tự động (Speech-to-Text)**
+Tích hợp OpenAI Whisper API tự động chuyển đổi file âm thanh tiếng Việt/tiếng Anh thành văn bản thô trong vài giây với độ chính xác cao.
+
+**Biên tập văn bản (Transcript Editor)**
+Trình biên tập trực quan cho PM rà soát và chỉnh sửa văn bản thô (thuật ngữ chuyên ngành, tên riêng) trước khi gửi yêu cầu tóm tắt AI.
+
+**Tóm tắt thông minh & Trích xuất Action Items**
+Sử dụng OpenAI GPT-4o phân tích văn bản cuộc họp, xuất ra bản tóm tắt ngắn gọn và danh sách Action Items dạng checklist rõ ràng.
+
+**Sao chép nhanh một chạm (Quick Copy)**
+Nút sao chép riêng biệt cho phần Tóm tắt và Action Items, PM dán thẳng vào email, Slack, Zalo hoặc Jira.
+
+## 2.3 Luồng Người Dùng (User Flow)
+
+Quy trình DailyTools được tối ưu để PM đạt kết quả nhanh nhất — từ đăng nhập, tải file, chuyển đổi âm thanh và tóm tắt, đến sao chép chia sẻ.
 
 ```mermaid
-graph TD
-    A([Dev opens DailyTools]) --> B[Fills out Daily Report Form]
-    B --> C[Submit]
-    C --> D[AI Scans Text for Blockers]
-    D --> E{Blocker Found?}
-    E -- Yes --> F[Highlight on PM Dashboard]
-    E -- No --> G[Log as normal status]
-    F --> H([PM Reviews Blockers])
-```
-
-### 2.4 High-Level Wireframe
-
-**Developer Submission Form**
-```text
-┌─────────────────────────────────────┐
-│  Daily Standup Submission           │
-├─────────────────────────────────────┤
-│                                     │
-│  What did you accomplish yesterday? │
-│  ┌─────────────────────────────┐    │
-│  │                             │    │
-│  └─────────────────────────────┘    │
-│                                     │
-│  What are you working on today?     │
-│  ┌─────────────────────────────┐    │
-│  │                             │    │
-│  └─────────────────────────────┘    │
-│                                     │
-│  Any blockers? (Optional)           │
-│  ┌─────────────────────────────┐    │
-│  │                             │    │
-│  └─────────────────────────────┘    │
-│                                     │
-│           [ Submit Update ]         │
-└─────────────────────────────────────┘
-```
-
-**Project Manager Dashboard**
-```text
-┌─────────────────────────────────────┐
-│  PM Management Console              │
-├─────────────────────────────────────┤
-│                                     │
-│  Active Project Blockers (2)        │
-│  ┌─────────────────────────────┐    │
-│  │ * John: API timeout issue   │    │
-│  │ * Mai: Waiting for design   │    │
-│  └─────────────────────────────┘    │
-│                                     │
-│  ─────────────────────────────────  │
-│                                     │
-│  Today's Standup Logs               │
-│  ┌─────────────────────────────┐    │
-│  │ John - 10:02 AM             │    │
-│  │ Did: Fixed auth module      │    │
-│  │ Will: Start API integration │    │
-│  │ Blocker: API timeout        │    │
-│  ├─────────────────────────────┤    │
-│  │ Mai - 09:45 AM              │    │
-│  │ Did: Completed wireframes   │    │
-│  │ Will: Build prototype       │    │
-│  │ Blocker: Waiting on design  │    │
-│  └─────────────────────────────┘    │
-│                                     │
-└─────────────────────────────────────┘
+flowchart TD
+    Start([Bắt đầu]) --> Login[PM Đăng nhập]
+    Login --> Dashboard{Trang Dashboard}
+    
+    Dashboard -->|Xem lịch sử| History[Xem danh sách cuộc họp cũ]
+    History --> ViewDetail[Xem chi tiết tóm tắt & Copy]
+    
+    Dashboard -->|Xử lý cuộc họp mới| UploadForm[Màn hình tải file cuộc họp]
+    UploadForm --> UploadFile[PM tải file .mp3, .wav hoặc .txt]
+    
+    UploadFile --> CheckFormat{Định dạng file là gì?}
+    CheckFormat -->|File Text .txt| SendLLM[Gửi trực tiếp qua GPT-4o API]
+    CheckFormat -->|File Audio .mp3, .wav| Whisper[Gửi qua OpenAI Whisper API]
+    
+    Whisper -->|Chuyển đổi thành công| SendLLM
+    Whisper -->|Lỗi file/âm thanh| ErrorSTT[Hiển thị lỗi và yêu cầu tải lại]
+    ErrorSTT --> UploadForm
+    
+    SendLLM -->|Tạo tóm tắt & Action Items| ShowResult[Hiển thị kết quả tóm tắt & Action Items]
+    ShowResult --> CopyResult[Sao chép nhanh / Lưu vào lịch sử]
+    CopyResult --> Dashboard
 ```

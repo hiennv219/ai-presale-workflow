@@ -17,7 +17,7 @@ Translate presale artifacts (proposals, WBS, scope, discovery) between supported
 |------|------------|-------------|
 | `en` | English    | English     |
 | `ja` | Japanese   | 日本語      |
-| `vi` | Vietnamese | Tiếng Việt  |
+| `vi` | Vietnamese | Vietnamese   |
 
 ### Prerequisites
 
@@ -88,7 +88,7 @@ If not met → report what's missing, do NOT translate.
 - Professional, clear, natural Vietnamese business writing.
 - Avoid overly literal translations — prioritize natural phrasing.
 - Technical terms: keep English original, no forced Vietnamese translation.
-  - Example: "API" stays "API", not "giao diện lập trình ứng dụng".
+  - Example: "API" stays "API", not translated to the Vietnamese phrase for application programming interface.
 - Use Vietnamese diacritics correctly.
 - Date format: DD/MM/YYYY for inline dates, keep YYYY-MM-DD in metadata/tables.
 

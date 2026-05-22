@@ -17,7 +17,7 @@ description: Route presale workflow to correct agent and skill based on stage an
 | 5. Proposal | Senior PM | `proposal` |
 | 6. Review | Senior PM | `review-finalize` |
 
-## Input-Based Routing (fallback khi không có status.md)
+## Input-Based Routing (fallback when status.md is missing)
 
 | User input | Skill |
 |---|---|
@@ -31,40 +31,40 @@ description: Route presale workflow to correct agent and skill based on stage an
 | Need slide deck from proposal | `slides` |
 | Need document translation (EN/JA/VI) | `transale` |
 
-## Routing Procedure (2 tầng)
+## Routing Procedure (2 levels)
 
-1. Đọc `workspace/status.md` → xác định current stage
-2. Map stage → agent (bảng trên)
+1. Read `workspace/status.md` → determine current stage
+2. Map stage → agent (using the table above)
 3. Load `agents/<agent>/AGENT.md` (persona + rules)
 4. Load `skills/<skill>/SKILL.md` (procedure)
-5. Agent chạy skill với Stop/Assume logic
-6. Kết quả:
-   - Stage hoàn thành → kiểm tra handoff conditions → next stage/agent
+5. Agent executes the skill with Stop/Assume logic
+6. Result handling:
+   - Stage completed → verify handoff conditions → next stage/agent
    - Stop Rule triggered → load Comm Hub → HOLD
-   - Assume Rule triggered → gọi Assumption Ledger → tiếp tục
-   - Loop back needed → quay lại agent trước
+   - Assume Rule triggered → call Assumption Ledger → continue
+   - Loop back needed → revert to previous agent
 
 ## Handoff Conditions
 
 **BA → SA:**
 - `workspace/discovery.md` EXISTS
 - `workspace/deal-context.md` EXISTS
-- Không còn Stop Rule question chưa trả lời
+- No remaining unanswered Stop Rule questions
 
 **SA → PM:**
 - `workspace/pain-scope.md` EXISTS
-- Scope register có ≥1 approved in-scope item
-- `workspace/technical.md` EXISTS hoặc skip condition met
+- Scope register has ≥1 approved in-scope item
+- `workspace/technical.md` EXISTS or skip condition met
 
 **PM → Done:**
 - Review gate PASS
-- `workspace/assumption-ledger.md`: không có impact=High + status≠Confirmed
+- `workspace/assumption-ledger.md`: no items with impact=High + status≠Confirmed
 
 ## Loop Back Triggers
 
-- SA → BA: scope item không map về requirement trong deal-context
-- PM → SA: WBS task không map về scope item, hoặc scope conflict detected
-- Any → same agent (retry): khách trả lời sau HOLD → resume stage
+- SA → BA: scope item does not map to a requirement in deal-context
+- PM → SA: WBS task does not map to a scope item, or scope conflict detected
+- Any → same agent (retry): client provides answers after HOLD → resume stage
 
 ## Standard Output Format
 

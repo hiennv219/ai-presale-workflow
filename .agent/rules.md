@@ -1,30 +1,30 @@
 # Presale Rules
 
-## 1. Stop Rule — Thông tin cốt lõi
+## 1. Stop Rule — Core Information
 
-Khi agent phát hiện thiếu thông tin thuộc danh sách Stop Rule của mình:
-1. Dừng stage hiện tại
-2. Đánh dấu status = HOLD
-3. Gọi Comm Hub để format câu hỏi
-4. Chờ khách trả lời trước khi tiếp tục
+When the agent detects that core information in its Stop Rule list is missing:
+1. Stop the current stage.
+2. Mark the status as HOLD.
+3. Call the Communication Hub to format the clarifying questions.
+4. Wait for the user's response before proceeding.
 
-Ranh giới: "Nếu thông tin này SAI sẽ thay đổi scope, effort, hoặc cost → Stop Rule."
+Boundary: "If this information being WRONG would change the scope, effort, or cost → it is a Stop Rule."
 
-Mỗi agent có danh sách Stop Rule riêng — xem `agents/<agent>/AGENT.md`.
+Each agent has its own list of Stop Rules — see `agents/<agent>/AGENT.md`.
 
-## 2. Assume Rule — Chi tiết phụ
+## 2. Assume Rule — Minor Details
 
-Khi agent phát hiện thiếu thông tin thuộc danh sách Assume Rule của mình:
-1. Chọn giá trị mặc định hợp lý
-2. Gọi Assumption Ledger để ghi nhận (ID, nội dung, impact, status=Active)
-3. Tiếp tục stage — không dừng, không hỏi khách
+When the agent detects that minor details in its Assume Rule list are missing:
+1. Select a reasonable default value.
+2. Call the Assumption Ledger to record it (ID, description, impact, status=Active).
+3. Proceed with the current stage — do not stop, and do not ask the client.
 
-Ranh giới: "Nếu thông tin này SAI chỉ thay đổi implementation detail → Assume Rule."
+Boundary: "If this information being WRONG would only change the implementation details → it is an Assume Rule."
 
 ### Escalation
 
-- Assumption đã Active > 7 ngày + impact Medium → escalate lên Stop Rule ở stage tiếp theo
-- Assumption bị Rejected bởi khách → trigger re-scope (loop back)
+- An active assumption that remains Active for > 7 days with a Medium impact is escalated to a Stop Rule in the next stage.
+- If an assumption is Rejected by the client, it triggers a re-scope loop (loop back).
 
 ## 3. Classify information
 

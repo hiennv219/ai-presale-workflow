@@ -7,50 +7,50 @@ description: Track all assumptions created during pipeline execution. Shared ski
 
 ## Purpose
 
-Theo dõi tập trung mọi giả định được tạo ra trong suốt pipeline. Cung cấp visibility cho Review gate và khách hàng.
+Centrally track all assumptions created throughout the pipeline. Provide visibility for the Review gate and the client.
 
 ## Trigger
 
-Bất kỳ agent nào trigger Assume Rule → gọi skill này để ghi nhận.
+Any agent that triggers the Assume Rule → calls this skill to record the assumption.
 
 ## Procedure
 
-### Ghi Assumption Mới
+### Record a New Assumption
 
-1. Đọc `workspace/assumption-ledger.md` (tạo từ template nếu chưa có)
-2. Tạo ID mới: `A-{n}` (sequential, never reuse)
-3. Ghi entry với: ID, nội dung, Created By (agent), Stage, Impact, Status=Active, Date, Note
-4. Cập nhật Overview table (totals)
-5. Lưu file
+1. Read `workspace/assumption-ledger.md` (create from template if it doesn't exist yet)
+2. Generate a new ID: `A-{n}` (sequential, never reuse)
+3. Record the entry with: ID, Description, Created By (agent), Stage, Impact, Status=Active, Date, Notes
+4. Update the Overview table (totals)
+5. Save the file
 
-### Phân Loại Impact
+### Impact Classification
 
-| Impact | Định nghĩa | Ví dụ |
-|--------|-------------|-------|
-| Low | Sai → chỉ thay đổi implementation detail, không ảnh hưởng scope/cost | Caching engine, logging tool |
-| Medium | Sai → thay đổi effort estimate hoặc timeline | Số user roles, API complexity |
-| High | Sai → thay đổi scope, cost, hoặc architecture | Migration required, compliance, platform choice |
+| Impact | Definition | Examples |
+|--------|------------|----------|
+| Low | Incorrect → only changes implementation details, does not affect scope/cost | Caching engine, logging tool |
+| Medium | Incorrect → changes effort estimate or timeline | Number of user roles, API complexity |
+| High | Incorrect → changes scope, cost, or architecture | Migration required, compliance, platform choice |
 
 ### Status Lifecycle
 
 ```
-Active → Confirmed (khách xác nhận)
-Active → Rejected (khách phủ nhận → cần re-scope)
-Active → Replaced (thay bằng assumption khác)
+Active → Confirmed (confirmed by client)
+Active → Rejected (rejected by client → triggers re-scope)
+Active → Replaced (replaced by another assumption)
 Pending confirm → Confirmed / Rejected
 ```
 
 ### Escalation
 
-- Assumption Active > 7 ngày + impact Medium → escalate lên Stop Rule ở stage tiếp theo
-- Assumption bị Rejected bởi khách → trigger re-scope (loop back)
+- Assumption Active > 7 days + impact Medium → escalate to Stop Rule in the next stage
+- Assumption Rejected by client → trigger re-scope (loop back)
 
-## Tích Hợp Với Review Gate
+## Integration with Review Gate
 
-Review agent (Stage 6) PHẢI kiểm tra Assumption Ledger:
+Review agent (Stage 6) MUST check the Assumption Ledger:
 - impact=High + status≠Confirmed → **BLOCK finalization**
-- impact=Medium + status=Active > 7 ngày → **WARNING**
-- Liệt kê tất cả Active assumptions trong proposal (Section: Assumptions & Risks)
+- impact=Medium + status=Active > 7 days → **WARNING**
+- List all Active assumptions in the proposal (Section: Assumptions & Risks)
 
 ## Output
 

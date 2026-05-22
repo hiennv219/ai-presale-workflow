@@ -226,429 +226,334 @@
 </head>
 <body>
   <div class="word-page">
-    <h1>Proposal: DailyTools MVP</h1>
-<p><strong>Author</strong>: Antigravity AI
+    <h1>Proposal: 2026 05 16 Dailytools</h1>
+<p><strong>Author</strong>: Ryan Nguyen
 <strong>Date</strong>: 2026-05-18
-<strong>Version</strong>: Final (8-Section Standardized)</p>
-<hr>
-<h2>1. Project Overview &amp; Business Value</h2>
-<h3>1.1 Context &amp; Problem Statement</h3>
-<p>Project Managers (PMs) often face a lack of immediate visibility into critical engineering blockers. Daily progress updates from development teams are frequently unstructured, overly long, or scattered across disjointed chat channels. Consequently, PMs must manually parse large volumes of text, risking delayed responses to critical issues that could compromise project timelines.</p>
-<p><strong>Core Pain Points:</strong></p>
+<strong>Version</strong>: Final</p>
+<h1>01 - Tổng Quan Dự Án &amp; Giá Trị Kinh Doanh</h1>
+<h1>01 - Tổng Quan Dự Án &amp; Giá Trị Kinh Doanh</h1>
+<h2>1.1 Bối Cảnh &amp; Vấn Đề (Context &amp; Problem Statement)</h2>
+<p>Các Quản trị dự án (PM) đang mất nhiều thời gian cho việc ghi chép biên bản họp và phân công công việc sau mỗi buổi thảo luận, làm giảm đáng kể hiệu suất làm việc.</p>
+<p>Các vấn đề cốt lõi:</p>
 <ul>
-<li><strong>Inadequate Blocker Visibility</strong>: Daily team reports are long and lack structure, which increases the likelihood of critical project delays going unnoticed.</li>
-<li><strong>Manual Data Extraction</strong>: Project managers spend excessive time manually parsing unstructured chat updates to determine actual progress and outstanding tasks.</li>
+<li>Tốn công sức hành chính: PM phải dành 30–60 phút sau mỗi cuộc họp để nghe lại ghi âm, ghi ý chính và soạn danh sách công việc — gián đoạn luồng công việc chiến lược.</li>
+<li>Rủi ro bỏ sót thông tin: Ghi chép thủ công trong cuộc họp nhanh dễ bỏ sót quyết định quan trọng hoặc Action Items, gây thiếu đồng bộ đội ngũ.</li>
+<li>Thiếu lưu trữ tập trung: Biên bản họp phân tán ở email, chat, file cá nhân — khó tra cứu lịch sử quyết định.</li>
 </ul>
-<p>Note: Our primary focus is to optimize administrative effort for PMs by automating the extraction and highlighting of project blockers from raw text updates.</p>
-<h3>1.2 Goals &amp; Business Impact</h3>
+<h2>1.2 Mục Tiêu &amp; Tác Động Kinh Doanh (Goals &amp; Business Impact)</h2>
+<p>DailyTools MVP xây dựng nền tảng Web thông minh giúp PM tự động chuyển đổi âm thanh cuộc họp thành văn bản, trích xuất tóm tắt và danh sách công việc — cắt giảm tối đa công sức hành chính.</p>
+<p>Loại hình dự án: Phát triển sản phẩm mới (Greenfield MVP).</p>
+<p>Lợi ích kinh doanh:</p>
 <ul>
-<li><strong>Primary Goal</strong>: Deliver a lightweight, automated system to collect developer progress reports and leverage intelligent summarization to instantly extract blockers.</li>
-<li><strong>Project Type</strong>: Greenfield MVP Development (Trial Implementation)</li>
+<li>Tối ưu thời gian PM: Giảm thời gian tổng hợp biên bản từ hàng chục phút xuống dưới 1 phút nhờ AI tự động.</li>
+<li>Nâng cao tính trách nhiệm: Trích xuất chính xác Action Items kèm người phụ trách từ hội thoại, cải thiện tỷ lệ hoàn thành công việc.</li>
+<li>Quản lý tập trung: Toàn bộ lịch sử tóm tắt họp lưu trên một dashboard duy nhất, dễ tìm kiếm và đối chiếu.</li>
 </ul>
-<p><strong>Key Business Benefits:</strong></p>
+<h1>02 - Giải Pháp Đề Xuất &amp; Quy Trình Trải Nghiệm</h1>
+<h2>2.1 Tổng Quan Giải Pháp (Solution Overview)</h2>
+<p>DailyTools là ứng dụng Web responsive, tối giản, thiết kế chuyên biệt cho PM. Hệ thống tích hợp Cloud API để tự động hóa toàn bộ quy trình: tiếp nhận âm thanh cuộc họp → chuyển đổi văn bản → phân tích tóm tắt — loại bỏ hoàn toàn tác vụ hành chính thủ công.</p>
+<h2>2.2 Các Tính Năng Chính (Key Features)</h2>
+<p><strong>Đăng nhập &amp; Bảo mật tài khoản PM</strong>
+Xác thực tài khoản cá nhân cho từng PM, mỗi người sở hữu không gian lưu trữ và quản lý cuộc họp độc lập, đảm bảo bảo mật dữ liệu dự án.</p>
+<p><strong>Dashboard quản lý lịch sử họp</strong>
+Dashboard tập trung hiển thị toàn bộ cuộc họp đã xử lý. PM dễ dàng tìm kiếm, xem lại nội dung họp cũ chỉ với vài thao tác.</p>
+<p><strong>Tiếp nhận dữ liệu đa định dạng (Upload Module)</strong>
+Hỗ trợ tải file âm thanh (.mp3, .wav) và văn bản thô (.txt), giúp PM linh hoạt đưa dữ liệu từ nhiều nguồn vào hệ thống.</p>
+<p><strong>Chuyển đổi âm thanh tự động (Speech-to-Text)</strong>
+Tích hợp OpenAI Whisper API tự động chuyển đổi file âm thanh tiếng Việt/tiếng Anh thành văn bản thô trong vài giây với độ chính xác cao.</p>
+<p><strong>Biên tập văn bản (Transcript Editor)</strong>
+Trình biên tập trực quan cho PM rà soát và chỉnh sửa văn bản thô (thuật ngữ chuyên ngành, tên riêng) trước khi gửi yêu cầu tóm tắt AI.</p>
+<p><strong>Tóm tắt thông minh &amp; Trích xuất Action Items</strong>
+Sử dụng OpenAI GPT-4o phân tích văn bản cuộc họp, xuất ra bản tóm tắt ngắn gọn và danh sách Action Items dạng checklist rõ ràng.</p>
+<p><strong>Sao chép nhanh một chạm (Quick Copy)</strong>
+Nút sao chép riêng biệt cho phần Tóm tắt và Action Items, PM dán thẳng vào email, Slack, Zalo hoặc Jira.</p>
+<h2>2.3 Luồng Người Dùng (User Flow)</h2>
+<p>Quy trình DailyTools được tối ưu để PM đạt kết quả nhanh nhất — từ đăng nhập, tải file, chuyển đổi âm thanh và tóm tắt, đến sao chép chia sẻ.</p>
+<pre><code class="language-mermaid">flowchart TD
+    Start([Bắt đầu]) --&gt; Login[PM Đăng nhập]
+    Login --&gt; Dashboard{Trang Dashboard}
+    
+    Dashboard --&gt;|Xem lịch sử| History[Xem danh sách cuộc họp cũ]
+    History --&gt; ViewDetail[Xem chi tiết tóm tắt &amp; Copy]
+    
+    Dashboard --&gt;|Xử lý cuộc họp mới| UploadForm[Màn hình tải file cuộc họp]
+    UploadForm --&gt; UploadFile[PM tải file .mp3, .wav hoặc .txt]
+    
+    UploadFile --&gt; CheckFormat{Định dạng file là gì?}
+    CheckFormat --&gt;|File Text .txt| SendLLM[Gửi trực tiếp qua GPT-4o API]
+    CheckFormat --&gt;|File Audio .mp3, .wav| Whisper[Gửi qua OpenAI Whisper API]
+    
+    Whisper --&gt;|Chuyển đổi thành công| SendLLM
+    Whisper --&gt;|Lỗi file/âm thanh| ErrorSTT[Hiển thị lỗi và yêu cầu tải lại]
+    ErrorSTT --&gt; UploadForm
+    
+    SendLLM --&gt;|Tạo tóm tắt &amp; Action Items| ShowResult[Hiển thị kết quả tóm tắt &amp; Action Items]
+    ShowResult --&gt; CopyResult[Sao chép nhanh / Lưu vào lịch sử]
+    CopyResult --&gt; Dashboard
+</code></pre>
+<h1>03 - Phạm Vi Dự Án</h1>
+<h2>3.1 Trong Phạm Vi Phát Triển (In-Scope)</h2>
 <ul>
-<li><strong>Optimized Management Effort (Quantified)</strong>: Automatically summarizing and highlighting key issues saves PMs an estimated 1 hour/day by highlighting only the ~10% of reports containing active blockers, reducing daily reading time from 1.6 hours to less than 15 minutes.</li>
-<li><strong>Proactive Risk Mitigation (Quantified)</strong>: Highlights critical blockers immediately, reducing blocker detection latency from 24+ hours (next PM review) to near zero. Based on comparable delivered projects, this early visibility prevents 10-15% of delivery delay incidents.</li>
-<li><strong>Frictionless Developer Adoption (Quantified)</strong>: A clean, mobile-responsive three-field reporting form saves developers an estimated 15 minutes/day in daily logging status over unstructured chat or complex PM tool updates (reducing standup logging overhead by 30% based on industry benchmarks).</li>
+<li><strong>Quản lý tài khoản PM (Authentication):</strong> Luồng đăng nhập/đăng xuất bảo mật, API xác thực JWT bảo vệ dữ liệu lịch sử họp cá nhân.</li>
+<li><strong>Dashboard lịch sử họp:</strong> Giao diện danh sách cuộc họp đã xử lý theo thời gian, API truy vấn phân trang và hiển thị trạng thái.</li>
+<li><strong>Upload file cuộc họp:</strong> Giao diện kéo thả cho file âm thanh (.mp3, .wav) hoặc văn bản (.txt), kiểm tra dung lượng (tối đa 100MB) và định dạng hợp lệ.</li>
+<li><strong>Speech-to-Text:</strong> Tích hợp OpenAI Whisper API chuyển file ghi âm thành transcript thô tiếng Việt/tiếng Anh.</li>
+<li><strong>Transcript Editor:</strong> Giao diện xem và chỉnh sửa thủ công văn bản thô trước khi gửi lệnh tóm tắt.</li>
+<li><strong>AI Summary &amp; Action Items:</strong> Tích hợp OpenAI GPT-4o phân tích transcript, tạo báo cáo tóm tắt và danh sách đầu việc dạng checkbox.</li>
+<li><strong>Meeting Detail &amp; Quick Copy:</strong> Giao diện chi tiết kết quả tóm tắt, nút sao chép nhanh riêng cho Tóm tắt và Action Items.</li>
 </ul>
-<h2>2. Proposed Solution &amp; UX</h2>
-<h3>2.1 Solution Overview</h3>
-<p>DailyTools is a centralized daily reporting hub designed to automatically identify and surface development bottlenecks. By analyzing unstructured developer updates, the system instantly flags potential risks and alerts project managers, eliminating the need for developers to manually configure complex project management tools or write long status logs.</p>
-<h3>2.2 Key Features</h3>
-<p>To address the primary needs of project managers and development teams, the system comprises three key modules:</p>
-<p><strong>Developer Workspace</strong></p>
+<h2>3.2 Ngoài Phạm Vi MVP (Out-of-Scope)</h2>
 <ul>
-<li><strong>Frictionless Web Form</strong>: A clean, mobile-responsive layout allowing developers to quickly submit daily status notes—focusing on accomplishments, upcoming tasks, and challenges—without disrupting their active coding workflow.</li>
-<li><strong>Passwordless Authentication</strong>: Quick login options (such as magic links) that eliminate username and password fatigue, encouraging consistent daily submission rates.</li>
+<li><strong>Ghi âm trực tiếp từ trình duyệt:</strong> Không hỗ trợ thu âm qua microphone trên Web App để tối giản giao diện và tránh rủi ro kỹ thuật quyền truy cập thiết bị.</li>
+<li><strong>Bot tham gia cuộc họp trực tuyến:</strong> Không phát triển bot tự động join Zoom, Google Meet hoặc Teams — cấu trúc tích hợp phức tạp, vượt khung thời gian MVP.</li>
+<li><strong>Phân quyền đa cấp (RBAC):</strong> Chỉ quản lý 1 loại tài khoản PM duy nhất, không hỗ trợ Admin/Member/Guest.</li>
+<li><strong>Đồng bộ công cụ bên thứ ba:</strong> Không gọi API trực tiếp đẩy task sang Jira/Trello hoặc gửi tin nhắn Slack tự động. PM sử dụng tính năng Sao chép nhanh thay thế.</li>
 </ul>
-<p><strong>AI Processing Engine</strong></p>
+<h1>04 - Giả Định Chiến Lược &amp; Quản Trị Rủi Ro</h1>
+<h2>4.1 Giả Định Chiến Lược (Strategic Assumptions)</h2>
 <ul>
-<li><strong>Intelligent Blocker Extraction</strong>: A natural language processing layer that automatically reads daily updates to flag implicit blocks or team dependencies, even if developers do not explicitly mark them as issues.</li>
+<li><strong>Chi phí API bên thứ ba:</strong> Khách hàng cung cấp tài khoản và chịu toàn bộ chi phí sử dụng OpenAI API (Whisper + GPT-4o) trong quá trình phát triển, thử nghiệm và vận hành.</li>
+<li><strong>Ngôn ngữ cuộc họp:</strong> Hệ thống hỗ trợ Tiếng Việt và Tiếng Anh — hai ngôn ngữ có độ chính xác cao nhất với OpenAI hiện tại.</li>
+<li><strong>Giới hạn thời lượng:</strong> File ghi âm tối đa 2 giờ/file để đảm bảo nằm trong context window của GPT-4o và tránh timeout API.</li>
+<li><strong>Hạ tầng deployment:</strong> Khách hàng cung cấp quyền truy cập hosting (Vercel, AWS hoặc tương đương) từ tuần thứ 3 để cấu hình staging và production.</li>
 </ul>
-<p><strong>Project Management Dashboard</strong></p>
-<ul>
-<li><strong>Priority Roadblock Alerts</strong>: A centralized view that automatically promotes flagged blockers to the top of the interface, ensuring management handles high-risk dependencies immediately.</li>
-</ul>
-<h3>2.3 User Flow</h3>
-<p>Developers submit their updates via a simple three-field form. The AI engine processes the text to identify potential blockers. If an issue is flagged, it is immediately highlighted at the top of the PM Dashboard. Otherwise, the submission is categorized as a standard, on-track daily update.</p>
+<h2>4.2 Rủi Ro &amp; Biện Pháp Giảm Thiểu (Risk &amp; Mitigation)</h2>
+<p><strong>Chất lượng nhận diện giọng nói giảm do tiếng ồn (Mức độ: Trung bình)</strong>
+Môi trường ghi âm nhiều tạp âm, micro xa hoặc nói đè giọng có thể làm Whisper dịch sai.
+<em>Biện pháp:</em> Khuyến cáo chất lượng ghi âm trên màn hình upload; Transcript Editor cho PM sửa từ sai trước khi tóm tắt.</p>
+<p><strong>Chi phí API OpenAI tăng đột biến (Mức độ: Thấp)</strong>
+Sử dụng tần suất cao hoặc file dung lượng lớn liên tục có thể đẩy chi phí API ngoài kiểm soát.
+<em>Biện pháp:</em> Hướng dẫn khách hàng cấu hình giới hạn chi tiêu (hard limit/soft limit) trên OpenAI Dashboard ngay từ ngày đầu.</p>
+<h1>05 - Kiến Trúc Kỹ Thuật Sơ Bộ</h1>
+<h2>5.1 Kiến Trúc Mục Tiêu (Target Architecture)</h2>
+<p>Hệ thống được thiết kế theo kiến trúc Client-Server tối giản và hiệu quả. Ứng dụng Web tương tác trực tiếp với người dùng và gửi yêu cầu thông qua kết nối bảo mật tới Backend API. API Service chịu trách nhiệm xử lý nghiệp vụ, lưu trữ cơ sở dữ liệu và đóng vai trò cổng kết nối (Gateway) điều phối cuộc gọi tới các API OpenAI.</p>
 <pre><code class="language-mermaid">graph TD
-    A([Dev opens DailyTools]) --&gt; B[Fills out Daily Report Form]
-    B --&gt; C[Submit]
-    C --&gt; D[AI Scans Text for Blockers]
-    D --&gt; E{Blocker Found?}
-    E -- Yes --&gt; F[Highlight on PM Dashboard]
-    E -- No --&gt; G[Log as normal status]
-    F --&gt; H([PM Reviews Blockers])
+    Client[Web App Client - Next.js] --&gt;|HTTPS Requests| Backend[Backend API Service - Node.js]
+    Backend --&gt;|Queries/Storage| DB[(PostgreSQL Database)]
+    Backend --&gt;|API Calls with API Key| OpenAI[OpenAI Cloud APIs]
+    subgraph OpenAI Service
+        OpenAI --&gt; Whisper[Whisper - Speech to Text]
+        OpenAI --&gt; GPT4o[GPT-4o - AI Summarizer]
+    end
 </code></pre>
-<h3>2.4 High-Level Wireframe</h3>
-<p><strong>Developer Submission Form</strong></p>
-<pre><code class="language-text">┌─────────────────────────────────────┐
-│  Daily Standup Submission           │
-├─────────────────────────────────────┤
-│                                     │
-│  What did you accomplish yesterday? │
-│  ┌─────────────────────────────┐    │
-│  │                             │    │
-│  └─────────────────────────────┘    │
-│                                     │
-│  What are you working on today?     │
-│  ┌─────────────────────────────┐    │
-│  │                             │    │
-│  └─────────────────────────────┘    │
-│                                     │
-│  Any blockers? (Optional)           │
-│  ┌─────────────────────────────┐    │
-│  │                             │    │
-│  └─────────────────────────────┘    │
-│                                     │
-│           [ Submit Update ]         │
-└─────────────────────────────────────┘
-</code></pre>
-<p><strong>Project Manager Dashboard</strong></p>
-<pre><code class="language-text">┌─────────────────────────────────────┐
-│  PM Management Console              │
-├─────────────────────────────────────┤
-│                                     │
-│  Active Project Blockers (2)        │
-│  ┌─────────────────────────────┐    │
-│  │ * John: API timeout issue   │    │
-│  │ * Mai: Waiting for design   │    │
-│  └─────────────────────────────┘    │
-│                                     │
-│  ─────────────────────────────────  │
-│                                     │
-│  Today&#39;s Standup Logs               │
-│  ┌─────────────────────────────┐    │
-│  │ John - 10:02 AM             │    │
-│  │ Did: Fixed auth module      │    │
-│  │ Will: Start API integration │    │
-│  │ Blocker: API timeout        │    │
-│  ├─────────────────────────────┤    │
-│  │ Mai - 09:45 AM              │    │
-│  │ Did: Completed wireframes   │    │
-│  │ Will: Build prototype       │    │
-│  │ Blocker: Waiting on design  │    │
-│  └─────────────────────────────┘    │
-│                                     │
-└─────────────────────────────────────┘
-</code></pre>
-<h2>3. Project Scope</h2>
-<h3>3.1 In-Scope</h3>
+<h2>5.2 Công Nghệ Lựa Chọn (Tech Stack)</h2>
+<p>Để tối ưu hóa thời gian phát triển trong vòng 1-1.5 tháng và đảm bảo chất lượng, đội ngũ đề xuất các công nghệ sau:</p>
 <ul>
-<li><strong>S-1: Web Form for Dev Daily Reports</strong>: Responsive, mobile-friendly. 3 text fields + submit. Platform: iOS Safari, Android Chrome, Desktop. Deliverable: deployed page + API endpoint.</li>
-<li><strong>S-2: AI extraction of Blockers from text</strong>: GPT-4o integration with custom prompt. Confidence scoring (0–1). Deliverable: extraction service + prompt documentation.</li>
-<li><strong>S-3: PM Dashboard to view Blockers</strong>: Active blockers view (sorted by severity) + historical daily logs (filterable by date/person). Deliverable: deployed dashboard + role-based access.</li>
+<li><strong>Frontend Framework:</strong> React.js &amp; Next.js giúp xây dựng giao diện responsive nhanh chóng, hỗ trợ render phía máy chủ tốt và tối ưu hóa trải nghiệm tương tác của PM.</li>
+<li><strong>Backend Framework:</strong> Node.js &amp; Express.js cung cấp môi trường chạy gọn nhẹ, xử lý bất đồng bộ tối ưu khi tương tác với các API AI thời gian thực và đồng bộ tốt với Javascript của Frontend.</li>
+<li><strong>Cơ sở dữ liệu (Database):</strong> PostgreSQL là hệ quản trị cơ sở dữ liệu quan hệ mã nguồn mở mạnh mẽ, đảm bảo tính toàn vẹn dữ liệu tài khoản và lưu trữ văn bản tóm tắt có cấu trúc an toàn.</li>
+<li><strong>Trí tuệ nhân tạo (AI Engine):</strong> OpenAI API (Whisper &amp; GPT-4o) được sử dụng để chuyển đổi giọng nói tiếng Việt/tiếng Anh và tóm tắt cuộc họp với chất lượng tối ưu nhất hiện nay mà không mất chi phí nghiên cứu phát triển mô hình riêng.</li>
+<li><strong>Hạ tầng triển khai (Hosting &amp; Cloud):</strong> Vercel (dành cho Frontend) và AWS EC2/RDS (dành cho Backend &amp; Database) giúp giảm thiểu tối đa chi phí vận hành ban đầu và cung cấp cơ chế CI/CD tự động hóa việc deploy.</li>
 </ul>
-<h3>3.2 Out-of-Scope &amp; Future Phases</h3>
-<ul>
-<li><strong>Real-time live transcription</strong>: MVP focuses on daily text reports only.</li>
-<li><strong>Meeting platform integrations (Zoom/Teams)</strong>: Deferred to Phase 2.</li>
-<li><strong>AI Voice Summarization engine</strong>: Deferred to Phase 2.</li>
-<li><strong>PM Tool Push (Jira/Notion)</strong>: Deferred to Phase 2.</li>
-</ul>
-<h2>4. Risks &amp; Strategic Assumptions</h2>
-<h3>4.1 Strategic Assumptions</h3>
-<p>This proposal is built upon the following assumptions:</p>
-<ul>
-<li><strong>PM tools APIs</strong> — PM tools have accessible APIs for pushing content (N/A for MVP, assumed for Phase 2).</li>
-<li><strong>Adoption</strong> — Devs will reliably fill out the Daily Report web form. If this fails, there will be no blockers to aggregate.</li>
-</ul>
-<h3>4.2 Risk &amp; Mitigation</h3>
-<ul>
-<li>🔴 <strong>R1: Low adoption by dev team (High)</strong>
-Developers might resist using a new tool if it takes too much time.
-→ <em>Mitigation</em>: Keep the form extremely short (3 fields max) and fast (&lt;30s to submit). Make it mobile-friendly so they can do it on the go.</li>
-<li>🟡 <strong>R2: AI summary inaccuracy (Medium)</strong>
-GPT-4o might miss subtle blockers or flag false positives.
-→ <em>Mitigation</em>: Implement a Human-in-the-loop review option, allowing PMs to manually adjust or tune the prompt if needed.</li>
-</ul>
-<h2>5. Technical Architecture</h2>
-<blockquote>
-<p>💡 DailyTools uses a modern, serverless Next.js monolithic architecture for rapid MVP delivery, ensuring low cost and high scalability.</p>
-</blockquote>
-<h3>5.1 Target Architecture</h3>
-<pre><code class="language-text">┌─ CLIENT (Next.js / React) ───────────────┐
-│  ┌──────────────┐  ┌──────────────────┐  │
-│  │ Dev Report   │  │ PM Dashboard     │  │
-│  │ Form         │  │ (Blockers View)  │  │
-│  └──────────────┘  └──────────────────┘  │
-└──────────────────────────────────────────┘
-              │
-              ▼
-┌─ API (Next.js API Routes) ───────────────┐
-│  [Auth]  [Submit Report]  [Get Blockers] │
-└──────────────────────────────────────────┘
-              │
-              ▼
-┌─ SERVICE ────────────────────────────────┐
-│  ┌─────────────────────────────────────┐ │
-│  │ AI Blocker Extraction (GPT-4o)     │ │
-│  │ • Scan text for hidden blockers    │ │
-│  │ • Classify severity                │ │
-│  └─────────────────────────────────────┘ │
-└──────────────────────────────────────────┘
-              │
-              ▼
-┌─ DATA (PostgreSQL / Supabase) ───────────┐
-│  • reports    • blockers    • users      │
-└──────────────────────────────────────────┘
-</code></pre>
-<h3>5.2 Tech Stack</h3>
-<ul>
-<li><strong>Frontend &amp; Backend</strong>: <strong>Next.js / TypeScript</strong> — Single codebase for both UI and API routes. Rapid MVP delivery, SSR for fast load times.</li>
-<li><strong>AI Engine</strong>: <strong>OpenAI GPT-4o</strong> — Best-in-class understanding for text analysis and blocker extraction with low integration effort.</li>
-<li><strong>Database &amp; Auth</strong>: <strong>PostgreSQL (Supabase)</strong> — Managed service, built-in auth (JWT), real-time subscriptions, free tier is fully sufficient for MVP.</li>
-<li><strong>Infrastructure</strong>: <strong>Vercel</strong> — Zero-config deployment, native Next.js support, serverless auto-scaling.</li>
-</ul>
-<h3>5.3 Data Flow</h3>
+<h2>5.3 Luồng Dữ Liệu Xử Lý (Data Flow)</h2>
+<p>Luồng dữ liệu xử lý một file ghi âm từ khi PM tải lên cho đến khi lưu trữ kết quả tóm tắt cuối cùng:</p>
 <pre><code class="language-mermaid">sequenceDiagram
-    participant Dev
-    participant Form as Web Form
-    participant API as API Route
-    participant AI as GPT-4o
+    autonumber
+    actor PM as Project Manager
+    participant FE as Web App Client
+    participant BE as Backend API
     participant DB as PostgreSQL
-    participant PM as PM Dashboard
+    participant AI as OpenAI API
 
-    Dev-&gt;&gt;Form: Fill daily report
-    Form-&gt;&gt;API: POST /api/reports
-    API-&gt;&gt;AI: Extract blockers from text
-    AI--&gt;&gt;API: {blockers: [...], severity}
-    API-&gt;&gt;DB: Save report + blockers
-    API--&gt;&gt;Form: Success
-
-    PM-&gt;&gt;API: GET /api/blockers
-    API-&gt;&gt;DB: Query active blockers
-    DB--&gt;&gt;API: Results
-    API--&gt;&gt;PM: Render blockers list
+    PM-&gt;&gt;FE: Đăng nhập &amp; Tải file cuộc họp lên (.mp3/.wav)
+    FE-&gt;&gt;BE: Gửi yêu cầu tải file kèm JWT token
+    BE-&gt;&gt;AI: Gửi file âm thanh sang Whisper API
+    AI--&gt;&gt;BE: Trả về văn bản transcript thô (text)
+    BE--&gt;&gt;FE: Hiển thị transcript thô trên giao diện Editor
+    PM-&gt;&gt;FE: Rà soát &amp; Chỉnh sửa transcript thô (nếu có)
+    PM-&gt;&gt;FE: Xác nhận và gửi lệnh tóm tắt
+    FE-&gt;&gt;BE: Gửi transcript đã chỉnh sửa sang Backend
+    BE-&gt;&gt;AI: Gửi transcript sang GPT-4o API kèm Prompt tóm tắt
+    AI--&gt;&gt;BE: Trả về văn bản tóm tắt &amp; danh sách Action Items
+    BE-&gt;&gt;DB: Lưu trữ transcript gốc, tóm tắt và Action Items vào database
+    BE--&gt;&gt;FE: Phản hồi kết quả tóm tắt &amp; Action Items lên Dashboard
+    FE--&gt;&gt;PM: Hiển thị kết quả &amp; Nút Sao chép nhanh (Quick Copy)
 </code></pre>
-<h3>5.4 Capacity &amp; Sizing</h3>
+<h2>5.4 Quy Mô &amp; Dung Lượng (Capacity &amp; Sizing)</h2>
+<p>Hệ thống được thiết kế phù hợp với nhu cầu sử dụng thực tế của một doanh nghiệp nhỏ:</p>
 <ul>
-<li><strong>Target Users</strong>: ~50 Developers.</li>
-<li><strong>Concurrent Connections</strong>: Low. ~50 reports/day, each report &lt;5KB. Total storage &lt;1MB/day.</li>
-<li><strong>Storage Strategy</strong>: Relational storage in Supabase PostgreSQL is more than enough. The entire system will run comfortably on free/hobby tiers until scaling past 200+ users.</li>
+<li><strong>Người dùng hoạt động:</strong> Phục vụ từ 1 đến 5 PM sử dụng đồng thời hàng ngày để quản trị các dự án.</li>
+<li><strong>Tải trọng đồng thời:</strong> Hệ thống hỗ trợ xử lý từ 2 đến 3 file ghi âm tải lên cùng một thời điểm mà không gây nghẽn băng thông.</li>
+<li><strong>Chiến lược lưu trữ:</strong> File âm thanh sau khi được Whisper chuyển đổi thành công sang văn bản sẽ được tự động xóa khỏi bộ nhớ đệm của server để giải phóng dung lượng và tối ưu hóa chi phí lưu trữ đĩa cứng. Hệ thống chỉ lưu trữ văn bản transcript gốc và kết quả tóm tắt dạng text trong PostgreSQL Database.</li>
 </ul>
-<h3>5.5 Security &amp; Privacy</h3>
+<h2>5.5 Bảo Mật &amp; Riêng Tư (Security &amp; Privacy)</h2>
+<p>Dữ liệu cuộc họp là tài sản nhạy cảm của doanh nghiệp, do đó bảo mật được đặt lên hàng đầu:</p>
 <ul>
-<li><strong>Transport</strong>: TLS 1.3 (Vercel default).</li>
-<li><strong>Storage</strong>: AES-256 encryption (Supabase default).</li>
-<li><strong>Auth</strong>: Supabase Auth (JWT) with RBAC (Dev = submit only, PM = read dashboard).</li>
-<li><strong>LLM Privacy</strong>: Zero-retention API — OpenAI does not store or train on input data. Report text will be anonymized before sending to GPT-4o.</li>
+<li><strong>Mã hóa đường truyền:</strong> Toàn bộ dữ liệu truyền đi giữa Client, Backend và các dịch vụ OpenAI đều được mã hóa bằng giao thức HTTPS với chuẩn bảo mật TLS 1.3.</li>
+<li><strong>Quản lý phiên làm việc:</strong> Sử dụng cơ chế JSON Web Token (JWT) lưu trữ ở client với thời gian hết hạn ngắn (ví dụ: 24 giờ) để ngăn chặn việc đánh cắp session.</li>
+<li><strong>Bảo mật khóa API bên thứ ba:</strong> Khóa API OpenAI được lưu trữ an toàn trong biến môi trường (Environment Variables) phía Backend API. Client tuyệt đối không có quyền truy cập trực tiếp vào API Key này để tránh rò rỉ hoặc lạm dụng.</li>
 </ul>
-<h2>6. Execution &amp; Delivery Plan</h2>
-<h3>6.1 Product Roadmap</h3>
-<p>The MVP is designed for a rapid 4-week delivery, divided into logical phases to validate core assumptions early. We deploy the Form first to test adoption, followed by AI integration, and finally the PM dashboard.</p>
+<h1>06 - Kế Hoạch Triển Khai &amp; Bàn Giao</h1>
+<h2>6.1 Lộ Trình Phát Triển Sản Phẩm (Product Roadmap)</h2>
+<p>Để đảm bảo sản phẩm MVP được bàn giao nhanh nhất và kiểm chứng hiệu quả thực tế của ý tưởng, chúng tôi đề xuất lộ trình triển khai cuốn chiếu trong vòng 4 tuần (1 tháng). Quy trình phát triển được phân chia thành các giai đoạn tập trung, mỗi giai đoạn giải quyết một nhóm tính năng độc lập và có sự phối hợp chặt chẽ giữa đội ngũ Frontend và Backend.</p>
+<p>Dưới đây là bảng phân bổ lộ trình phát triển chi tiết cho các phân hệ tính năng qua từng tuần triển khai:</p>
 <div class="table-container">
 <table>
 <thead>
 <tr>
-<th>Phase</th>
-<th>Feature</th>
-<th>Duration</th>
-<th>Timeline</th>
-<th align="center">W1</th>
-<th align="center">W2</th>
-<th align="center">W3</th>
-<th align="center">W4</th>
+<th>Giai đoạn</th>
+<th>Phân hệ tính năng chính</th>
+<th>Thời gian dự kiến</th>
+<th>Phân bổ nhân sự</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>P1</td>
-<td>Form &amp; Database</td>
-<td>1 week</td>
-<td>Week 1</td>
-<td align="center">███</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
+<td><strong>Tuần 1</strong></td>
+<td>Khởi tạo dự án, thiết lập cơ sở dữ liệu và hoàn thiện phân hệ Đăng nhập/Đăng xuất cho PM.</td>
+<td>5 – 7 ngày</td>
+<td>Backend Developer, Frontend Developer</td>
 </tr>
 <tr>
-<td>P2</td>
-<td>AI Blocker Engine</td>
-<td>1 week</td>
-<td>Week 2</td>
-<td align="center"></td>
-<td align="center">███</td>
-<td align="center"></td>
-<td align="center"></td>
+<td><strong>Tuần 2</strong></td>
+<td>Phát triển module Tải file cuộc họp, tích hợp API OpenAI Whisper chuyển âm thanh sang văn bản và trình biên tập transcript.</td>
+<td>7 – 10 ngày</td>
+<td>Backend Developer, Frontend Developer</td>
 </tr>
 <tr>
-<td>P3</td>
-<td>PM Dashboard View</td>
-<td>1 week</td>
-<td>Week 3</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">███</td>
-<td align="center"></td>
+<td><strong>Tuần 3</strong></td>
+<td>Tích hợp API OpenAI GPT-4o tóm tắt nội dung họp, xây dựng Dashboard lịch sử và tính năng Sao chép nhanh kết quả.</td>
+<td>5 – 8 ngày</td>
+<td>Backend Developer, Frontend Developer</td>
 </tr>
 <tr>
-<td>P4</td>
-<td>UAT &amp; Launch</td>
-<td>1 week</td>
-<td>Week 4</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">███</td>
+<td><strong>Tuần 4</strong></td>
+<td>Thực hiện kiểm thử tích hợp (QA), rà soát lỗi hệ thống và triển khai đưa ứng dụng lên internet (Go-live).</td>
+<td>4 – 6 ngày</td>
+<td>QA Engineer, Backend Developer</td>
 </tr>
 </tbody></table>
 </div>
-<h3>6.2 Milestones &amp; Acceptance Criteria</h3>
-<p>The project is accepted by Milestones. Below is the Definition of Done (DoD) and corresponding acceptance criteria for each phase.</p>
+<h2>6.2 Các Mốc Bàn Giao &amp; Tiêu Chí Nghiệm Thu (Milestones &amp; Acceptance Criteria)</h2>
+<p>Quy trình nghiệm thu sản phẩm được thực hiện minh bạch tại cuối mỗi mốc bàn giao (Milestone). Khách hàng sẽ trực tiếp chạy thử các tính năng trên môi trường kiểm thử (Staging) để xác nhận hệ thống hoạt động ổn định và đáp ứng đầy đủ các tiêu chí nghiệp vụ dưới đây trước khi chuyển sang giai đoạn tiếp theo.</p>
+<p>Dưới đây là danh sách chi tiết 4 mốc bàn giao của dự án kèm sản phẩm đầu ra và tiêu chí nghiệm thu tương ứng:</p>
 <div class="table-container">
 <table>
 <thead>
 <tr>
 <th>#</th>
-<th>Milestone</th>
-<th>Target Date</th>
-<th>Key Deliverables</th>
-<th>Acceptance Criteria</th>
+<th>Mốc bàn giao (Milestone)</th>
+<th>Thời gian dự kiến</th>
+<th>Sản phẩm bàn giao chính</th>
+<th>Tiêu chí nghiệm thu (Acceptance Criteria)</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>M1</td>
-<td>Form Ready</td>
-<td>End of W1</td>
-<td>Web Form &amp; DB</td>
-<td>Devs can submit form and data saves correctly</td>
+<td><strong>M1</strong></td>
+<td>Thiết lập hệ thống &amp; Hoàn thiện Đăng nhập</td>
+<td>Cuối Tuần 1</td>
+<td>Mã nguồn khung dự án trên GitHub; Cấu hình cơ sở dữ liệu PostgreSQL; Trang đăng nhập PM hoàn chỉnh.</td>
+<td>Mã nguồn build thành công không lỗi; PM có thể đăng nhập bằng tài khoản demo được cấu hình sẵn trong DB và chuyển hướng vào Dashboard.</td>
 </tr>
 <tr>
-<td>M2</td>
-<td>AI Ready</td>
-<td>End of W2</td>
-<td>AI Extraction</td>
-<td>AI correctly flags blockers in 90% of test inputs</td>
+<td><strong>M2</strong></td>
+<td>Tích hợp AI &amp; Chuyển đổi cuộc họp</td>
+<td>Cuối Tuần 2</td>
+<td>Module upload file (mp3, wav, txt); Tích hợp API OpenAI Whisper; Giao diện Transcript Editor.</td>
+<td>PM tải lên file ghi âm .mp3/.wav thành công; hệ thống trả về văn bản dịch thô (transcript) trên màn hình để PM chỉnh sửa văn bản.</td>
 </tr>
 <tr>
-<td>M3</td>
-<td>Dashboard</td>
-<td>End of W3</td>
-<td>PM UI</td>
-<td>Dashboard renders active blockers clearly above normal logs</td>
+<td><strong>M3</strong></td>
+<td>Dashboard lịch sử &amp; Sao chép nhanh</td>
+<td>Cuối Tuần 3</td>
+<td>Dashboard danh sách cuộc họp cũ; Giao diện xem chi tiết Tóm tắt &amp; Action Items; Nút sao chép một chạm.</td>
+<td>PM xem được danh sách lịch sử họp cũ; xem báo cáo tóm tắt cuộc họp; click nút Copy và dán được nội dung sang các ứng dụng chat (Zalo/Slack) bình thường.</td>
 </tr>
 <tr>
-<td>M4</td>
-<td>Launch</td>
-<td>End of W4</td>
-<td>Live Deploy</td>
-<td>Signed off UAT on production environment</td>
+<td><strong>M4</strong></td>
+<td>QA &amp; Triển khai Production</td>
+<td>Cuối Tuần 4</td>
+<td>Báo cáo kiểm thử QA Report; Ứng dụng Web chạy chính thức trên internet (Production).</td>
+<td>100% kịch bản kiểm thử cốt lõi vượt qua; ứng dụng hoạt động ổn định trên môi trường production của khách hàng dưới tên miền internet chính thức.</td>
 </tr>
 </tbody></table>
 </div>
-<h2>7. Budget &amp; Commercials</h2>
-<h3>7.1 Resource Allocation</h3>
-<p>We allocate a cross-functional team on a Fixed-Price model to deliver the MVP within 4 weeks.</p>
+<h1>07 - Ngân Sách &amp; Phân Bổ Nhân Sự</h1>
+<h2>7.1 Chi Phí Phát Triển Nhân Sự (Resource Allocation &amp; Development Cost)</h2>
+<p>Chi phí phát triển được tính toán dựa trên mô hình giá cố định (Fixed Price) tương ứng với thời lượng và nỗ lực thực tế được phân rã trong WBS. Chúng tôi phân bổ đội ngũ nhân sự tối giản và chuyên môn hóa cao bao gồm một lập trình viên Backend cấp cao (Senior), một lập trình viên Frontend cấp trung (Middle) và một kỹ sư kiểm thử (QA Middle) để đảm bảo chất lượng kỹ thuật cao nhất và tiến độ bàn giao trong vòng 1 tháng.</p>
+<p>Dưới đây là bảng tổng hợp chi phí nhân sự phát triển chi tiết cho dự án DailyTools MVP (được tính bằng Việt Nam Đồng - VND):</p>
 <div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="left">Position</th>
-<th align="left">Seniority</th>
-<th align="left">Unit Price</th>
-<th align="center">P1</th>
-<th align="center">P2</th>
-<th align="center">P3</th>
-<th align="center">P4</th>
-<th align="center">Total Effort</th>
+<th>Vai trò (Position)</th>
+<th>Cấp bậc (Seniority)</th>
+<th>Đơn giá / ngày (Unit Price)</th>
+<th>Tháng 1 (Effort)</th>
+<th>Tổng nỗ lực (Total Effort)</th>
+<th>Tổng chi phí (Total Cost)</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">Solutions Arch</td>
-<td align="left">Senior</td>
-<td align="left">$60/hr</td>
-<td align="center">4h</td>
-<td align="center">2h</td>
-<td align="center">2h</td>
-<td align="center">0h</td>
-<td align="center">8h</td>
+<td><strong>Backend Developer</strong></td>
+<td>Senior</td>
+<td>3.000.000 VND</td>
+<td>15 ngày</td>
+<td>15 ngày</td>
+<td>45.000.000 VND</td>
 </tr>
 <tr>
-<td align="left">Fullstack Dev</td>
-<td align="left">Mid</td>
-<td align="left">$40/hr</td>
-<td align="center">20h</td>
-<td align="center">18h</td>
-<td align="center">20h</td>
-<td align="center">8h</td>
-<td align="center">66h</td>
+<td><strong>Frontend Developer</strong></td>
+<td>Middle</td>
+<td>2.000.000 VND</td>
+<td>10 ngày</td>
+<td>10 ngày</td>
+<td>20.000.000 VND</td>
 </tr>
 <tr>
-<td align="left">AI Engineer</td>
-<td align="left">Senior</td>
-<td align="left">$60/hr</td>
-<td align="center">0h</td>
-<td align="center">12h</td>
-<td align="center">0h</td>
-<td align="center">2h</td>
-<td align="center">14h</td>
+<td><strong>QA Engineer</strong></td>
+<td>Middle</td>
+<td>1.500.000 VND</td>
+<td>5 ngày</td>
+<td>5 ngày</td>
+<td>7.500.000 VND</td>
 </tr>
 <tr>
-<td align="left">QA Engineer</td>
-<td align="left">Mid</td>
-<td align="left">$30/hr</td>
-<td align="center">4h</td>
-<td align="center">4h</td>
-<td align="center">6h</td>
-<td align="center">10h</td>
-<td align="center">24h</td>
-</tr>
-<tr>
-<td align="left"><strong>Total</strong></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="center"><strong>28h</strong></td>
-<td align="center"><strong>36h</strong></td>
-<td align="center"><strong>28h</strong></td>
-<td align="center"><strong>20h</strong></td>
-<td align="center"><strong>112h</strong></td>
+<td><strong>Tổng cộng</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>30 ngày</strong></td>
+<td><strong>30 ngày</strong></td>
+<td><strong>72.500.000 VND</strong></td>
 </tr>
 </tbody></table>
 </div>
-<h3>7.2 Operational Cost (Infra)</h3>
-<p>By utilizing a Serverless architecture, we keep MVP running costs near zero, only scaling costs when adoption grows significantly.</p>
+<h2>7.2 Chi Phí Vận Hành Hạ Tầng (Operational Cost - Infra)</h2>
+<p>Để tối ưu hóa chi phí vận hành cho phiên bản MVP, kiến trúc hệ thống tận dụng tối đa các chương trình miễn phí (Free Tier) từ các nhà cung cấp dịch vụ cloud. Frontend ứng dụng Next.js được triển khai miễn phí trên hạ tầng Vercel. Máy chủ API Backend và PostgreSQL Database được khuyến nghị chạy trên các gói server nhỏ gọn phù hợp với lượng người dùng nội bộ thấp.</p>
+<p>Dưới đây là ước tính chi phí hạ tầng vận hành hàng tháng của hệ thống:</p>
 <div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="left">Phase</th>
-<th align="left">Users</th>
-<th align="left">Infra Cost/month</th>
-<th align="left">Main Components</th>
+<th>Giai đoạn</th>
+<th>Số lượng PM sử dụng</th>
+<th>Chi phí hạ tầng / tháng</th>
+<th>Các thành phần chính</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">MVP</td>
-<td align="left">50 Devs</td>
-<td align="left">~$0</td>
-<td align="left">Vercel (Hobby), Supabase (Free Tier)</td>
-</tr>
-<tr>
-<td align="left">Phase 2</td>
-<td align="left">200+</td>
-<td align="left">~$50–100</td>
-<td align="left">Vercel Pro, Supabase Pro</td>
+<td><strong>MVP Vận hành</strong></td>
+<td>1 – 5 người dùng</td>
+<td>Khoảng 0 – 350.000 VND (0 - $15)</td>
+<td>Frontend deploy miễn phí trên Vercel; Backend &amp; PostgreSQL DB chạy trên AWS Free Tier hoặc gói basic của Render/DigitalOcean.</td>
 </tr>
 </tbody></table>
 </div>
-<h3>7.3 3rd-Party Vendor Costs</h3>
+<h2>7.3 Chi Phí Dịch Vụ Bên Thứ Ba (3rd-Party Vendor Costs)</h2>
+<p>Bên cạnh chi phí phát triển và hạ tầng máy chủ, hệ thống có phát sinh các chi phí sử dụng dịch vụ API dịch thuật và phân tích của OpenAI:</p>
 <ul>
-<li><strong>OpenAI (GPT-4o)</strong>: ~$5–15/month — Estimated at 50 reports/day × ~$0.01/call.</li>
+<li><strong>Dịch vụ OpenAI API (STT Whisper &amp; GPT-4o)</strong>: Chi phí thanh toán dựa trên lượng sử dụng thực tế (pay-as-you-go). Chi phí ước tính rất thấp, khoảng 500 VND cho mỗi phút dịch âm thanh (Whisper) và 1.000 - 2.000 VND cho mỗi cuộc gọi tóm tắt văn bản (GPT-4o). Ước tính tổng chi phí sử dụng thực tế khoảng 50.000 - 100.000 VND/PM/tháng. Dịch vụ này sẽ được thanh toán trực tiếp qua tài khoản thẻ liên kết OpenAI của khách hàng.</li>
+<li><strong>Chi phí mua tên miền (Domain Name)</strong>: Khoảng 250.000 VND/năm (chi phí phát sinh nếu khách hàng chưa sở hữu sẵn tên miền riêng).</li>
 </ul>
-<h2>8. Development Cost &amp; Payment Schedule</h2>
-<p>Summary of the total contract value for the development and handover of the DailyTools MVP.</p>
+<h1>08 - Chi Phí &amp; Lịch Thanh Toán</h1>
+<h2>8.1 Tổng Chi Phí Phát Triển (Total Development Cost)</h2>
+<p>Tổng chi phí phát triển cố định cho dự án DailyTools MVP là <strong>72.500.000 VND</strong> (Bằng chữ: Bảy mươi hai triệu năm trăm nghìn đồng chẵn). Chi phí này đã bao gồm toàn bộ công việc phân tích, thiết kế giao diện, lập trình frontend/backend, kiểm thử chất lượng hệ thống và hỗ trợ triển khai go-live trong vòng 1 tháng. Chi phí này chưa bao gồm các khoản phí dịch vụ API OpenAI bên thứ ba và hạ tầng hosting riêng của khách hàng (nếu có).</p>
+<h2>8.2 Lịch Trình Thanh Toán Theo Mốc Bàn Giao (Payment Schedule)</h2>
+<p>Chi phí phát triển được chia làm 3 đợt thanh toán gắn liền với tiến độ nghiệm thu thực tế của các mốc bàn giao (Milestones) đã thống nhất tại Mục 6.2:</p>
 <ul>
-<li><strong>Total Development Cost</strong>: <strong>$4,680</strong>
-<em>(Note: This is the total fixed price payable to the development team. It excludes operational infrastructure and 3rd-party vendor costs which are paid directly to those providers).</em></li>
+<li><strong>Đợt 1 (Tạm ứng &amp; Bắt đầu):</strong> Thanh toán <strong>30%</strong> tổng chi phí, tương đương <strong>21.750.000 VND</strong> ngay sau khi ký kết hợp đồng dịch vụ để đội ngũ khởi động dự án và thực hiện mốc <strong>M1: Thiết lập hệ thống &amp; Hoàn thiện Đăng nhập</strong>.</li>
+<li><strong>Đợt 2 (Nghiệm thu Mốc M2):</strong> Thanh toán <strong>40%</strong> tổng chi phí, tương đương <strong>29.000.000 VND</strong> sau khi khách hàng rà soát thử nghiệm và ký xác nhận nghiệm thu mốc <strong>M2: Tích hợp AI &amp; Chuyển đổi cuộc họp</strong> (hoàn thành tích hợp API OpenAI Whisper &amp; GPT-4o trên môi trường staging).</li>
+<li><strong>Đợt 3 (Quyết toán &amp; Bàn giao):</strong> Thanh toán <strong>30%</strong> còn lại, tương đương <strong>21.750.000 VND</strong> sau khi nghiệm thu mốc <strong>M3: Dashboard lịch sử &amp; Sao chép nhanh</strong> và hoàn thành nghiệm thu bàn giao mốc <strong>M4: QA &amp; Triển khai Production</strong> (Hệ thống đã deploy go-live chính thức dưới tên miền của khách hàng và bàn giao mã nguồn dự án).</li>
 </ul>
-<p><strong>Payment Schedule</strong>:</p>
-<ul>
-<li><strong>Advance Payment</strong>: 30% upon contract signing (kick-off).</li>
-<li><strong>Milestone P2</strong>: 30% upon delivery of the AI engine (End of W2).</li>
-<li><strong>Milestone P4</strong>: 40% upon UAT sign-off and launch (End of W4).</li>
-</ul>
-<hr>
-<p><em>Company Showcase and relevant Case Studies are attached in the appendix PDF if requested.</em></p>
 
 
   </div>

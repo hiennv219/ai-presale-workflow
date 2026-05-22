@@ -1,46 +1,41 @@
-# Discovery: DailyTools
+# Khảo Sát Dự Án (Discovery Analysis) — DailyTools
 
-## Summary
-DailyTools is a management tool designed to optimize project manager (PM) effort. The initial focus for the MVP is an automated or assisted tool to summarize the main content of meetings within any given project.
+## 1. Tóm Tắt Đầu Vào Từ Khách Hàng (Client Input Summary)
+Khách hàng muốn phát triển **DailyTools** - một công cụ quản lý nhằm hỗ trợ các Quản trị dự án (PM) tối ưu hóa và giảm thiểu nỗ lực làm việc. Giai đoạn đầu sẽ tập trung xây dựng một phiên bản sản phẩm tối thiểu khả thi (MVP) với tính năng cốt lõi là tóm tắt lại các nội dung chính của cuộc họp trong dự án.
 
-## Confirmed Facts
-- **Client/Project:** DailyTools
-- **Core User:** Project Managers (PMs)
-- **MVP Focus:** Meeting summarization
-- **Primary Goal:** Effort reduction and optimization for PMs
+## 2. Các Thực Tế Đã Xác Nhận (Confirmed Facts)
+- **Tên dự án:** DailyTools
+- **Mục tiêu sản phẩm:** Công cụ quản lý giúp PM tối ưu hóa quy trình làm việc.
+- **Phạm vi MVP:** Tập trung duy nhất vào tính năng tóm tắt nội dung chính của các cuộc họp.
 
-## Missing Information
-- **Input Method:** How meetings are captured (live recording, file upload, or transcript sync).
-- **Integrations:** Target meeting platforms (Zoom, Google Meet, Teams) and PM tools (Jira, Asana, Notion).
-- **Summarization Detail:** Format of the summary (bullets, action items, transcript, key decisions).
-- **Target Projects:** Whether it's for internal use, a specific industry, or a general-purpose SaaS.
-- **Security/Compliance:** Data privacy requirements for sensitive meeting content.
-- **Timeline/Budget:** Expected launch for MVP.
+## 3. Checklist Thông Tin Thiếu (Missing Info Checklist)
+Dựa trên yêu cầu của Senior BA, các thông tin sau đây cần làm rõ để xác định phạm vi công việc, thiết kế kiến trúc và ước lượng nỗ lực phát triển:
+- [ ] **Business goals & Success criteria:** Chỉ số đo lường hiệu quả cụ thể của MVP.
+- [ ] **Platform choice:** Nền tảng vận hành (Web, Mobile hay cả hai).
+- [ ] **Input Source:** Cách thức hệ thống tiếp nhận nội dung họp (File ghi âm, text transcript, hay tích hợp bot tự động join cuộc họp).
+- [ ] **Speech-to-Text (STT) & AI Integration:** Sử dụng API bên thứ ba hay tự deploy model bảo mật riêng.
+- [ ] **User Roles:** Số lượng nhóm người dùng (chỉ PM hay cả member dự án).
+- [ ] **Timeline & Budget:** Khung thời gian mong muốn bàn giao và giới hạn ngân sách.
+- [ ] **Security & Compliance:** Các yêu cầu về bảo mật thông tin cuộc họp (dữ liệu hội thoại nhạy cảm).
 
-## Clarification Questions
-*See [backlog-questions.md](backlog-questions.md) for full list and status.*
+## 4. Câu Hỏi Khảo Sát (Discovery Questions)
+*(Chi tiết các câu hỏi khảo sát được đồng bộ tại file `workspace/backlog-questions.md`)*
 
-1. **How will DailyTools capture meeting content?**
-   - **Option A:** Manual upload of audio/video files by the PM.
-   - **Option B:** Direct integration with platforms (Zoom, Teams) to automatically fetch recordings.
-   - **Option C:** PM pastes a text transcript from another tool.
-   - **Recommendation:** **Option B** (Direct Integration) provides the most effort reduction.
+Các câu hỏi thuộc nhóm **Stop Rule** (Thông tin cốt lõi bắt buộc phải xác nhận):
+1. Nền tảng triển khai (Platform Choice)
+2. Phương thức tiếp nhận đầu vào (Input Source)
+3. Vai trò người dùng và phân quyền (User Roles)
+4. Tích hợp công nghệ AI & STT (STT & AI Integration)
+5. Ngân sách & Tiến độ dự kiến (Budget & Timeline)
 
-2. **Where should the generated summaries be delivered?**
-   - **Option A:** Only accessible within the DailyTools dashboard.
-   - **Option B:** Sent automatically to meeting participants via Email or Slack/Teams.
-   - **Option C:** Pushed directly into project management tools (e.g., Jira, Notion) as tasks or notes.
-   - **Recommendation:** **Option C** (PM Tool Integration) to keep summaries where work happens.
+---
 
-3. **What is the primary success metric for the MVP?**
-   - **Option A:** Accuracy of the AI-generated summary.
-   - **Option B:** Number of minutes saved per PM per week.
-   - **Option C:** User retention and daily active usage of the tool.
-   - **Recommendation:** **Option B** (Time Saved) aligns best with the stated goal of optimization.
+## Deal Complexity: Light
 
-## Assumptions
-- None at this stage. (Following "Ask first, assume later" rule).
+**Reasoning:**
+Dự án tập trung vào một module tính năng duy nhất (tóm tắt cuộc họp), đề xuất 1 platform (Web app), tối đa 1-2 user roles chính (PM/Member) và tích hợp API STT/LLM có sẵn từ bên thứ ba. Dự án không yêu cầu migration dữ liệu cũ hoặc tuân thủ các chứng chỉ bảo mật đặc thù phức tạp.
 
-## Next Steps
-- [ ] Receive answers to clarification questions.
-- [ ] Define initial solution scope in `workspace/scope.md`.
+**Recommended pipeline adjustments:**
+- **Skip Stage 3.5 (Technical):** Bỏ qua bước phân tích kiến trúc kỹ thuật chuyên sâu do kiến trúc Web App tích hợp API đơn giản và không có yêu cầu phi chức năng đặc thù.
+- **WBS Decomposition:** Sử dụng phân rã công việc 3 cấp (Category → Module → Function) thay vì 4 cấp.
+- **Proposal Adjustments:** Bỏ qua phần Wireframe phác thảo giao diện trong proposal để tập trung vào mô tả tính năng.
