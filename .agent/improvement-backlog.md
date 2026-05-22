@@ -38,20 +38,22 @@
 - **Solution**: Configure an Input Dependency table in `proposal/SKILL.md` to filter only relevant input files (Overview reads context+scope, Budget reads wbs, etc.).
 - **Effort**: Low (~67% reduction in Stage 5 input tokens)
 
-### #12 — Offline Scope Coverage Matrix & Local Linter
+### #12 — ~~Offline Scope Coverage Matrix & Local Linter~~ ✅ DONE
 - **Issue**: Cross-checks like Scope↔WBS and WBS↔Budget are done by the LLM, which is slow and token-heavy.
 - **Solution**: Write a local Python script (integrate into `presale_cli.py --lint`) to automate static checks, blocking errors before calling Stage 6 Review.
 - **Effort**: Medium (~30k tokens saved per review, speed <1s)
+- **Implemented**: Added `--lint` flag to `shared/scripts/presale_cli.py` with 5 checks (Scope↔WBS, Roles↔Budget, Financial Math, Milestones). Review skill runs lint first.
 
 ### #13 — Batch Proposal Generation (Multiple sections in one turn)
 - **Issue**: Generating 8 sections with 8 separate API calls repeats the system prompt and rules redundantly.
 - **Solution**: Allow the LLM to output multiple sections in a single turn using section markers (`<!-- SECTION:XX -->`), then use a local script to split them.
 - **Effort**: Medium (~96k tokens saved per project)
 
-### #14 — Incremental Translation (Translate by Section)
+### #14 — ~~Incremental Translation (Translate by Section)~~ ✅ DONE
 - **Issue**: Translation is currently done on the full compiled `proposal-full.md` file; small edits force a complete re-translation.
 - **Solution**: Support translating individual section files and concating them later to avoid re-translating unchanged sections.
 - **Effort**: Low (~20k tokens saved per edit)
+- **Implemented**: Added Incremental Mode to `transale/SKILL.md` — manifest-based change detection, per-section translation, auto-concat.
 
 ### #16 — Agent Model
 

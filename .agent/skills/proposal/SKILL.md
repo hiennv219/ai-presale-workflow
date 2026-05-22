@@ -11,7 +11,7 @@ description: Create or revise presale proposal from context, scope, WBS, and ris
 2. **Generate one file per section** in `workspace/proposal/` using the `file` field from the template as filename. Follow the `structure` field for subsection layout and the `format` field for output style.
 3. **Customer Feedback Priority**: Pull requirements marked **Critical** from `Confirmed Requirements` table in Deal Context. These MUST be prioritized — weave them naturally at the top or highlight them in Pain Points, Key Features, and Risks. Clients appreciate seeing their core concerns addressed front and center.
 4. Key Features section = **natural prose**, business language (non-tech stakeholders must understand). **REQUIRED**: Reference Value Mapping from `pain-scope.md` as content source, but write as **coherent paragraphs** — DO NOT copy the table verbatim. Each feature must naturally weave: pain → solution → business value. Prioritize sharp reasoning and real-world impact over numbers. If using numbers → must have evidence basis (client data, benchmark, comparable project). **NEVER fabricate numbers** — unsubstantiated figures backfire immediately.
-5. Wireframes: Delegate to `wireframe` skill.
+5. Wireframes: Delegate to `html-wireframe` skill.
 6. Scope section: In-Scope and Out-of-Scope only.
 7. Risks section: Assumptions → Risks.
 8. Technical Architecture: Use Bullet Points exclusively, NO TABLES in this section.

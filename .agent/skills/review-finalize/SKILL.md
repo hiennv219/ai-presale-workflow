@@ -16,6 +16,17 @@ Before running checks, open `workspace/checklist.md` (created at Stage 4) and co
 
 All findings below are also reflected in the checklist.
 
+### Pre-check: Run Local Linter
+
+Before running LLM-based checks, execute the offline linter:
+
+```
+python3 shared/scripts/presale_cli.py --project <project_path> --lint
+```
+
+- If exit code 0 → systemic checks (items 1-5 below) already verified. Skip them, proceed to General Checks (items 6-11).
+- If exit code 1 → report lint findings as review failures. Do NOT proceed to finalization until fixed.
+
 ### Systemic Consistency Checks (Rule #10)
 
 1. **Scope → WBS**: Every In-Scope item (`S-{n}`) has ≥1 WBS task referencing it. Flag orphan scope items with no WBS coverage.

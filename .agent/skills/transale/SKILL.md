@@ -124,7 +124,7 @@ Translated ({{source_lang}} → {{target_lang}}):
 Source: {{source_file_path}}
 ```
 
-Multi-file (directory):
+Multi-file (directory) — see **Incremental Mode** below for change-detection behavior:
 ```
 Translated ({{source_lang}} → {{target_lang}}):
   - {{file_1_path}} ({{size}})
@@ -134,8 +134,68 @@ Total: {{count}} files translated
 Source directory: {{source_dir}}
 ```
 
+## Incremental Mode (Directory)
+
+When the resolved path is a **directory** (e.g., `workspace/proposal/`), translate section-by-section with change detection to avoid re-translating unchanged files.
+
+### Trigger
+
+Path resolves to a directory containing multiple `.md` files.
+
+### Manifest: `_translations.md`
+
+Stored in the same directory. Tracks translation state per file:
+
+```markdown
+| File | Lang | Content Hash | Last Translated |
+|------|------|--------------|-----------------|
+| 01-project-overview.md | ja | a3f8c1d2 | 2026-05-22 |
+| 02-proposed-solution.md | ja | b7e4f9a1 | 2026-05-22 |
+```
+
+- **Content Hash**: first 8 characters of MD5 of the source file content.
+- Create manifest if it does not exist.
+
+### Procedure
+
+1. Read `_translations.md` manifest (or initialize empty).
+2. List all `.md` files in directory, **excluding**:
+   - `_index.md`
+   - `_translations.md`
+   - Files matching `*_{{lang_code}}.md` (already-translated outputs)
+3. For each source file, in filename sort order:
+   - Compute content hash (first 8 chars of MD5).
+   - Look up file + target language in manifest.
+   - **Hash matches** → skip (report as "unchanged").
+   - **Hash differs or entry missing** → translate → write `{{name}}_{{lang}}.md` → update manifest entry.
+4. After all files processed, **concat** all `*_{{lang}}.md` files in order → write to `workspace/final-proposal_{{lang}}.md`.
+5. Report summary.
+
+### Output Format
+
+```
+Incremental translation ({{source_lang}} → {{target_lang}}):
+  Translated:
+    - 07-budget.md → 07-budget_ja.md
+  Unchanged (skipped):
+    - 01-project-overview.md
+    - 02-proposed-solution.md
+    - ...
+  Concatenated: workspace/final-proposal_ja.md
+
+  Sections translated: {{count}} / {{total}}
+```
+
+### Re-translation Trigger
+
+A section is re-translated when:
+- Its content hash no longer matches the manifest entry.
+- The manifest entry for that file + language does not exist.
+- User explicitly requests full re-translation (pass `--force` flag).
+
 ## Edge Cases
 
 - **Mixed-language source**: Treat the dominant language as source. Translate only the source-language portions; keep other-language technical terms as-is.
 - **Empty sections**: Keep empty sections with translated headings.
 - **Images with alt text**: Translate alt text, keep image path unchanged.
+- **Manifest out of sync**: If a translated file exists but manifest entry is missing, re-translate (do not trust orphaned translations).

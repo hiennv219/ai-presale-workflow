@@ -5,6 +5,8 @@ import re
 import argparse
 import subprocess
 
+import hashlib
+
 def get_latest_project_dir():
     projects_dir = "projects"
     if not os.path.exists(projects_dir):
@@ -546,6 +548,217 @@ def run_export(project_path):
     
     return True
 
+def run_lint(project_path):
+    workspace_dir = os.path.join(project_path, "workspace")
+    scope_path = os.path.join(workspace_dir, "pain-scope.md")
+    wbs_path = os.path.join(workspace_dir, "wbs.md")
+    budget_path = os.path.join(workspace_dir, "proposal", "07-budget.md")
+    exec_path = os.path.join(workspace_dir, "proposal", "06-execution-plan.md")
+    payment_path = os.path.join(workspace_dir, "proposal", "08-payment-schedule.md")
+
+    errors = 0
+    warnings = 0
+    results = []
+
+    # Read files once
+    scope_content = None
+    wbs_content = None
+    budget_content = None
+
+    if os.path.exists(scope_path):
+        with open(scope_path, 'r', encoding='utf-8') as f:
+            scope_content = f.read()
+    if os.path.exists(wbs_path):
+        with open(wbs_path, 'r', encoding='utf-8') as f:
+            wbs_content = f.read()
+    if os.path.exists(budget_path):
+        with open(budget_path, 'r', encoding='utf-8') as f:
+            budget_content = f.read()
+
+    # --- Check 1: Scope → WBS ---
+    if scope_content and wbs_content:
+
+        scope_ids = re.findall(r'\|\s*\*?\*?S-(\d+)\*?\*?\s*\|', scope_content)
+        scope_ids = sorted(set(scope_ids), key=int)
+
+        missing_in_wbs = []
+        for sid in scope_ids:
+            if not re.search(rf'S-{sid}', wbs_content):
+                missing_in_wbs.append(f"S-{sid}")
+
+        if missing_in_wbs:
+            results.append(f"[FAIL] Scope → WBS: {len(scope_ids) - len(missing_in_wbs)}/{len(scope_ids)} covered. Missing: {', '.join(missing_in_wbs)}")
+            errors += 1
+        else:
+            results.append(f"[PASS] Scope → WBS: {len(scope_ids)}/{len(scope_ids)} scope items covered")
+    else:
+        results.append("[SKIP] Scope → WBS: missing pain-scope.md or wbs.md")
+        warnings += 1
+
+    # --- Check 2: WBS → Scope ---
+    if wbs_content and scope_content:
+        wbs_scope_refs = set(re.findall(r'S-(\d+)', wbs_content))
+        invalid_refs = []
+        for ref in sorted(wbs_scope_refs, key=int):
+            if ref not in scope_ids:
+                invalid_refs.append(f"S-{ref}")
+
+        if invalid_refs:
+            results.append(f"[FAIL] WBS → Scope: invalid scope refs: {', '.join(invalid_refs)}")
+            errors += 1
+        else:
+            results.append(f"[PASS] WBS → Scope: all WBS tasks reference valid scope items")
+    else:
+        results.append("[SKIP] WBS → Scope: missing files")
+        warnings += 1
+
+    # --- Check 3: WBS Roles → Budget ---
+    if wbs_content and budget_content:
+
+        wbs_roles = set()
+        # Pattern A: "Dev: X ngày, QA: Y ngày" in description
+        dev_matches = re.findall(r'Dev:\s*([\d.,]+)\s*ngày', wbs_content)
+        qa_matches = re.findall(r'QA:\s*([\d.,]+)\s*ngày', wbs_content)
+        if dev_matches:
+            wbs_roles.add("dev")
+        if qa_matches:
+            wbs_roles.add("qa")
+
+        # Pattern B: "**Role:** Backend Developer" / "**Role:** Frontend Developer" etc.
+        role_matches = re.findall(r'\*\*Role:\*\*\s*([^\n<|]+)', wbs_content)
+        for role in role_matches:
+            role_lower = role.strip().lower()
+            if 'developer' in role_lower or 'dev' in role_lower or 'engineer' in role_lower:
+                wbs_roles.add("dev")
+            if 'qa' in role_lower or 'test' in role_lower or 'kiểm thử' in role_lower:
+                wbs_roles.add("qa")
+            if 'designer' in role_lower or 'ui' in role_lower or 'ux' in role_lower:
+                wbs_roles.add("designer")
+            if 'pm' in role_lower or 'project manager' in role_lower:
+                wbs_roles.add("pm")
+
+        budget_table_lines = []
+        in_table = False
+        for line in budget_content.split('\n'):
+            if '|' in line and ('Vai trò' in line or 'Position' in line or 'Role' in line):
+                in_table = True
+                continue
+            if in_table and line.strip().startswith('|'):
+                if '---' in line:
+                    continue
+                budget_table_lines.append(line)
+            elif in_table and not line.strip().startswith('|'):
+                in_table = False
+
+        budget_roles = set()
+        for line in budget_table_lines:
+            lower = line.lower()
+            if 'developer' in lower or 'dev' in lower:
+                budget_roles.add("dev")
+            if 'qa' in lower or 'test' in lower or 'kiểm thử' in lower:
+                budget_roles.add("qa")
+            if 'pm' in lower or 'project manager' in lower:
+                budget_roles.add("pm")
+            if 'designer' in lower or 'ui' in lower or 'ux' in lower:
+                budget_roles.add("designer")
+
+        missing_in_budget = wbs_roles - budget_roles
+        phantom_in_budget = budget_roles - wbs_roles
+
+        role_issues = []
+        if missing_in_budget:
+            role_issues.append(f"in WBS but not in budget: {', '.join(missing_in_budget)}")
+        if phantom_in_budget:
+            role_issues.append(f"in budget but not in WBS: {', '.join(phantom_in_budget)}")
+
+        if role_issues:
+            results.append(f"[FAIL] Roles: {'; '.join(role_issues)}")
+            errors += 1
+        else:
+            results.append(f"[PASS] Roles: WBS roles match budget ({', '.join(sorted(budget_roles))})")
+    else:
+        results.append("[SKIP] Roles: missing wbs.md or 07-budget.md")
+        warnings += 1
+
+    # --- Check 4: Financial Math ---
+    if budget_content:
+        cost_pattern = re.compile(r'([\d.]+(?:\.[\d.]+)*)\s*VND')
+        budget_lines = budget_content.split('\n')
+
+        in_cost_table = False
+        row_costs = []
+        total_stated = None
+
+        for line in budget_lines:
+            if '|' in line and ('Vai trò' in line or 'Position' in line or 'Unit Price' in line or 'Đơn giá' in line):
+                in_cost_table = True
+                continue
+            if in_cost_table and line.strip().startswith('|'):
+                if '---' in line:
+                    continue
+                costs_in_line = cost_pattern.findall(line)
+                if costs_in_line:
+                    last_cost = costs_in_line[-1]
+                    numeric = int(last_cost.replace('.', '').replace(',', ''))
+                    if 'tổng cộng' in line.lower() or 'total' in line.lower():
+                        total_stated = numeric
+                    else:
+                        row_costs.append(numeric)
+            elif in_cost_table and not line.strip().startswith('|'):
+                in_cost_table = False
+
+        if total_stated is not None and row_costs:
+            computed_total = sum(row_costs)
+            if computed_total == total_stated:
+                results.append(f"[PASS] Financial Math: total {total_stated:,.0f} VND = sum of rows")
+            else:
+                results.append(f"[FAIL] Financial Math: stated total {total_stated:,.0f} VND ≠ sum of rows {computed_total:,.0f} VND")
+                errors += 1
+        else:
+            results.append("[SKIP] Financial Math: could not parse cost table")
+            warnings += 1
+    else:
+        results.append("[SKIP] Financial Math: missing 07-budget.md")
+        warnings += 1
+
+    # --- Check 5: Milestone Alignment ---
+    if os.path.exists(exec_path) and os.path.exists(payment_path):
+        with open(exec_path, 'r', encoding='utf-8') as f:
+            exec_content = f.read()
+        with open(payment_path, 'r', encoding='utf-8') as f:
+            payment_content = f.read()
+
+        exec_milestones = re.findall(r'\*\*(M\d+)\*\*', exec_content)
+        exec_milestones = sorted(set(exec_milestones))
+
+        payment_milestones = re.findall(r'\*\*(M\d+)[:\s]', payment_content)
+        if not payment_milestones:
+            payment_milestones = re.findall(r'(M\d+)[:\s]', payment_content)
+        payment_milestones = sorted(set(payment_milestones))
+
+        if exec_milestones and payment_milestones:
+            missing_in_payment = set(exec_milestones) - set(payment_milestones)
+            if missing_in_payment:
+                results.append(f"[FAIL] Milestones: {', '.join(sorted(missing_in_payment))} in Section 06 but not in Section 08")
+                errors += 1
+            else:
+                results.append(f"[PASS] Milestones: {len(exec_milestones)}/{len(exec_milestones)} match between Section 06 and 08")
+        else:
+            results.append("[SKIP] Milestones: could not parse milestone references")
+            warnings += 1
+    else:
+        results.append("[SKIP] Milestones: missing 06 or 08 files")
+        warnings += 1
+
+    # --- Report ---
+    print(f"\n=== Presale Lint: {project_path} ===\n")
+    for r in results:
+        print(f"  {r}")
+    print(f"\n  Errors: {errors} | Warnings: {warnings}")
+
+    return errors == 0
+
+
 def main():
     parser = argparse.ArgumentParser(description="Automate presale proposal concatenation, WBS finalization, and HTML exports.")
     parser.add_argument("--project", help="Path to the project directory (e.g., projects/2026-05-11-terrafuse)")
@@ -553,6 +766,7 @@ def main():
     parser.add_argument("--wbs", action="store_true", help="Finalize WBS into final-wbs.md")
     parser.add_argument("--export", action="store_true", help="Compile and export documents into _delivery/ HTML formats")
     parser.add_argument("--all", action="store_true", help="Execute all steps (concat, wbs, export)")
+    parser.add_argument("--lint", action="store_true", help="Run offline consistency checks (scope↔WBS, budget math, milestones)")
     
     args = parser.parse_args()
     
@@ -574,8 +788,15 @@ def main():
     success = True
     
     # Default behavior if no action specified is --all
-    run_all = args.all or (not args.concat and not args.wbs and not args.export)
-    
+    run_all = args.all or (not args.concat and not args.wbs and not args.export and not args.lint)
+
+    if args.lint:
+        print("\n--- Lint: Running Consistency Checks ---")
+        if not run_lint(project_path):
+            sys.exit(1)
+        if not args.concat and not args.wbs and not args.export and not args.all:
+            sys.exit(0)
+
     if run_all or args.concat:
         print("\n--- Step 1: Concatenating Proposal ---")
         if not run_concat(project_path):
