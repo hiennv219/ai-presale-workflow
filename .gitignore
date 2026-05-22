@@ -6,9 +6,8 @@ artifacts/*.md
 !artifacts/.gitkeep
 
 # Project-specific ignores
-projects/2026-05-11-terrafuse/
-projects/2026-05-19-stack-trading/
-projects/2026-05-20-genvideo/
+projects/*
+
 # OS generated files
 .DS_Store
 .DS_Store?
