@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WBS: 2026 05 22 Translatorai</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #000000;
+      background-color: #E2E7EC; /* MS Word workspace canvas background */
+      margin: 0;
+      padding: 40px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .word-page {
+      background-color: #FFFFFF;
+      width: 210mm;
+      min-height: 297mm;
+      padding: 20mm 20mm 20mm 30mm; /* Top Right Bottom Left margins */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    .word-page.landscape {
+      width: 297mm;
+      min-height: 210mm;
+      padding: 20mm;
+    }
+
+    h1, h2, h3, h4 {
+      margin-top: 18pt;
+      margin-bottom: 6pt;
+      line-height: 1.3;
+      page-break-after: avoid;
+    }
+
+    h1 {
+      font-size: 20pt;
+      color: #1b365d; /* Deep Navy Blue */
+      text-align: left;
+      margin-bottom: 24pt;
+    }
+
+    h2 {
+      font-size: 16pt;
+      color: #1b365d; /* Deep Navy Blue */
+      border-bottom: 2px solid #cbd5e1; /* Elegant light-blue border separator */
+      padding-bottom: 4px;
+      margin-top: 24pt;
+      margin-bottom: 8pt;
+    }
+
+    h3 {
+      font-size: 14pt;
+      color: #2b6cb0; /* Vibrant Steel Blue */
+      font-weight: bold;
+      margin-top: 18pt;
+      margin-bottom: 6pt;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+      text-indent: 1.27cm; /* Regulatory 0.5 in indentation */
+      text-align: justify; /* Justified paragraphs */
+      padding-bottom: 8pt;
+    }
+
+    ul, ol {
+      margin-top: 0;
+      margin-bottom: 12pt;
+      padding-left: 0.8cm;
+    }
+
+    li {
+      margin-bottom: 4pt;
+      text-align: justify;
+    }
+
+    li p {
+      text-indent: 0;
+      margin-bottom: 0;
+      padding-bottom: 4pt;
+    }
+
+    .table-container {
+      width: 100%;
+      margin: 12pt 0;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px; /* Slightly smaller table typography */
+      margin: 12pt auto;
+    }
+
+    th, td {
+      border: 1px solid #000000; /* Distinct black grid border */
+      padding: 6px 8px;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #F2F2F2; /* Standard table header color */
+      color: #1b365d;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .caption {
+      font-size: 12px;
+      font-style: italic;
+      text-align: center;
+      margin-top: 6pt;
+      margin-bottom: 12pt;
+      color: #333333;
+    }
+
+    .media-container {
+      width: 100%;
+      margin: 18pt 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .media-container img,
+    .media-container .chart-mockup {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #D0D0D0;
+      background-color: #FFFFFF;
+    }
+
+    pre, code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    pre {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin-left: 1.27cm; /* Indent code blocks like paragraphs */
+    }
+
+    code {
+      background-color: #f8f9fa;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 0.95em;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 20mm 20mm 20mm 30mm;
+    }
+
+    @page landscape-page {
+      size: A4 landscape;
+      margin: 20mm;
+    }
+
+    @page cover-page-layout {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    @media screen and (max-width: 210mm) {
+      body {
+        padding: 10px;
+        background-color: #FFFFFF;
+      }
+      .word-page {
+        width: 100%;
+        padding: 15px;
+        box-shadow: none;
+      }
+      p {
+        text-indent: 20px;
+      }
+    }
+
+    @media screen and (max-width: 297mm) {
+      body.has-landscape {
+        padding: 10px;
+        background-color: #FFFFFF;
+      }
+      .word-page.landscape {
+        width: 100%;
+        padding: 15px;
+        box-shadow: none;
+      }
+    }
+
+    /* Cover Page Styles */
+    .cover-page {
+      position: relative;
+      overflow: hidden;
+      background-color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 297mm;
+      padding: 30mm 25mm 30mm 30mm;
+      page-break-after: always;
+    }
+    .cover-bg-shape-1 {
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background-color: rgba(15, 82, 186, 0.04);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .cover-bg-shape-2 {
+      position: absolute;
+      top: -220px;
+      right: -80px;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background-color: rgba(15, 82, 186, 0.07);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .cover-title-area {
+      margin-top: auto;
+      text-align: center;
+      width: 100%;
+      z-index: 5;
+    }
+    .cover-subtitle {
+      font-family: "Georgia", "Times New Roman", Times, serif;
+      font-style: italic;
+      font-size: 24pt;
+      color: #666666;
+      margin-bottom: 12pt;
+    }
+    .cover-main-title {
+      font-family: "Georgia", "Times New Roman", Times, serif;
+      font-size: 32pt;
+      font-weight: bold;
+      color: #0f52ba;
+      letter-spacing: 1px;
+      margin: 0;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .cover-metadata-area {
+      align-self: flex-end;
+      text-align: right;
+      margin-top: 20mm;
+      margin-bottom: auto;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 11pt;
+      line-height: 1.6;
+      color: #555555;
+      z-index: 5;
+      margin-right: 10mm;
+    }
+    .cover-meta-item {
+      margin-bottom: 4px;
+    }
+    .cover-meta-date {
+      color: #0f52ba;
+      font-weight: bold;
+      margin-top: 8pt;
+      font-size: 11pt;
+    }
+
+    /* Table of Contents Styles */
+    .toc-page {
+      min-height: 297mm;
+      padding: 30mm 20mm 20mm 30mm;
+      page-break-after: always;
+    }
+    .toc-title {
+      text-align: left !important;
+      text-transform: uppercase;
+      font-size: 20pt;
+      color: #1b365d;
+      margin-top: 10mm;
+      margin-bottom: 5mm;
+    }
+    .toc-divider {
+      width: 80px;
+      height: 3px;
+      background-color: #2b6cb0;
+      margin: 0 0 15mm 0;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 12pt;
+      font-size: 11pt;
+    }
+    .toc-name {
+      font-weight: bold;
+      color: #2d3748;
+    }
+    .toc-dots {
+      flex-grow: 1;
+      border-bottom: 2px dotted #cbd5e1;
+      margin: 0 8px 3px 8px;
+    }
+    .toc-page-num {
+      font-weight: bold;
+      color: #1b365d;
+    }
+    .toc-list li.toc-sub-item {
+      padding-left: 20px;
+      margin-bottom: 8pt;
+      font-size: 10pt;
+    }
+    .toc-list li.toc-sub-item .toc-name {
+      font-weight: normal;
+      color: #4a5568;
+    }
+    .toc-list li.toc-sub-item .toc-page-num {
+      font-weight: normal;
+      color: #4a5568;
+    }
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      margin: 18pt 0;
+      width: 100%;
+    }
+
+    @media print {
+      body {
+        background-color: #FFFFFF;
+        padding: 0;
+        margin: 0;
+      }
+      .word-page {
+        width: 100%;
+        min-height: initial !important;
+        box-shadow: none;
+        padding: 0 !important;
+        page-break-after: always;
+      }
+      .word-page:last-child {
+        page-break-after: avoid;
+      }
+      .word-page.landscape {
+        page: landscape-page;
+        width: 100%;
+        min-height: initial !important;
+        padding: 0 !important;
+      }
+      .cover-page {
+        page: cover-page-layout;
+        width: 210mm;
+        height: 297mm;
+        min-height: 297mm !important;
+        padding: 30mm 25mm 30mm 30mm !important;
+        margin: 0;
+        page-break-after: always;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .toc-page {
+        min-height: initial !important;
+        padding: 20mm 0 10mm 0 !important;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body class="has-landscape">
+  <div class="word-page landscape">
+    <h1>WBS - TranslatorAI</h1>
+<h2>Metadata</h2>
+<ul>
+<li>Artifact ID: WBS-TranslatorAI</li>
+<li>Version: 1.1</li>
+<li>Status: Approved</li>
+<li>Context Version: 1.1</li>
+<li>Date: 2026-05-22</li>
+</ul>
+<h2>WBS</h2>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Category</th>
+<th>Module</th>
+<th>Function</th>
+<th>Sub-function</th>
+<th>Description</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+  <tr>
+    <td>1</td>
+    <td rowspan="3">Phát triển Ứng dụng (Core App)</td>
+    <td rowspan="3">Menu Bar &amp; Tích hợp hệ thống</td>
+    <td>Khởi tạo Status Item trên Menu Bar</td>
+    <td>Chạy ngầm và hiển thị icon ứng dụng</td>
+    <td>Thiết lập ứng dụng native macOS chạy ngầm, hiển thị icon trên hệ thống Menu Bar và menu drop-down nhanh.<br>Ước lượng: Dev: 2 ngày, QA: 1 ngày</td>
+    <td>Áp dụng cho: S-1. Đảm bảo ứng dụng khởi động mượt mà, chiếm ít RAM.</td>
+  </tr>
+  <tr>
+    <td>1.2</td>
+    <td>Cấp quyền hệ thống (Permissions)</td>
+    <td>Kiểm tra và yêu cầu quyền Accessibility</td>
+    <td>Xây dựng logic kiểm tra và hướng dẫn người dùng cấp quyền Trợ năng (Accessibility) trong System Settings.<br>Ước lượng: Dev: 1 ngày, QA: 0.5 ngày</td>
+    <td>Áp dụng cho: S-1, R-1. Hướng dẫn trực quan hiển thị khi khởi chạy ứng dụng lần đầu.</td>
+  </tr>
+  <tr>
+    <td>1.3</td>
+    <td>Lắng nghe Phím tắt toàn cục</td>
+    <td>Đăng ký global hotkey listener</td>
+    <td>Thiết lập listener lắng nghe phím tắt toàn hệ thống (Option + Space để dịch bôi đen).<br>Ước lượng: Dev: 1 ngày, QA: 0.5 ngày</td>
+    <td>Áp dụng cho: S-2. Lắng nghe phím tắt ngay cả khi ứng dụng đang chạy ngầm.</td>
+  </tr>
+  <tr>
+    <td>2.1</td>
+    <td rowspan="2">Giao diện người dùng (UI Components)</td>
+    <td>Floating HUD Overlays</td>
+    <td>Bong bóng Popup dịch nhanh</td>
+    <td>Hiển thị kết quả dịch sát con trỏ</td>
+    <td>Tạo cửa sổ popover không viền (HUD style) dạng mờ ảo (Acrylic background) xuất hiện ngay cạnh con trỏ chuột, tự động ẩn khi click ra ngoài.<br>Ước lượng: Dev: 3 ngày, QA: 1.5 ngày</td>
+    <td>Áp dụng cho: S-3. UI mượt mà, hỗ trợ bo góc, đổ bóng chuẩn Apple Design Guidelines.</td>
+  </tr>
+  <tr>
+    <td>2.3</td>
+    <td>Cấu hình Preferences</td>
+    <td>Giao diện Cài đặt (Preferences Panel)</td>
+    <td>Quản lý cấu hình dịch thuật và phím tắt</td>
+    <td>Thiết lập cửa sổ preferences gồm tab: Chung (Cài đặt phím tắt), API OpenAI (Nhập Key, System Prompt, chọn model), Lịch sử (bật/tắt, xóa lịch sử).<br>Ước lượng: Dev: 3 ngày, QA: 1 ngày</td>
+    <td>Áp dụng cho: S-7, S-5, S-6. Lưu cấu hình an toàn trong NSUserDefaults hoặc SQLite.</td>
+  </tr>
+  <tr>
+    <td>4.1</td>
+    <td rowspan="2">Dịch thuật &amp; Kết nối API</td>
+    <td rowspan="2">API Integration</td>
+    <td>Google Translate Client</td>
+    <td>Request dịch thuật qua API Google</td>
+    <td>Tích hợp thư viện hoặc wrapper gọi API Google Translate miễn phí để dịch nhanh văn bản.<br>Ước lượng: Dev: 1.5 ngày, QA: 0.5 ngày</td>
+    <td>Áp dụng cho: S-5. Không giới hạn ký tự và hoàn toàn miễn phí cho người dùng.</td>
+  </tr>
+  <tr>
+    <td>4.2</td>
+    <td>OpenAI GPT-4o Client</td>
+    <td>Request dịch thuật qua OpenAI API</td>
+    <td>Gọi API OpenAI GPT-4o sử dụng API Key cá nhân của người dùng, hỗ trợ tùy chỉnh System Prompt để dịch văn bản tự nhiên.<br>Ước lượng: Dev: 2 ngày, QA: 1 ngày</td>
+    <td>Áp dụng cho: S-5, S-7. Dịch chất lượng cao, lưu giữ thuật ngữ chuyên ngành.</td>
+  </tr>
+  <tr>
+    <td>5.1</td>
+    <td rowspan="2">Lưu trữ Dữ liệu cục bộ</td>
+    <td rowspan="2">SQLite Storage</td>
+    <td>Thiết lập Database cục bộ</td>
+    <td>Khởi tạo cấu trúc SQLite database</td>
+    <td>Cài đặt và khởi tạo file database SQLite cục bộ tại thư mục Application Support của ứng dụng.<br>Ước lượng: Dev: 1.5 ngày, QA: 0.5 ngày</td>
+    <td>Áp dụng cho: S-6. Tạo bảng và cấu trúc dữ liệu lưu lịch sử dịch thuật.</td>
+  </tr>
+  <tr>
+    <td>5.2</td>
+    <td>Quản lý lịch sử dịch thuật</td>
+    <td>Lưu trữ, truy vấn và xóa dữ liệu</td>
+    <td>Viết các truy vấn SQLite lưu bản dịch mới, hiển thị lịch sử trên UI và thực hiện xóa toàn bộ lịch sử khi người dùng yêu cầu.<br>Ước lượng: Dev: 1.5 ngày, QA: 0.5 ngày</td>
+    <td>Áp dụng cho: S-6, S-7. Đảm bảo dữ liệu được mã hóa cơ bản và chỉ lưu dưới local.</td>
+  </tr>
+  <tr>
+    <td>6.1</td>
+    <td rowspan="2">Quản lý dự án &amp; Triển khai</td>
+    <td rowspan="2">Dự án &amp; Đóng gói</td>
+    <td>Thiết lập môi trường</td>
+    <td>Khởi tạo repo và CI/CD cơ bản</td>
+    <td>Thiết lập Xcode project, cấu hình build target, và thiết lập workflow build tự động trên Xcode Cloud hoặc GitHub Actions.<br>Ước lượng: Dev: 1 ngày, QA: 0.5 ngày</td>
+    <td>Áp dụng cho: Quản lý dự án. Đảm bảo code được build sạch sẽ ngay từ đầu.</td>
+  </tr>
+  <tr>
+    <td>6.2</td>
+    <td>Đóng gói sản phẩm</td>
+    <td>Build bản phân phối .dmg</td>
+    <td>Cấu hình code signing với Apple Developer Certificate và đóng gói ứng dụng thành file .dmg sẵn sàng để người dùng cài đặt.<br>Ước lượng: Dev: 1 ngày, QA: 0.5 ngày</td>
+    <td>Áp dụng cho: Phát hành. Ứng dụng phải được notarize bởi Apple để tránh cảnh báo bảo mật.</td>
+  </tr>
+  <tr>
+    <td>7.1</td>
+    <td rowspan="2">Kiểm thử &amp; QA</td>
+    <td rowspan="2">Đảm bảo chất lượng</td>
+    <td>Kiểm thử Tích hợp &amp; Bảo mật</td>
+    <td>Kiểm thử luồng phân quyền và API</td>
+    <td>Kiểm tra tính ổn định của hệ thống phân quyền (Accessibility) và bảo mật lưu trữ API keys.<br>Ước lượng: QA: 1 ngày</td>
+    <td>Áp dụng cho: R-1, S-7. Phát hiện lỗi chặn quyền và rò rỉ key.</td>
+  </tr>
+  <tr>
+    <td>7.2</td>
+    <td>Kiểm thử Hiệu năng &amp; Rò rỉ</td>
+    <td>Kiểm tra CPU/RAM khi dịch</td>
+    <td>Đo lường mức chiếm dụng CPU khi thực hiện dịch thuật và kiểm tra rò rỉ bộ nhớ RAM khi chạy ngầm lâu ngày.<br>Ước lượng: QA: 1 ngày</td>
+    <td>Áp dụng cho: S-1. Bảo đảm ứng dụng cực nhẹ, không gây nóng máy hoặc tốn pin.</td>
+  </tr>
+</tbody></table>
+</div>
+<h2>Milestones</h2>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Description</th>
+<th>Exit Criteria</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M1: Khởi động &amp; Tích hợp hệ thống</td>
+<td>Thiết lập cấu trúc dự án cơ bản, tạo Menu Bar icon và xử lý hệ thống quyền truy cập cùng phím tắt toàn hệ thống.</td>
+<td>- Xcode project sẵn sàng, build chạy ngầm trên Menu Bar.<br>- Nhấn hotkey Option+Space nhận biết được sự kiện bôi đen.<br>- Màn hình xin quyền Accessibility hiển thị thành công.</td>
+</tr>
+<tr>
+<td>M2: Core HUD &amp; Database SQLite</td>
+<td>Phát triển bong bóng dịch Popup HUD và thiết lập database SQLite lưu trữ lịch sử.</td>
+<td>- Bong bóng Popup HUD hiển thị cạnh con trỏ chuột đúng vị trí và hiển thị được chữ gốc.<br>- Khởi tạo database SQLite cục bộ thành công.</td>
+</tr>
+<tr>
+<td>M3: APIs Dịch thuật &amp; Cài đặt</td>
+<td>Tích hợp Google Translate API, OpenAI GPT-4o API và hoàn thiện Preferences Panel cùng SQLite lưu trữ lịch sử.</td>
+<td>- Dịch thành công qua Google Translate and OpenAI GPT-4o.<br>- Lưu cấu hình OpenAI API Key cá nhân vào Preferences panel.<br>- Lịch sử dịch thuật được lưu vào SQLite cục bộ và hiển thị/xóa được từ giao diện cài đặt.</td>
+</tr>
+<tr>
+<td>M4: Kiểm thử, Tối ưu &amp; Đóng gói</td>
+<td>Kiểm thử hiệu năng, tối ưu bộ nhớ, kiểm tra bảo mật, notarize và đóng gói thành file .dmg phân phối.</td>
+<td>- Không có lỗi nghiêm trọng (Critical/Blocker).<br>- CPU tiêu hao khi dịch thấp (&lt;5% peak), bộ nhớ RAM tĩnh chạy ngầm &lt;30MB.<br>- Notarize thành công từ Apple và xuất file cài đặt TranslatorAI.dmg chạy tốt trên macOS 14+.</td>
+</tr>
+</tbody></table>
+</div>
+<h2>Dependencies</h2>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>From (WBS #)</th>
+<th>To (WBS #)</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1.3 (Lắng nghe Phím tắt)</td>
+<td>2.1 (Popup dịch nhanh)</td>
+<td>FS</td>
+<td>Phải tích hợp được phím tắt toàn cục trước khi kích hoạt bong bóng dịch nhanh Popup HUD.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2.1 (Popup dịch nhanh)</td>
+<td>4.1, 4.2 (API Integration)</td>
+<td>FS</td>
+<td>Cửa sổ HUD phải sẵn sàng để nhận dữ liệu dịch thuật từ Google/OpenAI và hiển thị lên cho người dùng.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5.1 (Database SQLite)</td>
+<td>5.2 (Lưu trữ lịch sử)</td>
+<td>FS</td>
+<td>Phải khởi tạo xong cấu trúc database SQLite cục bộ trước khi thực hiện các truy vấn lưu trữ và truy vấn lịch sử dịch thuật.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Tất cả các tính năng chính</td>
+<td>6.2 (Đóng gói DMG)</td>
+<td>FS</td>
+<td>Toàn bộ các module chức năng phải được hoàn thành và kiểm thử trước khi tiến hành đóng gói phiên bản phát hành chính thức.</td>
+</tr>
+</tbody></table>
+</div>
+<h2>Delivery Assumptions</h2>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Assumption</th>
+<th>Status</th>
+<th>Impact If False</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DA-1</td>
+<td>Quyền truy cập API Google Translate miễn phí thông qua wrapper/web requests vẫn hoạt động ổn định và không bị chặn IP hàng loạt.</td>
+<td>Hoạt động (Active)</td>
+<td>Nếu bị chặn, người dùng bắt buộc phải dùng OpenAI API Key cá nhân để dịch thuật, làm giảm tính khả dụng miễn phí của app.</td>
+</tr>
+<tr>
+<td>DA-2</td>
+<td>Không phát sinh trong MVP vì tính năng OCR đã được dời sang giai đoạn tương lai.</td>
+<td>Không áp dụng (N/A)</td>
+<td>Không ảnh hưởng đến phiên bản MVP hiện tại.</td>
+</tr>
+<tr>
+<td>DA-3</td>
+<td>Khách hàng sẵn lòng tự cấu hình API Key OpenAI cá nhân của họ nếu muốn sử dụng dịch AI nâng cao.</td>
+<td>Đã xác nhận (Confirmed)</td>
+<td>Nếu không, chúng tôi sẽ phải thiết lập proxy server và hệ thống thanh toán để quản lý token, tăng chi phí và thay đổi hoàn toàn kiến trúc offline của app.</td>
+</tr>
+</tbody></table>
+</div>
+
+
+  </div>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    
+    // Find all <pre><code class="language-mermaid"> blocks and convert them to <div class="mermaid">
+    const codeBlocks = document.querySelectorAll('pre code.language-mermaid');
+    codeBlocks.forEach((codeBlock) => {
+      const preBlock = codeBlock.parentNode;
+      const mermaidDiv = document.createElement('div');
+      mermaidDiv.className = 'mermaid';
+      mermaidDiv.textContent = codeBlock.textContent.trim();
+      preBlock.parentNode.replaceChild(mermaidDiv, preBlock);
+    });
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true
+      }
+    });
+  </script>
+</body>
+</html>

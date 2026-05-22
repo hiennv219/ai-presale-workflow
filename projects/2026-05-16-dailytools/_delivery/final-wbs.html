@@ -18,7 +18,9 @@
       margin: 0;
       padding: 40px 10px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
     }
 
     .word-page {
@@ -48,11 +50,6 @@
       color: #1b365d; /* Deep Navy Blue */
       text-align: left;
       margin-bottom: 24pt;
-    }
-
-    h1:first-child {
-      text-align: center;
-      text-transform: uppercase;
     }
 
     h2 {
@@ -178,22 +175,9 @@
       margin: 20mm;
     }
 
-    @media print {
-      body {
-        background-color: #FFFFFF;
-        padding: 0;
-        margin: 0;
-      }
-      .word-page {
-        width: 100%;
-        box-shadow: none;
-        padding: 0;
-      }
-      .word-page.landscape {
-        page: landscape-page;
-        width: 100%;
-        padding: 0;
-      }
+    @page cover-page-layout {
+      size: A4 portrait;
+      margin: 0;
     }
 
     @media screen and (max-width: 210mm) {
@@ -222,114 +206,346 @@
         box-shadow: none;
       }
     }
+
+    /* Cover Page Styles */
+    .cover-page {
+      position: relative;
+      overflow: hidden;
+      background-color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 297mm;
+      padding: 30mm 25mm 30mm 30mm;
+      page-break-after: always;
+    }
+    .cover-bg-shape-1 {
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background-color: rgba(15, 82, 186, 0.04);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .cover-bg-shape-2 {
+      position: absolute;
+      top: -220px;
+      right: -80px;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background-color: rgba(15, 82, 186, 0.07);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .cover-title-area {
+      margin-top: auto;
+      text-align: center;
+      width: 100%;
+      z-index: 5;
+    }
+    .cover-subtitle {
+      font-family: "Georgia", "Times New Roman", Times, serif;
+      font-style: italic;
+      font-size: 24pt;
+      color: #666666;
+      margin-bottom: 12pt;
+    }
+    .cover-main-title {
+      font-family: "Georgia", "Times New Roman", Times, serif;
+      font-size: 32pt;
+      font-weight: bold;
+      color: #0f52ba;
+      letter-spacing: 1px;
+      margin: 0;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .cover-metadata-area {
+      align-self: flex-end;
+      text-align: right;
+      margin-top: 20mm;
+      margin-bottom: auto;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 11pt;
+      line-height: 1.6;
+      color: #555555;
+      z-index: 5;
+      margin-right: 10mm;
+    }
+    .cover-meta-item {
+      margin-bottom: 4px;
+    }
+    .cover-meta-date {
+      color: #0f52ba;
+      font-weight: bold;
+      margin-top: 8pt;
+      font-size: 11pt;
+    }
+
+    /* Table of Contents Styles */
+    .toc-page {
+      min-height: 297mm;
+      padding: 30mm 20mm 20mm 30mm;
+      page-break-after: always;
+    }
+    .toc-title {
+      text-align: left !important;
+      text-transform: uppercase;
+      font-size: 20pt;
+      color: #1b365d;
+      margin-top: 10mm;
+      margin-bottom: 5mm;
+    }
+    .toc-divider {
+      width: 80px;
+      height: 3px;
+      background-color: #2b6cb0;
+      margin: 0 0 15mm 0;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 12pt;
+      font-size: 11pt;
+    }
+    .toc-name {
+      font-weight: bold;
+      color: #2d3748;
+    }
+    .toc-dots {
+      flex-grow: 1;
+      border-bottom: 2px dotted #cbd5e1;
+      margin: 0 8px 3px 8px;
+    }
+    .toc-page-num {
+      font-weight: bold;
+      color: #1b365d;
+    }
+    .toc-list li.toc-sub-item {
+      padding-left: 20px;
+      margin-bottom: 8pt;
+      font-size: 10pt;
+    }
+    .toc-list li.toc-sub-item .toc-name {
+      font-weight: normal;
+      color: #4a5568;
+    }
+    .toc-list li.toc-sub-item .toc-page-num {
+      font-weight: normal;
+      color: #4a5568;
+    }
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      margin: 18pt 0;
+      width: 100%;
+    }
+
+    @media print {
+      body {
+        background-color: #FFFFFF;
+        padding: 0;
+        margin: 0;
+      }
+      .word-page {
+        width: 100%;
+        min-height: initial !important;
+        box-shadow: none;
+        padding: 0 !important;
+        page-break-after: always;
+      }
+      .word-page:last-child {
+        page-break-after: avoid;
+      }
+      .word-page.landscape {
+        page: landscape-page;
+        width: 100%;
+        min-height: initial !important;
+        padding: 0 !important;
+      }
+      .cover-page {
+        page: cover-page-layout;
+        width: 210mm;
+        height: 297mm;
+        min-height: 297mm !important;
+        padding: 30mm 25mm 30mm 30mm !important;
+        margin: 0;
+        page-break-after: always;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .toc-page {
+        min-height: initial !important;
+        padding: 20mm 0 10mm 0 !important;
+        page-break-after: always;
+      }
+    }
   </style>
 </head>
 <body class="has-landscape">
   <div class="word-page landscape">
-    <h1>WBS: DailyTools MVP</h1>
+    <h1>Work Breakdown Structure (WBS) — DailyTools</h1>
 <h2>Metadata</h2>
 <ul>
-<li>Artifact ID: WBS-DT-001</li>
-<li>Version: Final</li>
-<li>Status: Approved</li>
-<li>Context Version: 1.1</li>
-<li>Date: 2026-05-17</li>
+<li><strong>Artifact ID:</strong> wbs-dailytools-v1</li>
+<li><strong>Version:</strong> 1.0</li>
+<li><strong>Status:</strong> Draft</li>
+<li><strong>Context Version:</strong> 1.0</li>
+<li><strong>Date:</strong> 2026-05-21</li>
 </ul>
 <h2>WBS</h2>
 <div class="table-container">
 <table>
 <thead>
 <tr>
-<th>WBS ID</th>
-<th>Phase</th>
-<th>Task</th>
-<th>Deliverable</th>
-<th>Owner Role</th>
-<th>Dependency</th>
-<th>Assumption</th>
-<th>Estimate Range</th>
+<th>#</th>
+<th>Category</th>
+<th>Module</th>
+<th>Function</th>
+<th>Sub-function</th>
+<th>Description</th>
+<th>Note</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>1.0</td>
-<td>P1: Foundation</td>
-<td>Project Kickoff &amp; Env Setup</td>
-<td>Dev Environment</td>
-<td>Solutions Arch</td>
-<td>—</td>
-<td>—</td>
-<td>4 - 8h</td>
-</tr>
-<tr>
-<td>1.1</td>
-<td>P1: Foundation</td>
-<td>Database Setup</td>
-<td>DB Schema</td>
-<td>Fullstack Dev</td>
-<td>1.0</td>
-<td>Supabase/Postgres</td>
-<td>8 - 12h</td>
-</tr>
-<tr>
-<td>2.1</td>
-<td>P2: Core App</td>
-<td>Dev Daily Report Form</td>
-<td>Web Form UI</td>
-<td>Fullstack Dev</td>
-<td>1.1</td>
-<td>Mobile-friendly</td>
-<td>12 - 16h</td>
-</tr>
-<tr>
-<td>2.2</td>
-<td>P2: Core App</td>
-<td>PM Dashboard (Blocker View)</td>
-<td>Dashboard UI</td>
-<td>Fullstack Dev</td>
-<td>1.1</td>
-<td>Clear highlights</td>
-<td>16 - 24h</td>
-</tr>
-<tr>
-<td>3.1</td>
-<td>P3: AI Engine</td>
-<td>LLM API Integration</td>
-<td>API Module</td>
-<td>Fullstack Dev</td>
-<td>1.0</td>
-<td>OpenAI GPT-4o</td>
-<td>8 - 12h</td>
-</tr>
-<tr>
-<td>3.2</td>
-<td>P3: AI Engine</td>
-<td>Blocker Extraction Prompting</td>
-<td>AI Logic</td>
-<td>AI Engineer</td>
-<td>3.1</td>
-<td>Text holds context</td>
-<td>12 - 20h</td>
-</tr>
-<tr>
-<td>4.1</td>
-<td>P4: Launch</td>
-<td>E2E Testing &amp; Bug Fixing</td>
-<td>QA Report</td>
-<td>QA Engineer</td>
-<td>2.1, 2.2, 3.2</td>
-<td>—</td>
-<td>12 - 16h</td>
-</tr>
-<tr>
-<td>4.2</td>
-<td>P4: Launch</td>
-<td>User Acceptance (UAT)</td>
-<td>Sign-off</td>
-<td>Solutions Arch</td>
-<td>4.1</td>
-<td>Client availability</td>
-<td>4 - 8h</td>
-</tr>
+<tbody>
+  <tr>
+    <td>1.1</td>
+    <td rowspan="2">Foundation</td>
+    <td rowspan="2">Project Setup</td>
+    <td>Repository Init</td>
+    <td>—</td>
+    <td>Khởi tạo Git repository, cấu hình project structure (Web App) và thiết lập CI/CD pipeline cơ bản.<br><strong>Role:</strong> Backend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-1</td>
+    <td>User Story: Là lập trình viên, tôi muốn có cấu trúc mã nguồn chuẩn để bắt đầu phát triển hệ thống.</td>
+  </tr>
+  <tr>
+    <td>1.2</td>
+    <td>Database Setup</td>
+    <td>—</td>
+    <td>Khởi tạo và thiết lập database (PostgreSQL/MongoDB), thiết kế cấu trúc bảng User, Meeting và Summary.<br><strong>Role:</strong> Backend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-1</td>
+    <td>User Story: Là lập trình viên, tôi muốn cấu trúc cơ sở dữ liệu được định nghĩa sẵn để lưu trữ thông tin PM và lịch sử họp.</td>
+  </tr>
+  <tr>
+    <td>2.1</td>
+    <td rowspan="3">Common</td>
+    <td rowspan="3">Authentication</td>
+    <td>Login UI</td>
+    <td>—</td>
+    <td>Xây dựng giao diện trang đăng nhập cho PM với các ô nhập Email, Mật khẩu và thông báo lỗi.<br><strong>Role:</strong> Frontend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-1</td>
+    <td>User Story: Là PM, tôi muốn có màn hình đăng nhập để điền thông tin tài khoản của mình.</td>
+  </tr>
+  <tr>
+    <td>2.2</td>
+    <td>Login API</td>
+    <td>—</td>
+    <td>Phát triển API đăng nhập, kiểm tra thông tin tài khoản và trả về JWT token để duy trì phiên làm việc.<br><strong>Role:</strong> Backend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-1</td>
+    <td>User Story: Là PM, tôi muốn hệ thống xác thực tài khoản của tôi và cấp quyền truy cập Dashboard.</td>
+  </tr>
+  <tr>
+    <td>2.3</td>
+    <td>Logout</td>
+    <td>—</td>
+    <td>Xây dựng cơ chế đăng xuất, hủy JWT token ở client và chuyển hướng về màn hình đăng nhập.<br><strong>Role:</strong> Frontend Developer<br><strong>Estimate:</strong> 0.5 days<br><strong>Scope Ref:</strong> S-1</td>
+    <td>User Story: Là PM, tôi muốn đăng xuất khỏi hệ thống để bảo vệ tài khoản khi không sử dụng.</td>
+  </tr>
+  <tr>
+    <td>3.1</td>
+    <td rowspan="10">Core</td>
+    <td rowspan="5">Meeting Processing</td>
+    <td>File Upload UI</td>
+    <td>—</td>
+    <td>Xây dựng khu vực tải file kéo thả (drag-and-drop) trên Web, giới hạn dung lượng file (max 100MB) và kiểm tra định dạng (.mp3, .wav, .txt).<br><strong>Role:</strong> Frontend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-2</td>
+    <td>User Story: Là PM, tôi muốn kéo thả file ghi âm cuộc họp trực tiếp trên Web để hệ thống bắt đầu xử lý.</td>
+  </tr>
+  <tr>
+    <td>3.2</td>
+    <td>Upload API</td>
+    <td>—</td>
+    <td>Xây dựng API tiếp nhận file tải lên từ client, thực hiện lưu trữ tạm thời trên server hoặc cloud storage.<br><strong>Role:</strong> Backend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-2</td>
+    <td>User Story: Là PM, tôi muốn file ghi âm của mình được tải lên máy chủ hệ thống ổn định, không bị ngắt quãng.</td>
+  </tr>
+  <tr>
+    <td>3.3</td>
+    <td>Whisper Integration</td>
+    <td>—</td>
+    <td>Tích hợp OpenAI Whisper API để gửi file ghi âm tiếng Việt/tiếng Anh và nhận về văn bản thô (transcript).<br><strong>Role:</strong> Backend Developer<br><strong>Estimate:</strong> 2–3 days<br><strong>Scope Ref:</strong> S-3</td>
+    <td>User Story: Là hệ thống, tôi muốn chuyển đổi giọng nói trong cuộc họp thành văn bản dạng text để AI có thể đọc hiểu.</td>
+  </tr>
+  <tr>
+    <td>3.4</td>
+    <td>GPT-4o Integration</td>
+    <td>—</td>
+    <td>Tích hợp OpenAI GPT-4o API để tóm tắt văn bản họp thành nội dung chính (Summary) và danh sách đầu việc (Action Items).<br><strong>Role:</strong> Backend Developer<br><strong>Estimate:</strong> 2–3 days<br><strong>Scope Ref:</strong> S-4</td>
+    <td>User Story: Là PM, tôi muốn AI tự động trích xuất các ý chính và công việc cần làm từ cuộc họp để tiết kiệm thời gian ghi chép.</td>
+  </tr>
+  <tr>
+    <td>3.5</td>
+    <td>Transcript Edit UI</td>
+    <td>—</td>
+    <td>Xây dựng giao diện hiển thị text transcript gốc, cho phép PM chỉnh sửa văn bản trực tiếp trước khi gửi yêu cầu AI tóm tắt.<br><strong>Role:</strong> Frontend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-6</td>
+    <td>User Story: Là PM, tôi muốn có thể chỉnh sửa lại các từ ngữ AI nhận diện sai trong transcript trước khi tạo tóm tắt cuối cùng.</td>
+  </tr>
+  <tr>
+    <td>4.1</td>
+    <td rowspan="5">Dashboard &amp; History</td>
+    <td>History List UI</td>
+    <td>—</td>
+    <td>Xây dựng màn hình Dashboard hiển thị danh sách các cuộc họp PM đã xử lý kèm thông tin ngày tháng, thời lượng, định dạng file.<br><strong>Role:</strong> Frontend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-5</td>
+    <td>User Story: Là PM, tôi muốn nhìn thấy danh sách các cuộc họp cũ đã xử lý ngay khi đăng nhập vào hệ thống.</td>
+  </tr>
+  <tr>
+    <td>4.2</td>
+    <td>History List API</td>
+    <td>—</td>
+    <td>Phát triển API truy vấn danh sách cuộc họp của tài khoản PM đang đăng nhập, hỗ trợ phân trang (pagination).<br><strong>Role:</strong> Backend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-5</td>
+    <td>User Story: Là PM, tôi muốn danh sách cuộc họp cũ tải nhanh và có thể chuyển qua các trang lịch sử.</td>
+  </tr>
+  <tr>
+    <td>4.3</td>
+    <td>Detail View UI</td>
+    <td>—</td>
+    <td>Thiết kế màn hình xem chi tiết kết quả tóm tắt cuộc họp gồm hai phần chính: Văn bản tóm tắt ý chính và Danh sách Action Items dạng checklist.<br><strong>Role:</strong> Frontend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> S-6</td>
+    <td>User Story: Là PM, tôi muốn xem kết quả tóm tắt cuộc họp và danh sách việc cần làm một cách trực quan trên một màn hình.</td>
+  </tr>
+  <tr>
+    <td>4.4</td>
+    <td>Detail View API</td>
+    <td>—</td>
+    <td>Phát triển API lấy thông tin chi tiết của một cuộc họp cụ thể dựa theo Meeting ID đã phân quyền.<br><strong>Role:</strong> Backend Developer<br><strong>Estimate:</strong> 1 day<br><strong>Scope Ref:</strong> S-6</td>
+    <td>User Story: Là PM, tôi muốn hệ thống tải thông tin chi tiết cuộc họp chính xác khi click chọn từ danh sách.</td>
+  </tr>
+  <tr>
+    <td>4.5</td>
+    <td>Copy to Clipboard</td>
+    <td>—</td>
+    <td>Tích hợp tính năng nhấp chuột để sao chép nhanh (one-click copy) toàn bộ phần Tóm tắt hoặc danh sách Action Items vào clipboard.<br><strong>Role:</strong> Frontend Developer<br><strong>Estimate:</strong> 0.5–1 day<br><strong>Scope Ref:</strong> S-7</td>
+    <td>User Story: Là PM, tôi muốn copy nhanh kết quả tóm tắt cuộc họp để dán trực tiếp gửi cho team qua Zalo/Slack.</td>
+  </tr>
+  <tr>
+    <td>5.1</td>
+    <td rowspan="2">Testing</td>
+    <td>QA</td>
+    <td>Integration Testing</td>
+    <td>—</td>
+    <td>Thực hiện kiểm thử tích hợp toàn diện hệ thống: luồng đăng nhập, tải file, gọi API Whisper/GPT-4o, hiển thị và copy kết quả.<br><strong>Role:</strong> QA Engineer<br><strong>Estimate:</strong> 3–4 days<br><strong>Scope Ref:</strong> All</td>
+    <td>User Story: Là đội dự án, tôi muốn kiểm thử kỹ toàn bộ tính năng để đảm bảo không có lỗi nghiêm trọng khi bàn giao.</td>
+  </tr>
+  <tr>
+    <td>5.2</td>
+    <td>Go-Live</td>
+    <td>Production Deployment</td>
+    <td>—</td>
+    <td>Triển khai Web App lên môi trường production (Vercel/AWS), cấu hình domain và cài đặt biến môi trường API OpenAI thực tế.<br><strong>Role:</strong> Backend Developer<br><strong>Estimate:</strong> 1–2 days<br><strong>Scope Ref:</strong> All</td>
+    <td>User Story: Là PM, tôi muốn truy cập DailyTools thông qua một tên miền internet thực tế để sử dụng hàng ngày.</td>
+  </tr>
 </tbody></table>
 </div>
 <h2>Milestones</h2>
@@ -343,24 +559,129 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>M1: Form Ready</td>
-<td>Web form accepts and stores Dev reports</td>
-<td>Form submits to DB successfully</td>
+<td><strong>M1: Foundation &amp; Auth</strong></td>
+<td>Thiết lập môi trường dự án và hoàn thiện đăng nhập</td>
+<td>Khởi tạo xong Repository, DB; hoàn thiện giao diện và API đăng nhập PM. (WBS 1.1, 1.2, 2.1, 2.2, 2.3)</td>
 </tr>
 <tr>
-<td>M2: AI Ready</td>
-<td>AI extracts blockers accurately</td>
-<td>90% accuracy on sample text</td>
+<td><strong>M2: Core Processing</strong></td>
+<td>Hoàn thành tích hợp API OpenAI Whisper &amp; GPT-4o</td>
+<td>Hoàn thiện module tải file ghi âm, API Speech-to-Text Whisper, API tóm tắt GPT-4o và trình sửa transcript. (WBS 3.1, 3.2, 3.3, 3.4, 3.5)</td>
 </tr>
 <tr>
-<td>M3: Dashboard Live</td>
-<td>PM can see blockers highlighted</td>
-<td>UI renders correctly with AI data</td>
+<td><strong>M3: Dashboard &amp; History</strong></td>
+<td>Hoàn thiện Dashboard lịch sử họp và chia sẻ</td>
+<td>Hoàn thiện màn hình danh sách cuộc họp, xem chi tiết tóm tắt và tính năng Sao chép nhanh. (WBS 4.1, 4.2, 4.3, 4.4, 4.5)</td>
 </tr>
 <tr>
-<td>M4: Launch</td>
-<td>Project hand-over and MVP live</td>
-<td>All tasks signed off</td>
+<td><strong>M4: QA &amp; Go-Live</strong></td>
+<td>Kiểm thử tích hợp và đưa ứng dụng lên internet</td>
+<td>100% kịch bản kiểm thử tích hợp vượt qua; deploy thành công ứng dụng lên server production. (WBS 5.1, 5.2)</td>
+</tr>
+</tbody></table>
+</div>
+<h2>Dependencies</h2>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>From (WBS #)</th>
+<th>To (WBS #)</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2.1 (Login UI)</td>
+<td>1.1 (Repo Init)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Cần có repo để code giao diện đăng nhập.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2.2 (Login API)</td>
+<td>1.2 (DB Setup)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Cần cấu hình DB trước khi viết API xác thực.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3.2 (Upload API)</td>
+<td>1.1 (Repo Init)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Cần repo để triển khai API upload file.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3.3 (Whisper API)</td>
+<td>3.2 (Upload API)</td>
+<td>FS (Finish-to-Start)</td>
+<td>API chuyển giọng nói cần file đã tải lên thành công để xử lý.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3.4 (GPT-4o API)</td>
+<td>3.3 (Whisper API)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Cần văn bản transcript từ Whisper để AI tiến hành tóm tắt.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>3.5 (Transcript Edit UI)</td>
+<td>3.1 (Upload UI) &amp; 3.3 (Whisper)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Cần giao diện tải file và văn bản transcript từ Whisper để PM chỉnh sửa.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>4.1 (History List UI)</td>
+<td>1.1 (Repo Init)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Cần repo để phát triển trang Dashboard.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>4.2 (History List API)</td>
+<td>1.2 (DB Setup)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Cần DB để truy vấn danh sách cuộc họp cũ.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>4.3 (Detail UI)</td>
+<td>4.1 (History List UI)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Trang chi tiết kế thừa cấu trúc trang Dashboard lịch sử.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>4.4 (Detail API)</td>
+<td>4.2 (History List API)</td>
+<td>FS (Finish-to-Start)</td>
+<td>API chi tiết phụ thuộc vào cấu trúc API danh sách lịch sử.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>4.5 (Copy Clipboard)</td>
+<td>4.3 (Detail UI)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Cần có giao diện chi tiết để tích hợp nút Sao chép nhanh.</td>
+</tr>
+<tr>
+<td>12</td>
+<td>5.1 (Integration Testing)</td>
+<td>Tất cả phát triển</td>
+<td>FS (Finish-to-Start)</td>
+<td>Cần hoàn thành toàn bộ code tính năng trước khi chạy test tích hợp.</td>
+</tr>
+<tr>
+<td>13</td>
+<td>5.2 (Production Deploy)</td>
+<td>5.1 (QA)</td>
+<td>FS (Finish-to-Start)</td>
+<td>Hệ thống phải vượt qua QA trước khi deploy lên internet cho PM sử dụng.</td>
 </tr>
 </tbody></table>
 </div>
@@ -370,27 +691,55 @@
 <thead>
 <tr>
 <th>ID</th>
-<th>Assumption</th>
-<th>Status</th>
-<th>Impact If False</th>
+<th>Giả định</th>
+<th>Trạng thái</th>
+<th>Mức độ ảnh hưởng nếu sai</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>DA001</td>
-<td>Devs will type enough text for AI to detect issues</td>
+<td>DA1</td>
+<td>Tài khoản API OpenAI của khách hàng đã nạp sẵn số dư và được cấu hình từ ngày đầu tiên.</td>
 <td>Active</td>
-<td>AI extraction will return false negatives</td>
+<td>Trễ tiến độ kiểm thử tích hợp các tính năng AI (STT &amp; GPT-4o).</td>
 </tr>
 <tr>
-<td>DA002</td>
-<td>Client has OpenAI API Key for processing</td>
+<td>DA2</td>
+<td>Khách hàng sẵn sàng cung cấp các file âm thanh cuộc họp thực tế bằng tiếng Việt (khoảng 3-5 file) làm dữ liệu mẫu để QA test chất lượng tóm tắt.</td>
 <td>Active</td>
-<td>Development blocked until key provided</td>
+<td>Kết quả tóm tắt thực tế có thể không khớp với kỳ vọng của PM nếu chỉ dùng file mẫu giả lập.</td>
+</tr>
+<tr>
+<td>DA3</td>
+<td>Môi trường production (Vercel/AWS) do khách hàng cung cấp quyền truy cập trong tuần thứ 3.</td>
+<td>Active</td>
+<td>Trễ tiến độ deploy go-live ở Milestone 4.</td>
 </tr>
 </tbody></table>
 </div>
 
 
   </div>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    
+    // Find all <pre><code class="language-mermaid"> blocks and convert them to <div class="mermaid">
+    const codeBlocks = document.querySelectorAll('pre code.language-mermaid');
+    codeBlocks.forEach((codeBlock) => {
+      const preBlock = codeBlock.parentNode;
+      const mermaidDiv = document.createElement('div');
+      mermaidDiv.className = 'mermaid';
+      mermaidDiv.textContent = codeBlock.textContent.trim();
+      preBlock.parentNode.replaceChild(mermaidDiv, preBlock);
+    });
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true
+      }
+    });
+  </script>
 </body>
 </html>

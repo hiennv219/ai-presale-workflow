@@ -1,54 +1,110 @@
 # Pipeline Improvement Backlog
 
-> Ghi nhận từ review ngày 2026-05-20. Sửa đổi khi có thời gian.
+> Recorded from review on 2026-05-20. Modify when time permits.
 
-## Đã có / Đã implement
+## Completed / Implemented
 
-- [x] #7 — Cascade preview trước khi thực hiện update (presale-update Step 1 đã có impact summary + wait confirm)
-- [x] #1 — Cho phép paste input trực tiếp trong `/presale-run` (updated presale-run.md + presale-init.md)
-- [x] #2 — `/presale-preview` command chạy script concat on-demand, không cần gate (presale-preview.md + CLAUDE.md)
-- [x] #3 — Deal complexity auto-classification sau Discovery (discovery SKILL.md + wbs SKILL.md, min level 3)
-- [x] #4 — Thêm "Next Action" + "Blockers" + "Deal Complexity" vào status.md template (không cần command riêng)
+- [x] #7 — Cascade preview before executing updates (presale-update Step 1 already includes impact summary + confirmation prompt)
+- [x] #1 — Allow pasting input directly in `/presale-run` (updated presale-run.md + presale-init.md)
+- [x] #2 — `/presale-preview` command runs concat on-demand without gating (presale-preview.md + CLAUDE.md)
+- [x] #3 — Automatic deal complexity classification after Discovery (discovery SKILL.md + wbs SKILL.md, min level 3)
+- [x] #4 — Add "Next Action" + "Blockers" + "Deal Complexity" to status.md template (no separate command needed)
+- [x] #15 — Dynamic & Customizable Proposal Template (self-customizable Proposal structure)
 
-## Cần sửa
+## To Do
 
-### #5 — Question format linh hoạt
-- **Vấn đề**: Bắt buộc 3 options + 1 rec cho mọi câu hỏi → câu hỏi open-ended bị ép format giả tạo
-- **Giải pháp**: Cho phép 3 loại: open-ended, yes/no confirm, multi-option (giữ 3-option cho decisions)
-- **Effort**: Thấp
+### #5 — Flexible Question Format
+- **Issue**: Forcing 3 options + 1 recommendation for all questions → open-ended questions feel artificially formatted
+- **Solution**: Allow 3 question types: open-ended, yes/no confirmation, and multi-option (keep 3-option format for decision-making)
+- **Effort**: Low
 
-### #6 — PDF export
-- **Vấn đề**: Chỉ có HTML, presale cần PDF gửi email
-- **Giải pháp**: Thêm `--pdf` flag vào presale_cli.py, dùng puppeteer (đã implement)
-- **Effort**: Trung bình
+### #6 — PDF Export
+- **Issue**: Only HTML is generated, but presale processes require PDF to email to clients
+- **Solution**: Add `--pdf` flag to `presale_cli.py` using puppeteer (implemented)
+- **Effort**: Medium
 
-### #8 — Slide deck generation ✅
-- **Vấn đề**: Presale luôn cần deck cho meeting, hiện phải làm tay
-- **Giải pháp**: `/presale-slides` — skill tóm tắt proposal → slide Markdown, handoff cho GPT/Gemini
-- **Implemented**: workflow + skill (17 slides, co giãn theo nội dung)
+### #8 — Slide Deck Generation ✅
+- **Issue**: Presale always requires slides for meetings, currently done manually
+- **Solution**: `/presale-slides` — skill to summarize proposal → Markdown slides, handoff to GPT/Gemini
+- **Implemented**: workflow + skill (17 fixed slides, content-dependent expansion)
 
-### #10 — Multi-project dashboard
-- **Vấn đề**: Presale handle 3-5 deal cùng lúc, không có overview
-- **Giải pháp**: `/presale-dashboard` scan tất cả projects/, hiển thị table: deal, stage, last updated, blockers
-- **Effort**: Cao
+### #10 — Multi-Project Dashboard
+- **Issue**: A presale engineer handles 3-5 deals simultaneously, lacks overview
+- **Solution**: `/presale-dashboard` scans all `projects/`, displays a summary table: deal, stage, last updated, blockers
+- **Effort**: High
 
-### #11 — Input Pruning (Chọn lọc Input động cho từng Section Proposal)
-- **Vấn đề**: LLM đọc toàn bộ workspace (~100 KB) cho mọi section ở Stage 5, lãng phí token.
-- **Giải pháp**: Cấu hình bảng Input Dependency trong `proposal/SKILL.md` để lọc file đầu vào tương ứng (Overview chỉ đọc context+scope, Budget chỉ đọc wbs, v.v.).
-- **Effort**: Thấp (Tiết kiệm ~67% input token Stage 5)
+### #11 — Input Pruning (Dynamic input selection per Proposal Section)
+- **Issue**: LLM reads the entire workspace (~100 KB) for every section in Stage 5, wasting tokens.
+- **Solution**: Configure an Input Dependency table in `proposal/SKILL.md` to filter only relevant input files (Overview reads context+scope, Budget reads wbs, etc.).
+- **Effort**: Low (~67% reduction in Stage 5 input tokens)
 
 ### #12 — Offline Scope Coverage Matrix & Local Linter
-- **Vấn đề**: Việc kiểm tra chéo Scope↔WBS và WBS↔Budget hiện do LLM thực hiện, gây tốn token và chậm.
-- **Giải pháp**: Viết script Python local (tích hợp vào `presale_cli.py --lint`) để tự động hóa các checks có tính quy tắc cứng, chặn lỗi trước khi gọi Stage 6 Review.
-- **Effort**: Trung bình (Tiết kiệm ~30k tokens/lượt review, tốc độ <1s)
+- **Issue**: Cross-checks like Scope↔WBS and WBS↔Budget are done by the LLM, which is slow and token-heavy.
+- **Solution**: Write a local Python script (integrate into `presale_cli.py --lint`) to automate static checks, blocking errors before calling Stage 6 Review.
+- **Effort**: Medium (~30k tokens saved per review, speed <1s)
 
-### #13 — Batch Proposal Generation (Sinh nhiều Section trong 1 Turn)
-- **Vấn đề**: Sinh 8 section bằng 8 API calls riêng lẻ gây lặp lại system prompt và rules lãng phí.
-- **Giải pháp**: Cho phép LLM xuất nội dung của nhiều section cùng lúc trong 1 turn bằng các thẻ đánh dấu (`<!-- SECTION:XX -->`), sau đó dùng script local phân tách ra.
-- **Effort**: Trung bình (Tiết kiệm ~96k tokens/dự án)
+### #13 — Batch Proposal Generation (Multiple sections in one turn)
+- **Issue**: Generating 8 sections with 8 separate API calls repeats the system prompt and rules redundantly.
+- **Solution**: Allow the LLM to output multiple sections in a single turn using section markers (`<!-- SECTION:XX -->`), then use a local script to split them.
+- **Effort**: Medium (~96k tokens saved per project)
 
-### #14 — Incremental Translation (Dịch theo Section)
-- **Vấn đề**: Dịch thuật đang thực hiện trên toàn bộ file proposal-full lớn, mỗi lần sửa đổi nhỏ phải chạy lại toàn bộ.
-- **Giải pháp**: Hỗ trợ dịch từng file section độc lập rồi concat sau, tránh dịch lại các phần không đổi.
-- **Effort**: Thấp (Tiết kiệm ~20k tokens mỗi lần sửa dịch)
+### #14 — Incremental Translation (Translate by Section)
+- **Issue**: Translation is currently done on the full compiled `proposal-full.md` file; small edits force a complete re-translation.
+- **Solution**: Support translating individual section files and concating them later to avoid re-translating unchanged sections.
+- **Effort**: Low (~20k tokens saved per edit)
 
+### #16 — Agent Model
+
+[ CLIENT IDEAS ]
+                      |
+                      v
+                 --> ( + )
+                |     |
+                |     +===============================+
+                |     | 1. INGESTION & INTERROGATION  |
+                |     |      (Agent: Senior BA)       |
+                |     +===============================+
+                |                    |
+                |                    v
+                |             /=============\
+                |            /  INFORMATION  \
+                |            \  VERIFICATION /
+                |             \=============/
+                |              |     |     |
+                |     +--------+     |     +---------+
+                |     |              |               |
+                | (Missing Core)     |       (Missing Details)
+                | (Stop Rule)  (Sufficient Info) (Assume Rule)
+                |     |              |               |
+                |     v              |               v
+                | +---------------+  |       +----------------+
+                | |  HOLD STATUS  |  |       | AUTO ASSUME    |
+                | +---------------+  |       | (Call skill:   |
+                |     |              |       | Assumption     |
+                |     v              |       | Ledger)        |
+                | +---------------+  |       +----------------+
+                | |Agent: COMM HUB|  |               |
+                | |(Tone Switcher)|  |               |
+                | +---------------+  |               |
+                |     |              |               |
+                |     v              |               |
+                | [Ask Client]       |               |
+                |     |              |               |
+                '-----+              |               |
+                 (Client responds)   |               |
+                                     v               v
+                              +===============================+
+                              |    2. SCOPING & PRUNING       |
+                              |  (Agent: Solution Architect)  |
+                              +===============================+
+                                             |
+                                             v
+                              +===============================+
+                              |   3. ARTIFACT GENERATION      |
+                              |       (Agent: Senior PM)      |
+                              |     (Skill: WBS Generator)    |
+                              +===============================+
+                                             |
+                                             v
+                             [ OUTPUT: PROPOSAL + WBS TABLE  ]
+                             [    (With Assumptions list)    ]

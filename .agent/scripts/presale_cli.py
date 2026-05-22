@@ -24,7 +24,7 @@ def get_proposal_header(final_proposal_path, project_name):
     default_header = f"""# {default_title}
 **Author**: Ryan Nguyen
 **Date**: 2026-05-18
-**Version**: Final (8-Section Standardized)
+**Version**: Final
 
 """
     if not os.path.exists(final_proposal_path):
@@ -38,7 +38,7 @@ def get_proposal_header(final_proposal_path, project_name):
                 if not line:
                     break
                 # Stop if we hit a main header that isn't part of the metadata block
-                if line.startswith("## "):
+                if line.startswith("## ") or (len(lines) > 0 and line.startswith("# ")):
                     break
                 lines.append(line)
             
@@ -247,6 +247,205 @@ def merge_html_tables(html_content):
         
     return table_pattern.sub(process_table, html_content)
 
+def format_cover_date(date_str):
+    date_str = date_str.strip()
+    match = re.match(r'^(\d{4})-(\d{2})-(\d{2})$', date_str)
+    if match:
+        year, month_num, day_num = match.groups()
+    else:
+        match = re.match(r'^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$', date_str)
+        if match:
+            day_num, month_num, year = match.groups()
+            month_num = month_num.zfill(2)
+        else:
+            return date_str
+            
+    months = {
+        "01": "January", "02": "February", "03": "March", "04": "April",
+        "05": "May", "06": "June", "07": "July", "08": "August",
+        "09": "September", "10": "October", "11": "November", "12": "December"
+    }
+    month = months.get(month_num, "January")
+    
+    day = int(day_num)
+    if 11 <= day <= 13:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
+        
+    return f"{month} {day}{suffix} {year}"
+
+def generate_proposal_pages(md_content):
+    lines = md_content.split('\n')
+    title = "ĐỀ XUẤT GIẢI PHÁP"
+    author = "Ryan Nguyen"
+    date = "2026-05-22"
+    version = "Final"
+    status = "Approved"
+    
+    metadata_lines_count = 0
+    for idx, line in enumerate(lines[:10]):
+        stripped = line.strip()
+        if stripped.startswith("# "):
+            if idx == 0:
+                title = stripped.replace("# ", "").strip()
+                metadata_lines_count = idx + 1
+            else:
+                break
+        elif "**Tác giả**" in line or "**Author**" in line or "**Tác giả**" in stripped or "**Author**" in stripped:
+            parts = line.split(":")
+            if len(parts) > 1:
+                author = parts[1].replace("**", "").strip()
+            metadata_lines_count = idx + 1
+        elif "**Ngày**" in line or "**Date**" in line or "**Ngày**" in stripped or "**Date**" in stripped:
+            parts = line.split(":")
+            if len(parts) > 1:
+                date = parts[1].replace("**", "").strip()
+            metadata_lines_count = idx + 1
+        elif "**Phiên bản**" in line or "**Version**" in line or "**Phiên bản**" in stripped or "**Version**" in stripped:
+            parts = line.split(":")
+            if len(parts) > 1:
+                version = parts[1].replace("**", "").strip()
+            metadata_lines_count = idx + 1
+        elif "**Trạng thái**" in line or "**Status**" in line or "**Trạng thái**" in stripped or "**Status**" in stripped:
+            parts = line.split(":")
+            if len(parts) > 1:
+                status = parts[1].replace("**", "").strip()
+            metadata_lines_count = idx + 1
+        elif stripped == "":
+            metadata_lines_count = idx + 1
+        else:
+            break
+            
+    # Clean main content (strip title and metadata block)
+    main_content_lines = lines[metadata_lines_count:]
+    main_content = "\n".join(main_content_lines).strip()
+    
+    # Detect the heading level for main sections
+    heading_level = 1
+    m = re.search(r'^(#{1,3})\s*[0-9]+\s*[\.\-]\s*', main_content, re.MULTILINE)
+    if m:
+        heading_level = len(m.group(1))
+    
+    # Based on the heading level, we define the regex patterns
+    main_pattern = r'^' + ('#' * heading_level) + r'\s*(([0-9]+)\s*[\.\-]\s*.*)'
+    sub_pattern = r'^' + ('#' * (heading_level + 1)) + r'\s*(([0-9]+\.[0-9]+(?:\.[0-9]+)?)\s+.*)'
+    
+    # Extract sections & subheadings for TOC
+    h1_matches = list(re.finditer(main_pattern, main_content, re.MULTILINE))
+    
+    # Hardcoded or estimated page numbers for TOC
+    toc_pages = {
+        "01": 3,
+        "02": 4,
+        "03": 5,
+        "04": 6,
+        "05": 7,
+        "06": 9,
+        "07": 10,
+        "08": 11
+    }
+    
+    if ":" in title:
+        title_parts = title.split(":", 1)
+        project_name_meta = title_parts[1].strip()
+    else:
+        project_name_meta = "TranslatorAI"
+        
+    project_name_display = project_name_meta
+    date_formatted = format_cover_date(date)
+    
+    cover_html = f"""
+<div class="word-page cover-page">
+  <div class="cover-bg-shape-1"></div>
+  <div class="cover-bg-shape-2"></div>
+  
+  <div class="cover-title-area">
+    <div class="cover-subtitle">Project Proposal</div>
+    <h1 class="cover-main-title">{project_name_display}</h1>
+  </div>
+  
+  <div class="cover-metadata-area">
+    <div class="cover-meta-item">Version: {version}</div>
+    <div class="cover-meta-item">Authored by: {author}</div>
+    <div class="cover-meta-date">Hanoi, {date_formatted}</div>
+  </div>
+</div>
+"""
+
+    toc_items = []
+    for idx, match in enumerate(h1_matches):
+        sec_text = match.group(1).strip()
+        sec_num = match.group(2).strip()
+        sec_prefix = f"{int(sec_num):02d}"
+        parent_page = toc_pages.get(sec_prefix, "")
+        
+        # Add parent section to TOC
+        toc_items.append(f"""    <li>
+      <span class="toc-name">{sec_text}</span>
+      <span class="toc-dots"></span>
+      <span class="toc-page-num">{parent_page}</span>
+    </li>""")
+        
+        # Determine the text block range for this section
+        start_pos = match.end()
+        end_pos = h1_matches[idx + 1].start() if idx + 1 < len(h1_matches) else len(main_content)
+        section_content = main_content[start_pos:end_pos]
+        
+        # Find all subheadings in this section
+        h2_matches = list(re.finditer(sub_pattern, section_content, re.MULTILINE))
+        
+        # Determine the page span for this section
+        if parent_page:
+            parent_page_num = int(parent_page)
+            next_page_num = None
+            if idx + 1 < len(h1_matches):
+                next_sec_num = h1_matches[idx + 1].group(2).strip()
+                next_page_str = toc_pages.get(f"{int(next_sec_num):02d}", "")
+                if next_page_str:
+                    next_page_num = int(next_page_str)
+            
+            num_pages = max(1, next_page_num - parent_page_num) if next_page_num else 1
+        else:
+            parent_page_num = None
+            num_pages = 1
+            
+        for h2_match in h2_matches:
+            sub_text = h2_match.group(1).strip()
+            if parent_page_num is not None:
+                offset = h2_match.start()
+                total_len = len(section_content)
+                if total_len > 0 and num_pages > 1:
+                    # Calculate page offset based on position in section text
+                    page_offset = int((offset / total_len) * num_pages)
+                    sub_page = parent_page_num + page_offset
+                    # Ensure sub_page doesn't exceed parent_page + num_pages - 1
+                    sub_page = min(sub_page, parent_page_num + num_pages - 1)
+                else:
+                    sub_page = parent_page_num
+            else:
+                sub_page = ""
+                
+            toc_items.append(f"""    <li class="toc-sub-item">
+      <span class="toc-name">{sub_text}</span>
+      <span class="toc-dots"></span>
+      <span class="toc-page-num">{sub_page}</span>
+    </li>""")
+        
+    toc_list_html = "\n".join(toc_items)
+    
+    toc_html = f"""
+<div class="word-page toc-page">
+  <h1 class="toc-title">MỤC LỤC</h1>
+  <div class="toc-divider"></div>
+  <ul class="toc-list">
+{toc_list_html}
+  </ul>
+</div>
+"""
+    
+    return cover_html, toc_html, main_content, heading_level
+
 def convert_md_to_html(md_path, html_path, title, default_template_path, project_path):
     if not os.path.exists(md_path):
         print(f"File not found for HTML conversion: {md_path}")
@@ -264,14 +463,34 @@ def convert_md_to_html(md_path, html_path, title, default_template_path, project
     # Exclude internal-only sections from the HTML export
     md_content = re.sub(r'## Scope Coverage Check.*?(?=## |\Z)', '', md_content, flags=re.DOTALL)
     
-    result = subprocess.run(['npx', 'marked', '--gfm'], input=md_content, capture_output=True, text=True)
-    if result.returncode != 0:
-        print(f"Error converting markdown via marked: {result.stderr}")
-        return False
-        
-    html_body = result.stdout
-    html_body = merge_html_tables(html_body)
+    is_proposal = "proposal" in html_path.lower() or "proposal" in md_path.lower()
     
+    if is_proposal:
+        cover_html, toc_html, cleaned_md, heading_level = generate_proposal_pages(md_content)
+        result = subprocess.run(['npx', 'marked', '--gfm'], input=cleaned_md, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"Error converting markdown via marked: {result.stderr}")
+            return False
+        main_html = result.stdout
+        main_html = merge_html_tables(main_html)
+        
+        # Split main_html into separate sections by H1/H2 tags to layout them as separate pages
+        split_tag = f"h{heading_level}"
+        sections_html = re.split(rf'(?=<{split_tag}[^>]*>)', main_html)
+        wrapped_sections = []
+        for sec in sections_html:
+            sec = sec.strip()
+            if sec:
+                wrapped_sections.append(f'<div class="word-page">\n{sec}\n</div>')
+        html_body = f"{cover_html}\n{toc_html}\n" + "\n".join(wrapped_sections)
+    else:
+        result = subprocess.run(['npx', 'marked', '--gfm'], input=md_content, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"Error converting markdown via marked: {result.stderr}")
+            return False
+        html_body = result.stdout
+        html_body = merge_html_tables(html_body)
+        
     with open(template_to_use, 'r', encoding='utf-8') as f:
         template = f.read()
         
@@ -285,7 +504,11 @@ def convert_md_to_html(md_path, html_path, title, default_template_path, project
         template = template.replace("</head>", css_tag)
         print(f"ℹ Injected custom styles from {custom_css_path}")
         
-    output_html = template.replace("{{title}}", title).replace("{{body}}", html_body)
+    if is_proposal:
+        output_html = template.replace("{{title}}", title)
+        output_html = re.sub(r'<div class="word-page">\s*\{\{body\}\}\s*</div>', html_body, output_html)
+    else:
+        output_html = template.replace("{{title}}", title).replace("{{body}}", html_body)
     
     # Apply landscape classes if it's WBS
     is_landscape = "wbs" in html_path.lower() or "wbs" in md_path.lower() or "wbs" in title.lower()
