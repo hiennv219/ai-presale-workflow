@@ -25,7 +25,7 @@ User runs `/presale-export` with optional flags:
 
 Quick concat without review gate:
 
-1. Run: `python3 .agent/scripts/presale_cli.py --project <project_path> --concat`
+1. Run: `python3 shared/scripts/presale_cli.py --project <project_path> --concat`
 2. Report output path and word count.
 3. Does NOT update status.md or trigger review.
 
@@ -64,12 +64,12 @@ If not met → report findings table, do NOT export. User must fix via `/presale
 ### Step 3: Export to Format
 
 **HTML** (default for `--final` and `--all`):
-1. Run: `python3 .agent/scripts/presale_cli.py --project <project_path> --export`
+1. Run: `python3 shared/scripts/presale_cli.py --project <project_path> --export`
 2. Asset sync: copy `workspace/assets/` → `_delivery/assets/` if exists.
 3. Output: `_delivery/final-proposal.html`, `_delivery/final-wbs.html`
 
 **PDF** (`--pdf` or `--all`):
-1. Run: `python3 .agent/scripts/presale_cli.py --project <project_path> --pdf`
+1. Run: `python3 shared/scripts/presale_cli.py --project <project_path> --pdf`
 2. Output: `_delivery/final-proposal.pdf`
 
 ### Step 4: Open in browser for preview.
@@ -95,7 +95,7 @@ Export any workspace Markdown file to styled HTML:
 
 1. Resolve path: name only (e.g. `backlog-questions`) → `workspace/backlog-questions.md`.
 2. Convert: `npx marked <target_file>`.
-3. Apply template: `references/designs/export-template.html`.
+3. Apply template: `shared/designs/export-template.html`.
 4. Output: `_delivery/<file-name>.html`.
 5. Open in browser.
 
@@ -114,8 +114,8 @@ What would you like to export?
 ## Reusable CLI Script
 
 ```bash
-python3 .agent/scripts/presale_cli.py --project projects/{{project-dir}} --all
-python3 .agent/scripts/presale_cli.py --project projects/{{project-dir}} --concat
-python3 .agent/scripts/presale_cli.py --project projects/{{project-dir}} --export
-python3 .agent/scripts/presale_cli.py --project projects/{{project-dir}} --pdf
+python3 shared/scripts/presale_cli.py --project projects/{{project-dir}} --all
+python3 shared/scripts/presale_cli.py --project projects/{{project-dir}} --concat
+python3 shared/scripts/presale_cli.py --project projects/{{project-dir}} --export
+python3 shared/scripts/presale_cli.py --project projects/{{project-dir}} --pdf
 ```

@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# Pre-commit hook: verify every /presale-* command in CLAUDE.md
+# has a corresponding workflow file in .agent/workflows/
+#
+
+CLAUDE_MD="CLAUDE.md"
+
+if [ ! -f "$CLAUDE_MD" ]; then
+  exit 0
+fi
+
+errors=""
+
+commands=$(grep -oE '/presale-[a-z-]+' "$CLAUDE_MD" | sed 's|^/||' | sort -u)
+
+for cmd in $commands; do
+  workflow=".agent/workflows/${cmd}.md"
+  if ! git ls-files --cached --others --exclude-standard | grep -qx "$workflow" && [ ! -f "$workflow" ]; then
+    errors="${errors}\n  - CLAUDE.md references /${cmd} but ${workflow} does not exist"
+  fi
+done
+
+if [ -n "$errors" ]; then
+  echo "ERROR: Workflow file missing for commands referenced in CLAUDE.md:"
+  printf "%b\n" "$errors"
+  echo ""
+  echo "Either restore the workflow file or remove the command from CLAUDE.md."
+  exit 1
+fi

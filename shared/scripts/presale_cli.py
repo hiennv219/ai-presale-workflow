@@ -526,7 +526,7 @@ def convert_md_to_html(md_path, html_path, title, default_template_path, project
 def run_export(project_path):
     workspace_dir = os.path.join(project_path, "workspace")
     delivery_dir = os.path.join(project_path, "_delivery")
-    template_path = ".agent/references/designs/export-template.html"
+    template_path = "shared/designs/export-template.html"
     
     if not os.path.exists(template_path):
         print(f"Error: Export template not found at {template_path}")
