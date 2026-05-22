@@ -128,12 +128,12 @@ TranslatorAI được thiết kế theo kiến trúc local-first (ưu tiên xử
 ```mermaid
 graph TD
     subgraph macOS Device (Xử lý Cục bộ)
-        MenuApp[Menu Bar status item] <--> Controller[Main Application Controller]
+        MenuApp[Menu Bar status item] --- Controller[Main Application Controller]
         Hotkey[Global Hotkey listener] -->|Trigger event| Controller
         Controller -->|Lấy chữ bôi đen| AccessAPI[Accessibility API]
         AccessAPI -->|Văn bản gốc| HUD[Floating Popup HUD Overlay]
-        Controller <--> HUD
-        HUD <--> DB[(SQLite Database)]
+        Controller --- HUD
+        HUD --- DB[(SQLite Database)]
     end
     
     subgraph Cloud Services (Đám mây)

@@ -315,7 +315,7 @@
       page-break-after: always;
     }
     .toc-title {
-      text-align: center !important;
+      text-align: left !important;
       text-transform: uppercase;
       font-size: 20pt;
       color: #1b365d;
@@ -326,12 +326,12 @@
       width: 80px;
       height: 3px;
       background-color: #2b6cb0;
-      margin: 0 auto 15mm auto;
+      margin: 0 0 15mm 0;
     }
     .toc-list {
       list-style: none;
       padding: 0;
-      margin: 0 10mm;
+      margin: 0;
     }
     .toc-list li {
       display: flex;
@@ -365,11 +365,39 @@
       font-weight: normal;
       color: #4a5568;
     }
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      margin: 18pt 0;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
   <div class="word-page">
     {{body}}
   </div>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    
+    // Find all <pre><code class="language-mermaid"> blocks and convert them to <div class="mermaid">
+    const codeBlocks = document.querySelectorAll('pre code.language-mermaid');
+    codeBlocks.forEach((codeBlock) => {
+      const preBlock = codeBlock.parentNode;
+      const mermaidDiv = document.createElement('div');
+      mermaidDiv.className = 'mermaid';
+      mermaidDiv.textContent = codeBlock.textContent.trim();
+      preBlock.parentNode.replaceChild(mermaidDiv, preBlock);
+    });
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true
+      }
+    });
+  </script>
 </body>
 </html>
