@@ -4,11 +4,11 @@
 
 - **Dự án:** TranslatorAI
 - **Khách hàng:** TranslatorAI
-- **Phiên bản:** 1.1
+- **Phiên bản:** 1.2
 - **Trạng thái:** Draft
 - **Ngày tạo:** 2026-05-22
 - **Cập nhật lần cuối:** 2026-05-22
-- **Context Version:** 1.1
+- **Context Version:** 1.2
 
 ## Các Phần Đề Xuất (Sections)
 
@@ -29,3 +29,4 @@
 |---------|------|------------------|---------|
 | 1.0 | 2026-05-22 | Khởi tạo tất cả | Bản thảo đầu tiên dựa trên phản hồi khảo sát và yêu cầu kỹ thuật của khách hàng. |
 | 1.1 | 2026-05-22 | Loại bỏ OCR khỏi MVP | Loại bỏ module chụp ảnh màn hình và tích hợp OCR khỏi MVP, dời sang Future Phase; giảm thời gian phát triển xuống 4 tuần và điều chỉnh chi phí phát triển cố định xuống 70.500.000 VND. |
+| 1.2 | 2026-05-22 | Thay đổi nguồn dịch API | Chuyển sang Gemini API làm nguồn dịch duy nhất trong MVP (thay vì Google Translate + OpenAI). Google Translate và OpenAI dời sang Future Phase. Kiến trúc multi-provider mở. Giảm effort xuống 26,5 ngày và chi phí xuống 65.250.000 VND. |

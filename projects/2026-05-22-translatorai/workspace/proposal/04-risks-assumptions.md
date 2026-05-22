@@ -2,8 +2,8 @@
 
 ## 4.1 Giả Định Chiến Lược (Strategic Assumptions)
 
-- **Tài khoản OpenAI:** Người dùng tự cung cấp API Key OpenAI cá nhân và chịu trách nhiệm chi trả mọi chi phí phát sinh từ việc gọi API GPT-4o.
-- **Tính ổn định của Google Translate API:** API dịch thuật miễn phí của Google Translate thông qua các thư viện wrapper hoạt động ổn định và không bị chặn IP hàng loạt trong tương lai gần.
+- **Tài khoản Gemini API:** Người dùng tự cung cấp Gemini API Key cá nhân và chịu trách nhiệm chi trả mọi chi phí phát sinh từ việc gọi API dịch thuật.
+- **Chất lượng dịch thuật Gemini:** Gemini API hỗ trợ đầy đủ chức năng dịch thuật text-to-text với chất lượng tương đương hoặc tốt hơn các provider khác cho nhu cầu dịch thuật hàng ngày.
 - **Hệ điều hành tối thiểu:** Hệ điều hành mục tiêu tối thiểu là macOS 14+ (Sonoma) để có sự hỗ trợ tốt nhất cho các API native và SwiftUI mới nhất.
 - **Phân phối ứng dụng:** Khách hàng sở hữu tài khoản Apple Developer để ký số (Code Sign) và thực hiện quy trình phê duyệt Notarization từ Apple khi phát hành bản phân phối .dmg.
 
@@ -14,5 +14,5 @@ Hệ điều hành macOS thắt chặt chính sách bảo mật, yêu cầu ngư
 *Biện pháp:* Thiết kế màn hình Onboarding hướng dẫn bằng hình ảnh động trực quan ngay khi mở ứng dụng lần đầu, chỉ dẫn chi tiết từng bước bật quyền trong System Settings.
 
 **Giới hạn tốc độ kết nối internet khi gọi API dịch thuật (Mức độ: Thấp)**
-Kết nối mạng bị gián đoạn hoặc API Google/OpenAI phản hồi chậm sẽ làm gián đoạn trải nghiệm dịch tức thời.
+Kết nối mạng bị gián đoạn hoặc Gemini API phản hồi chậm sẽ làm gián đoạn trải nghiệm dịch tức thời.
 *Biện pháp:* Hiển thị trạng thái kết nối mạng trực quan trên bong bóng HUD và thiết lập cơ chế timeout hợp lý để thông báo lỗi rõ ràng thay vì để ứng dụng bị treo.

@@ -397,9 +397,9 @@
 <h2>Metadata</h2>
 <ul>
 <li>Artifact ID: WBS-TranslatorAI</li>
-<li>Version: 1.1</li>
+<li>Version: 1.2</li>
 <li>Status: Approved</li>
-<li>Context Version: 1.1</li>
+<li>Context Version: 1.2</li>
 <li>Date: 2026-05-22</li>
 </ul>
 <h2>WBS</h2>
@@ -454,24 +454,17 @@
     <td>Cấu hình Preferences</td>
     <td>Giao diện Cài đặt (Preferences Panel)</td>
     <td>Quản lý cấu hình dịch thuật và phím tắt</td>
-    <td>Thiết lập cửa sổ preferences gồm tab: Chung (Cài đặt phím tắt), API OpenAI (Nhập Key, System Prompt, chọn model), Lịch sử (bật/tắt, xóa lịch sử).<br>Ước lượng: Dev: 3 ngày, QA: 1 ngày</td>
+    <td>Thiết lập cửa sổ preferences gồm tab: Chung (Cài đặt phím tắt), API Gemini (Nhập Key, System Prompt, chọn model), Lịch sử (bật/tắt, xóa lịch sử).<br>Ước lượng: Dev: 3 ngày, QA: 1 ngày</td>
     <td>Áp dụng cho: S-7, S-5, S-6. Lưu cấu hình an toàn trong NSUserDefaults hoặc SQLite.</td>
   </tr>
   <tr>
     <td>4.1</td>
-    <td rowspan="2">Dịch thuật &amp; Kết nối API</td>
-    <td rowspan="2">API Integration</td>
-    <td>Google Translate Client</td>
-    <td>Request dịch thuật qua API Google</td>
-    <td>Tích hợp thư viện hoặc wrapper gọi API Google Translate miễn phí để dịch nhanh văn bản.<br>Ước lượng: Dev: 1.5 ngày, QA: 0.5 ngày</td>
-    <td>Áp dụng cho: S-5. Không giới hạn ký tự và hoàn toàn miễn phí cho người dùng.</td>
-  </tr>
-  <tr>
-    <td>4.2</td>
-    <td>OpenAI GPT-4o Client</td>
-    <td>Request dịch thuật qua OpenAI API</td>
-    <td>Gọi API OpenAI GPT-4o sử dụng API Key cá nhân của người dùng, hỗ trợ tùy chỉnh System Prompt để dịch văn bản tự nhiên.<br>Ước lượng: Dev: 2 ngày, QA: 1 ngày</td>
-    <td>Áp dụng cho: S-5, S-7. Dịch chất lượng cao, lưu giữ thuật ngữ chuyên ngành.</td>
+    <td>Dịch thuật &amp; Kết nối API</td>
+    <td>API Integration</td>
+    <td>Gemini API Client</td>
+    <td>Request dịch thuật qua Gemini API</td>
+    <td>Tích hợp Gemini API sử dụng API Key cá nhân của người dùng, hỗ trợ tùy chỉnh System Prompt để dịch văn bản tự nhiên. Thiết kế theo mô hình protocol/interface để dễ bổ sung provider sau.<br>Ước lượng: Dev: 2 ngày, QA: 1 ngày</td>
+    <td>Áp dụng cho: S-5, S-7. Dịch chất lượng cao, kiến trúc multi-provider mở.</td>
   </tr>
   <tr>
     <td>5.1</td>
@@ -544,9 +537,9 @@
 <td>- Bong bóng Popup HUD hiển thị cạnh con trỏ chuột đúng vị trí và hiển thị được chữ gốc.<br>- Khởi tạo database SQLite cục bộ thành công.</td>
 </tr>
 <tr>
-<td>M3: APIs Dịch thuật &amp; Cài đặt</td>
-<td>Tích hợp Google Translate API, OpenAI GPT-4o API và hoàn thiện Preferences Panel cùng SQLite lưu trữ lịch sử.</td>
-<td>- Dịch thành công qua Google Translate and OpenAI GPT-4o.<br>- Lưu cấu hình OpenAI API Key cá nhân vào Preferences panel.<br>- Lịch sử dịch thuật được lưu vào SQLite cục bộ và hiển thị/xóa được từ giao diện cài đặt.</td>
+<td>M3: API Dịch thuật &amp; Cài đặt</td>
+<td>Tích hợp Gemini API client và hoàn thiện Preferences Panel cùng SQLite lưu trữ lịch sử.</td>
+<td>- Dịch thành công qua Gemini API.<br>- Lưu cấu hình Gemini API Key cá nhân vào Preferences panel.<br>- Lịch sử dịch thuật được lưu vào SQLite cục bộ và hiển thị/xóa được từ giao diện cài đặt.</td>
 </tr>
 <tr>
 <td>M4: Kiểm thử, Tối ưu &amp; Đóng gói</td>
@@ -577,9 +570,9 @@
 <tr>
 <td>2</td>
 <td>2.1 (Popup dịch nhanh)</td>
-<td>4.1, 4.2 (API Integration)</td>
+<td>4.1 (API Integration)</td>
 <td>FS</td>
-<td>Cửa sổ HUD phải sẵn sàng để nhận dữ liệu dịch thuật từ Google/OpenAI và hiển thị lên cho người dùng.</td>
+<td>Cửa sổ HUD phải sẵn sàng để nhận dữ liệu dịch thuật từ Gemini API và hiển thị lên cho người dùng.</td>
 </tr>
 <tr>
 <td>3</td>
@@ -610,9 +603,9 @@
 </thead>
 <tbody><tr>
 <td>DA-1</td>
-<td>Quyền truy cập API Google Translate miễn phí thông qua wrapper/web requests vẫn hoạt động ổn định và không bị chặn IP hàng loạt.</td>
+<td>Gemini API hỗ trợ đầy đủ chức năng dịch thuật text-to-text với chất lượng tốt và thời gian phản hồi nhanh.</td>
 <td>Hoạt động (Active)</td>
-<td>Nếu bị chặn, người dùng bắt buộc phải dùng OpenAI API Key cá nhân để dịch thuật, làm giảm tính khả dụng miễn phí của app.</td>
+<td>Nếu chất lượng dịch kém hoặc API không ổn định, cần bổ sung provider khác sớm hơn dự kiến.</td>
 </tr>
 <tr>
 <td>DA-2</td>
@@ -622,7 +615,7 @@
 </tr>
 <tr>
 <td>DA-3</td>
-<td>Khách hàng sẵn lòng tự cấu hình API Key OpenAI cá nhân của họ nếu muốn sử dụng dịch AI nâng cao.</td>
+<td>Khách hàng sẵn lòng tự cấu hình Gemini API Key cá nhân của họ để sử dụng dịch thuật AI.</td>
 <td>Đã xác nhận (Confirmed)</td>
 <td>Nếu không, chúng tôi sẽ phải thiết lập proxy server và hệ thống thanh toán để quản lý token, tăng chi phí và thay đổi hoàn toàn kiến trúc offline của app.</td>
 </tr>
