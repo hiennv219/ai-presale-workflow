@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- **Dự án:** TranslatorAI macOS App MVP
+- **Dự án:** TranslatorAI
 - **Khách hàng:** TranslatorAI
 - **Phiên bản:** 1.1
 - **Trạng thái:** Draft

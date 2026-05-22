@@ -52,11 +52,6 @@
       margin-bottom: 24pt;
     }
 
-    h1:first-child {
-      text-align: center;
-      text-transform: uppercase;
-    }
-
     h2 {
       font-size: 16pt;
       color: #1b365d; /* Deep Navy Blue */
@@ -180,26 +175,9 @@
       margin: 20mm;
     }
 
-    @media print {
-      body {
-        background-color: #FFFFFF;
-        padding: 0;
-        margin: 0;
-      }
-      .word-page {
-        width: 100%;
-        box-shadow: none;
-        padding: 0;
-        page-break-after: always;
-      }
-      .word-page:last-child {
-        page-break-after: avoid;
-      }
-      .word-page.landscape {
-        page: landscape-page;
-        width: 100%;
-        padding: 0;
-      }
+    @page cover-page-layout {
+      size: A4 portrait;
+      margin: 0;
     }
 
     @media screen and (max-width: 210mm) {
@@ -264,7 +242,7 @@
       pointer-events: none;
     }
     .cover-title-area {
-      margin-top: 50mm;
+      margin-top: auto;
       text-align: center;
       width: 100%;
       z-index: 5;
@@ -278,34 +256,34 @@
     }
     .cover-main-title {
       font-family: "Georgia", "Times New Roman", Times, serif;
-      font-size: 46pt;
+      font-size: 32pt;
       font-weight: bold;
       color: #0f52ba;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       margin: 0;
-      text-transform: uppercase;
+      text-align: center;
       line-height: 1.2;
     }
     .cover-metadata-area {
       align-self: flex-end;
       text-align: right;
-      margin-top: auto;
+      margin-top: 20mm;
+      margin-bottom: auto;
       font-family: "Times New Roman", Times, serif;
-      font-size: 14pt;
+      font-size: 11pt;
       line-height: 1.6;
-      color: #333333;
+      color: #555555;
       z-index: 5;
       margin-right: 10mm;
-      margin-bottom: 10mm;
     }
     .cover-meta-item {
-      margin-bottom: 2pt;
+      margin-bottom: 4px;
     }
     .cover-meta-date {
       color: #0f52ba;
       font-weight: bold;
-      margin-top: 15pt;
-      font-size: 14pt;
+      margin-top: 8pt;
+      font-size: 11pt;
     }
 
     /* Table of Contents Styles */
@@ -371,6 +349,46 @@
       margin: 18pt 0;
       width: 100%;
     }
+
+    @media print {
+      body {
+        background-color: #FFFFFF;
+        padding: 0;
+        margin: 0;
+      }
+      .word-page {
+        width: 100%;
+        min-height: initial !important;
+        box-shadow: none;
+        padding: 0 !important;
+        page-break-after: always;
+      }
+      .word-page:last-child {
+        page-break-after: avoid;
+      }
+      .word-page.landscape {
+        page: landscape-page;
+        width: 100%;
+        min-height: initial !important;
+        padding: 0 !important;
+      }
+      .cover-page {
+        page: cover-page-layout;
+        width: 210mm;
+        height: 297mm;
+        min-height: 297mm !important;
+        padding: 30mm 25mm 30mm 30mm !important;
+        margin: 0;
+        page-break-after: always;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .toc-page {
+        min-height: initial !important;
+        padding: 20mm 0 10mm 0 !important;
+        page-break-after: always;
+      }
+    }
   </style>
 </head>
 <body>
@@ -381,7 +399,7 @@
   
   <div class="cover-title-area">
     <div class="cover-subtitle">Project Proposal</div>
-    <h1 class="cover-main-title">TRANSLATORAI MACOS APP MVP</h1>
+    <h1 class="cover-main-title">TranslatorAI</h1>
   </div>
   
   <div class="cover-metadata-area">

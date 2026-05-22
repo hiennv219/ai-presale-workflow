@@ -5,8 +5,6 @@
 
 # 01 - Tổng Quan Dự Án & Giá Trị Kinh Doanh
 
-# 01 - Tổng Quan Dự Án & Giá Trị Kinh Doanh
-
 ## 1.1 Bối Cảnh & Vấn Đề (Context & Problem Statement)
 
 Các Quản trị dự án (PM) đang mất nhiều thời gian cho việc ghi chép biên bản họp và phân công công việc sau mỗi buổi thảo luận, làm giảm đáng kể hiệu suất làm việc.

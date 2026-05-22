@@ -18,7 +18,9 @@
       margin: 0;
       padding: 40px 10px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
     }
 
     .word-page {
@@ -48,11 +50,6 @@
       color: #1b365d; /* Deep Navy Blue */
       text-align: left;
       margin-bottom: 24pt;
-    }
-
-    h1:first-child {
-      text-align: center;
-      text-transform: uppercase;
     }
 
     h2 {
@@ -178,22 +175,9 @@
       margin: 20mm;
     }
 
-    @media print {
-      body {
-        background-color: #FFFFFF;
-        padding: 0;
-        margin: 0;
-      }
-      .word-page {
-        width: 100%;
-        box-shadow: none;
-        padding: 0;
-      }
-      .word-page.landscape {
-        page: landscape-page;
-        width: 100%;
-        padding: 0;
-      }
+    @page cover-page-layout {
+      size: A4 portrait;
+      margin: 0;
     }
 
     @media screen and (max-width: 210mm) {
@@ -220,6 +204,189 @@
         width: 100%;
         padding: 15px;
         box-shadow: none;
+      }
+    }
+
+    /* Cover Page Styles */
+    .cover-page {
+      position: relative;
+      overflow: hidden;
+      background-color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 297mm;
+      padding: 30mm 25mm 30mm 30mm;
+      page-break-after: always;
+    }
+    .cover-bg-shape-1 {
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background-color: rgba(15, 82, 186, 0.04);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .cover-bg-shape-2 {
+      position: absolute;
+      top: -220px;
+      right: -80px;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background-color: rgba(15, 82, 186, 0.07);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .cover-title-area {
+      margin-top: auto;
+      text-align: center;
+      width: 100%;
+      z-index: 5;
+    }
+    .cover-subtitle {
+      font-family: "Georgia", "Times New Roman", Times, serif;
+      font-style: italic;
+      font-size: 24pt;
+      color: #666666;
+      margin-bottom: 12pt;
+    }
+    .cover-main-title {
+      font-family: "Georgia", "Times New Roman", Times, serif;
+      font-size: 32pt;
+      font-weight: bold;
+      color: #0f52ba;
+      letter-spacing: 1px;
+      margin: 0;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .cover-metadata-area {
+      align-self: flex-end;
+      text-align: right;
+      margin-top: 20mm;
+      margin-bottom: auto;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 11pt;
+      line-height: 1.6;
+      color: #555555;
+      z-index: 5;
+      margin-right: 10mm;
+    }
+    .cover-meta-item {
+      margin-bottom: 4px;
+    }
+    .cover-meta-date {
+      color: #0f52ba;
+      font-weight: bold;
+      margin-top: 8pt;
+      font-size: 11pt;
+    }
+
+    /* Table of Contents Styles */
+    .toc-page {
+      min-height: 297mm;
+      padding: 30mm 20mm 20mm 30mm;
+      page-break-after: always;
+    }
+    .toc-title {
+      text-align: left !important;
+      text-transform: uppercase;
+      font-size: 20pt;
+      color: #1b365d;
+      margin-top: 10mm;
+      margin-bottom: 5mm;
+    }
+    .toc-divider {
+      width: 80px;
+      height: 3px;
+      background-color: #2b6cb0;
+      margin: 0 0 15mm 0;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 12pt;
+      font-size: 11pt;
+    }
+    .toc-name {
+      font-weight: bold;
+      color: #2d3748;
+    }
+    .toc-dots {
+      flex-grow: 1;
+      border-bottom: 2px dotted #cbd5e1;
+      margin: 0 8px 3px 8px;
+    }
+    .toc-page-num {
+      font-weight: bold;
+      color: #1b365d;
+    }
+    .toc-list li.toc-sub-item {
+      padding-left: 20px;
+      margin-bottom: 8pt;
+      font-size: 10pt;
+    }
+    .toc-list li.toc-sub-item .toc-name {
+      font-weight: normal;
+      color: #4a5568;
+    }
+    .toc-list li.toc-sub-item .toc-page-num {
+      font-weight: normal;
+      color: #4a5568;
+    }
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      margin: 18pt 0;
+      width: 100%;
+    }
+
+    @media print {
+      body {
+        background-color: #FFFFFF;
+        padding: 0;
+        margin: 0;
+      }
+      .word-page {
+        width: 100%;
+        min-height: initial !important;
+        box-shadow: none;
+        padding: 0 !important;
+        page-break-after: always;
+      }
+      .word-page:last-child {
+        page-break-after: avoid;
+      }
+      .word-page.landscape {
+        page: landscape-page;
+        width: 100%;
+        min-height: initial !important;
+        padding: 0 !important;
+      }
+      .cover-page {
+        page: cover-page-layout;
+        width: 210mm;
+        height: 297mm;
+        min-height: 297mm !important;
+        padding: 30mm 25mm 30mm 30mm !important;
+        margin: 0;
+        page-break-after: always;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .toc-page {
+        min-height: initial !important;
+        padding: 20mm 0 10mm 0 !important;
+        page-break-after: always;
       }
     }
   </style>
@@ -552,5 +719,27 @@
 
 
   </div>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    
+    // Find all <pre><code class="language-mermaid"> blocks and convert them to <div class="mermaid">
+    const codeBlocks = document.querySelectorAll('pre code.language-mermaid');
+    codeBlocks.forEach((codeBlock) => {
+      const preBlock = codeBlock.parentNode;
+      const mermaidDiv = document.createElement('div');
+      mermaidDiv.className = 'mermaid';
+      mermaidDiv.textContent = codeBlock.textContent.trim();
+      preBlock.parentNode.replaceChild(mermaidDiv, preBlock);
+    });
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true
+      }
+    });
+  </script>
 </body>
 </html>

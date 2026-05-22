@@ -1,4 +1,4 @@
-# Đề Xuất Giải Pháp: TranslatorAI macOS App MVP
+# Đề Xuất Giải Pháp: TranslatorAI
 **Tác giả**: Ryan Nguyen
 **Ngày**: 2026-05-22
 **Phiên bản**: Final

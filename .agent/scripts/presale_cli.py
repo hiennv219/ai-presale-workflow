@@ -321,8 +321,18 @@ def generate_proposal_pages(md_content):
     main_content_lines = lines[metadata_lines_count:]
     main_content = "\n".join(main_content_lines).strip()
     
+    # Detect the heading level for main sections
+    heading_level = 1
+    m = re.search(r'^(#{1,3})\s*[0-9]+\s*[\.\-]\s*', main_content, re.MULTILINE)
+    if m:
+        heading_level = len(m.group(1))
+    
+    # Based on the heading level, we define the regex patterns
+    main_pattern = r'^' + ('#' * heading_level) + r'\s*(([0-9]+)\s*[\.\-]\s*.*)'
+    sub_pattern = r'^' + ('#' * (heading_level + 1)) + r'\s*(([0-9]+\.[0-9]+(?:\.[0-9]+)?)\s+.*)'
+    
     # Extract sections & subheadings for TOC
-    h1_matches = list(re.finditer(r'^#\s*([0-9]+\s*-\s*.*)', main_content, re.MULTILINE))
+    h1_matches = list(re.finditer(main_pattern, main_content, re.MULTILINE))
     
     # Hardcoded or estimated page numbers for TOC
     toc_pages = {
@@ -340,9 +350,9 @@ def generate_proposal_pages(md_content):
         title_parts = title.split(":", 1)
         project_name_meta = title_parts[1].strip()
     else:
-        project_name_meta = "TranslatorAI macOS App MVP"
+        project_name_meta = "TranslatorAI"
         
-    project_name_upper = project_name_meta.upper()
+    project_name_display = project_name_meta
     date_formatted = format_cover_date(date)
     
     cover_html = f"""
@@ -352,7 +362,7 @@ def generate_proposal_pages(md_content):
   
   <div class="cover-title-area">
     <div class="cover-subtitle">Project Proposal</div>
-    <h1 class="cover-main-title">{project_name_upper}</h1>
+    <h1 class="cover-main-title">{project_name_display}</h1>
   </div>
   
   <div class="cover-metadata-area">
@@ -366,7 +376,8 @@ def generate_proposal_pages(md_content):
     toc_items = []
     for idx, match in enumerate(h1_matches):
         sec_text = match.group(1).strip()
-        sec_prefix = sec_text.split("-")[0].strip()
+        sec_num = match.group(2).strip()
+        sec_prefix = f"{int(sec_num):02d}"
         parent_page = toc_pages.get(sec_prefix, "")
         
         # Add parent section to TOC
@@ -381,17 +392,16 @@ def generate_proposal_pages(md_content):
         end_pos = h1_matches[idx + 1].start() if idx + 1 < len(h1_matches) else len(main_content)
         section_content = main_content[start_pos:end_pos]
         
-        # Find all H2 subheadings in this section
-        h2_matches = list(re.finditer(r'^##\s*([0-9]+\.[0-9]+\s+.*)', section_content, re.MULTILINE))
+        # Find all subheadings in this section
+        h2_matches = list(re.finditer(sub_pattern, section_content, re.MULTILINE))
         
         # Determine the page span for this section
         if parent_page:
             parent_page_num = int(parent_page)
             next_page_num = None
             if idx + 1 < len(h1_matches):
-                next_sec_text = h1_matches[idx + 1].group(1).strip()
-                next_sec_prefix = next_sec_text.split("-")[0].strip()
-                next_page_str = toc_pages.get(next_sec_prefix, "")
+                next_sec_num = h1_matches[idx + 1].group(2).strip()
+                next_page_str = toc_pages.get(f"{int(next_sec_num):02d}", "")
                 if next_page_str:
                     next_page_num = int(next_page_str)
             
@@ -434,7 +444,7 @@ def generate_proposal_pages(md_content):
 </div>
 """
     
-    return cover_html, toc_html, main_content
+    return cover_html, toc_html, main_content, heading_level
 
 def convert_md_to_html(md_path, html_path, title, default_template_path, project_path):
     if not os.path.exists(md_path):
@@ -456,7 +466,7 @@ def convert_md_to_html(md_path, html_path, title, default_template_path, project
     is_proposal = "proposal" in html_path.lower() or "proposal" in md_path.lower()
     
     if is_proposal:
-        cover_html, toc_html, cleaned_md = generate_proposal_pages(md_content)
+        cover_html, toc_html, cleaned_md, heading_level = generate_proposal_pages(md_content)
         result = subprocess.run(['npx', 'marked', '--gfm'], input=cleaned_md, capture_output=True, text=True)
         if result.returncode != 0:
             print(f"Error converting markdown via marked: {result.stderr}")
@@ -464,8 +474,9 @@ def convert_md_to_html(md_path, html_path, title, default_template_path, project
         main_html = result.stdout
         main_html = merge_html_tables(main_html)
         
-        # Split main_html into separate sections by H1 tags to layout them as separate pages
-        sections_html = re.split(r'(?=<h1[^>]*>)', main_html)
+        # Split main_html into separate sections by H1/H2 tags to layout them as separate pages
+        split_tag = f"h{heading_level}"
+        sections_html = re.split(rf'(?=<{split_tag}[^>]*>)', main_html)
         wrapped_sections = []
         for sec in sections_html:
             sec = sec.strip()
