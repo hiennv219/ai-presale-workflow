@@ -759,6 +759,46 @@ def run_lint(project_path):
     return errors == 0
 
 
+def run_split(project_path, input_file=None):
+    workspace_dir = os.path.join(project_path, "workspace")
+    proposal_dir = os.path.join(workspace_dir, "proposal")
+
+    if not input_file:
+        input_file = os.path.join(workspace_dir, "proposal-batch.md")
+
+    if not os.path.exists(input_file):
+        print(f"Error: Batch file not found at {input_file}")
+        return False
+
+    with open(input_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    marker_pattern = re.compile(r'<!--\s*SECTION:\s*(.+?)\s*-->')
+    markers = list(marker_pattern.finditer(content))
+
+    if not markers:
+        print("Error: No <!-- SECTION:filename.md --> markers found in batch file.")
+        return False
+
+    os.makedirs(proposal_dir, exist_ok=True)
+
+    written = 0
+    for i, match in enumerate(markers):
+        filename = match.group(1).strip()
+        start = match.end()
+        end = markers[i + 1].start() if i + 1 < len(markers) else len(content)
+        section_content = content[start:end].strip()
+
+        out_path = os.path.join(proposal_dir, filename)
+        with open(out_path, 'w', encoding='utf-8') as f:
+            f.write(section_content + "\n")
+        written += 1
+        print(f"  ✔ {filename}")
+
+    print(f"\n✔ Split {written} sections into {proposal_dir}")
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser(description="Automate presale proposal concatenation, WBS finalization, and HTML exports.")
     parser.add_argument("--project", help="Path to the project directory (e.g., projects/2026-05-11-terrafuse)")
@@ -767,6 +807,7 @@ def main():
     parser.add_argument("--export", action="store_true", help="Compile and export documents into _delivery/ HTML formats")
     parser.add_argument("--all", action="store_true", help="Execute all steps (concat, wbs, export)")
     parser.add_argument("--lint", action="store_true", help="Run offline consistency checks (scope↔WBS, budget math, milestones)")
+    parser.add_argument("--split", nargs='?', const=True, default=None, help="Split batch proposal output by <!-- SECTION:xx --> markers. Optional: path to batch file (default: workspace/proposal-batch.md)")
     
     args = parser.parse_args()
     
